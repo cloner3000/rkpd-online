@@ -1,0 +1,93 @@
+id;kode;nama;bidang_urusan_id
+1;14;Program Peningkatan Kualitas dan Produktifitas Tenaga Kerja;8
+2;15;Program Perlindungan Pengembangan Lembaga Ketenagakerjaan;8
+3;13;Program perluasan dan pengembangan kesempatan kerja;8
+4;87;Program Pembinaan Jasa Konstruksi;4
+5;84;Program Pengembangan Kinerja Pengelolaan Air Minum dan Air Limbah;4
+6;85;Program Pengembangan Kinerja Pengelolaan Persampahan dan Drainase;4
+7;43;Program Kerjasama Pembangunan;34
+8;1;Program Pelayanan Administrasi Perkantoran;1
+9;40;Program Pembinaan dan Pengembangan Aparatur;34
+10;45;Program Penataan Daerah Otonom Baru;34
+11;41;Program Penataan Kelembagaan dan Ketatalaksanaan;34
+12;42;Program Penataan Pelayanan Publik Daerah;34
+13;39;Program Pendidikan Kedinasan;34
+14;49;Program Penegakan Supremasi Hukum;34
+15;44;Program Pengelolaan Wilayah Administrasi Kecamatan dan Desa;34
+16;46;Program Peningkatan Budaya Organisasi Pemerintah yang Bersih Peduli dan Profesional;34
+17;51;Program Peningkatan dan Pengembangan Pengelolaan Keuangan dan Asset Daerah;34
+18;3;Program peningkatan Disiplin Aparatur;1
+19;5;Program Peningkatan Kapasitas Sumber Daya Aparatur;1
+20;47;Program peningkatan kualitas lembaga perwakilan rakyat daerah;34
+21;48;Program Peningkatan Pelayanan Kedinasan Kepala Daerah dan Wakil Kepala Daerah;34
+22;6;Program Peningkatan Pengembangan Sistem Pelaporan Capaian Kinerja dan Keuangan;1
+23;2;Program Peningkatan Sarana dan Prasarana Aparatur;1
+24;52;Program Peningkatan Sumber-Sumber Penerimaan Daerah;34
+25;50;Program Perencanaan dan Pengendalian Pembangunan Daerah;34
+26;86;Program Pengembangan Perumahan dan Kawasan Permukiman;5
+27;53;Program peningkatan kualitas dan pelayanan tata kearsipan;25
+28;27;Program Pengembangan Nilai-nilai Budaya  dan Pembinaan Kesenian;23
+29;90;Program Pengembangan  Budidaya Perikanan;26
+30;89;Program Pengembangan Perikanan Tangkap;26
+31;88;Program Peningkatan Kesejahteraan Pelaku Perikanan;26
+32;23;Program Pembinaan dan Peningkatan Partisipasi Pemuda dan Prestasi Olahraga;20
+33;54;Program Penataan Administrasi Kependudukan;13
+34;60;Program Obat dan Perbekalan Kesehatan;3
+35;63;Program Pelayanan Kesehatan Penduduk Miskin;3
+36;67;Program Pencegahan dan Pengendalian Penyakit;3
+37;70;Program pengadaan peningkatan sarana dan prasarana rumah sakit;3
+38;69;Program Peningkatan dan Pembangunan Fasilitas Kesehatan;3
+39;68;Program Peningkatan Mutu  Pelayanan Kesehatan;3
+40;65;Program Penyehatan Lingkungan;3
+41;64;Program Perbaikan Gizi Masyarakat;3
+42;66;Program Promosi Kesehatan dan Pemberdayaan Masyarakat;3
+43;61;Program Upaya Kesehatan Masyarakat;3
+44;62;Progran Pembinaan Kesehatan Khusus;3
+45;31;Program Pemeliharaan Keamanan Ketertiban dan Perlindungan Masyarakat;6
+46;32;Program Penguatan Kelembagaan Sosial dan Organisasi Massa;6
+47;33;Program Penjalinan Koordinasi dan Komunikasi dengan Kelembagaan Politik;6
+48;59;Program Pengembangan Sistem Informasi dan Teknologi Informasi;17
+49;58;program peningkatan publikasi dan kerjasama informasi daerah;17
+50;22;Program Pengembangan Kewirausahaan dan Keunggulan Kompetitif Usaha Kecil Menengah;18
+51;9;Program Pengembangan Sistem Pendukung Usaha Bagi Usaha Mikro Kecil Menengah;18
+52;21;Program Peningkatan Kualitas Kelembagaan Koperasi;18
+53;91;Program Pengendalian Pencemaran dan Kerusakan Lingkungan Hidup;12
+54;92;Program Perlindungan Rehabilitasi dan Konservasi Sumber Daya Alam;12
+55;16;Program Peningkatan Ketahanan Pangan;10
+56;7;Program Pengembangan Pariwisata;27
+57;8;Program Jalan dan Jembatan;4
+59;79;Program Pengelolaan Ruang Terbuka Hijau (RTH) di perkotaan;4
+60;83;Program Pengembangan dan Pengelolaan jaringan Irigasi Rawa dan jaringan pengairan lainnya;4
+61;82;program peningkatan sarana dan prasarana kebinamargaan;4
+62;26;Program Pengembangan Lembaga Ekonomi Pedesaan;14
+63;56;Program Peningkatan Kapasitas Aparatur Pemerintah Desa;14
+64;57;Program Peningkatan Keberdayaan Masyarakat Pedesaan;14
+65;55;Program Peningkatan Partisipasi Pembangunan Kecamatan;14
+66;38;Program Pemberdayaan perlindungan anak dan perempuan;9
+67;18;Program Peningkatan Iklim Investasi dan Realisasi Investasi;19
+68;17;Program Peningkatan Promosi dan Kerjasama Investasi;19
+69;77;Program Manajemen Layanan Pendidikan;2
+70;75;Program PAUD dan Pendidikan Masyarakat;2
+71;76;Program Peningkatan Mutu Pendidik dan Tenaga Kependidikan;2
+72;74;Program Wajar Dikdas 9 Tahun;2
+73;72;Program Keluarga Kecil Yang Berkualitas;15
+74;71;Program Pengendalian Penduduk dan Keluarga Berencana;15
+75;24;Program Peningkatan Efisiensi Perdagangan dan Pengembangan Ekspor;31
+76;25;program penyediaan sarana dan prasarana perdagangan;31
+77;10;Program Pembangunan Pemeliharaan dan Pengembangan Sarana Prasarana dan Fasilitas Perhubungan;16
+78;12;Program Pembinaan dan Peningkatan Keselamatan Perhubungan;16
+79;11;Program Peningkatan Kinerja dan pelayanan perhubungan;16
+80;19;Program Pengembangan Industri Rumah Tangga Kecil Menengah;32
+81;73;Program Pengembangan Budaya Baca dan Pembinaan Perpustakaan;24
+82;78;Program Penataan Ruang dan Pertanahan;11
+83;20;Program Peningkatan Kesejahteraan Petani;28
+85;28;Program Peningkatan Produksi Pertanian;28
+86;34;Program Pemberdayaan Penyandang Masalah Kesejahteraan Sosial (PMKS) komunitas adat  dan Pelestarian Nilai-nilai Keperintisan Kepahlawanan & Kesetiakawanan Sosial (K2KS).;7
+87;37;Program Pemberdayaan Potensi Sumber Kesejahteraan Sosial;7
+88;80;program penanggulangan bencana;7
+89;30;Program Penguatan Lembaga-lembaga Sosial dan Pendidikan Keagamaan;7
+90;29;"Program Peningkatan Pemahaman Penghayatan Pengamalan dan Pengembangan Nilai-nilai Keagamaan;";7
+91;36;Program Perlindungan dan Jaminan Sosial;7
+92;35;Program Rehabilitasi Kesejahteraan Sosial;7
+94;81;Program pengembangan wilayah Transmigrasi;33
+95;4;Program Fasilitas Pindah/Purna Tugas PNS;1

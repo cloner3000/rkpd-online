@@ -1,0 +1,32 @@
+id;kode;nama;urusan_id
+1;0;Rutin;1
+2;1;Pendidikan;1
+3;2;Kesehatan;1
+4;3;Pekerjaan Umum dan Penataan Ruang;1
+5;4;Perumahan rakyat dan kawasan pemukiman;1
+6;5;Ketenteraman, ketertiban umum, dan perlindungan masyarakat;1
+7;6;Sosial;1
+8;1;Tenaga Kerja;2
+9;2;Pemberdayaan perempuan dan perlindungan anak;2
+10;3;Pangan;2
+11;4;Pertanahan;2
+12;5;Lingkungan Hidup;2
+13;6;Kependudukan dan Catatan Sipil;2
+14;7;Pemberdayaan Masyarakat dan Desa;2
+15;8;Pengendalian penduduk dan keluarga berencana;2
+16;9;Perhubungan;2
+17;10;Komunikasi dan Informatika;2
+18;11;Koperasi, Usaha Kecil dan Menengah;2
+19;12;Penanaman Modal;2
+20;13;Kepemudaan dan Olahraga;2
+23;16;Kebudayaan;2
+24;17;perpustakaan;2
+25;18;Kearsipan;2
+26;1;Kelautan dan Perikanan;3
+27;2;Pariwisata;3
+28;3;Pertanian;3
+30;5;Energi dan Sumber Daya Mineral;3
+31;6;Perdagangan;3
+32;7;Perindustrian;3
+33;8;Transmigrasi;3
+34;1;Penunjang urusan pemerintahan;4
