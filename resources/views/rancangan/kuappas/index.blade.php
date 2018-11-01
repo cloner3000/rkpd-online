@@ -53,7 +53,32 @@
                 <form action="{{ route('rancangan-kuappas.filter') }}" method="post">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <div class="col-md-8">
+                        
+                        <!-- edited form -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>
+                                    Perangkat Daerah
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <select name="selected_opd" class="form-control m-select2" id="m_select2_1">
+                                    @foreach ($opd_bidang as $opd)
+                                        <option value="{{ $opd->id }}" @if($opd->id == $dropdown1) selected @endif>{{ $opd->nama }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="old_dropdown1" value="{{ $dropdown1 }}">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="submit" class="btn btn-primary" name="button_1" value="Pilih">
+                            </div>
+                        </div>
+                        <!-- edited form -->
+                        
+                        <!-- original form -->
+                        {{-- <div class="col-md-8">
                             <div class="form-group m-form__group">
                                 <label>
                                     Perangkat Daerah
@@ -65,12 +90,40 @@
                                 </select>
                                 <input type="hidden" name="old_dropdown1" value="{{ $dropdown1 }}">
                             </div>
-                        </div>
+                        </div> --}}
+                        <!-- original form -->
+                        
                     </div>
 
                     @if (!empty($dropdown1))
                         <div class="form-group">
-                            <div class="col-md-8">
+
+                            <!-- edited form -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>
+                                        Program
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <select name="selected_program" class="form-control m-select2" id="m_select2_1">
+                                        @forelse ($program as $prog)
+                                            <option value="{{ $prog->id }}">{{ $prog->nama }}</option>
+                                        @empty
+                                            <option value="">Tidak ada data program</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="submit" class="btn btn-primary" name="button_1" value="Pilih">
+                                </div>
+                            </div>
+                            <!-- edited form -->
+
+                            <!-- original form -->
+                            {{-- <div class="col-md-12">
                                 <div class="form-group m-form__group">
                                     <label>
                                         Program
@@ -83,16 +136,19 @@
                                         @endforelse
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
+                            <!-- original form -->
+
                         </div>
                     @endif
 
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <div class="col-12">
                             <label></label>
                             <button type="submit" class="btn btn-primary">Pilih</button>
                         </div>
-                    </div>
+                    </div> --}}
+
                 </form>
             @endrole
 
@@ -138,6 +194,11 @@
                         <th title="Field #2">
                             Lokasi
                         </th>
+                        @role(\App\Enum\Roles::BIDANG)
+                            <th title="Field #3">
+                                Prioritas
+                            </th>
+                        @endrole
                         <th title="Field #4">
                             Transfer
                         </th>
@@ -158,6 +219,11 @@
                             <td>
                                 {{ $item->lokasi }}
                             </td>
+                            @role(\App\Enum\Roles::BIDANG)
+                                <td>
+                                    {{ $item->prioritas }}
+                                </td>
+                            @endrole
                             <td>
                                 {{ $item->is_transfer ? 'Sudah' : 'Belum' }}
                             </td>

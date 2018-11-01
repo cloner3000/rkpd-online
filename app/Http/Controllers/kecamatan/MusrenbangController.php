@@ -16,6 +16,9 @@ use App\Tahapan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use File;
+use Storage;
+
 class MusrenbangController extends Controller
 {
     protected $musrenbang_service;
@@ -318,9 +321,48 @@ class MusrenbangController extends Controller
 
     public function doTransfer(Request $request, $id)
     {
+        if (empty($request->pilihan)) {
+            $this->validate($request, [
+                'pilihan' => 'required'
+            ]);
+        }
+        if ($request->pilihan) {
+            $this->validate($request, [
+                'catatan' => 'required',
+                'proposal' => 'required|max:3100'
+            ]);
+        }
+        else {
+            $this->validate($request, [
+                'catatan' => 'required'
+            ]);
+        }
+
+        $path_proposal = null;
+        $anggaran = Anggaran::find($id);
+        if ($request->hasFile('proposal')) {
+            $file_proposal = $request->file('proposal');
+            $path_proposal = "proposal".'/'.$request->id." - ".$anggaran->kegiatan->nama.'.'.'pdf';
+            // echo $path_proposal;
+            $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
+        }
+        
+        if ($request->pilihan) {
+            $anggaran->is_verifikasi = 1;
+            $message = 'Berhasil Transfer data.';
+        }
+        else {
+            $anggaran->is_verifikasi = 2;
+            $message = 'Data telah ditolak.';
+        }
+        
+        $anggaran->catatan = $request->catatan;
+        $anggaran->proposal = $path_proposal;
+        $anggaran->save();
+
         $anggaran = Anggaran::find($id);
         $tahapan = Tahapan::whereNama(\App\Enum\Tahapan::RANCANGAN_RENJA)->firstOrFail();
-        if (!empty($tahapan)) {
+        if (!empty($tahapan) && $request->pilihan) {
             $newAnggaran = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
             $anggaran->is_transfer = true;
             $anggaran->save();
@@ -331,7 +373,7 @@ class MusrenbangController extends Controller
         return redirect(route('musrenbang-kecamatan.index'))->with('alert', [
             'type' => 'success',
             'alert' => 'Berhasil !',
-            'message' => 'Berhasil Transfer data.',
+            'message' => $message,
         ]);
     }
 }

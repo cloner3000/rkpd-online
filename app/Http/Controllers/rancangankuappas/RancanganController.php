@@ -114,11 +114,12 @@ class RancanganController extends Controller
                                 ->where('bidang_permissions.bidang_id', $bidang_id)
                                 ->where('anggaran.tahapan_id', $tahapan->id)
                                 ->where('program.id', $dropdown2)
-                                ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama')
+                                ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas')
                                 ->where(function($query) use ($search_keyword){
                                     $query->where('kegiatan.nama', 'like', '%'.$search_keyword.'%')
                                                     ->orWhere('anggaran.lokasi', 'like', '%'.$search_keyword.'%');
                                 })
+                                ->orderBy('anggaran.prioritas')
                                 ->orderBy('anggaran.created_at', 'ASC')
                                 ->paginate(10);
 
@@ -133,7 +134,8 @@ class RancanganController extends Controller
                                     ->where('bidang_permissions.bidang_id', $bidang_id)
                                     ->where('anggaran.tahapan_id', $tahapan->id)
                                     ->where('program.id', $dropdown2)
-                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama')
+                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas')
+                                    ->orderBy('anggaran.prioritas')
                                     ->orderBy('anggaran.created_at', 'ASC')
                                     ->paginate(10);
                         }
@@ -366,15 +368,40 @@ class RancanganController extends Controller
 
     public function transfer(Request $request)
     {
+        // -- adding code
+        if (empty($request->pilihan)) {
+            $this->validate($request, [
+                'pilihan' => 'required'
+            ]);
+        }
+        if ($request->pilihan) {
+            $this->validate($request, [
+                'catatan' => 'required'
+            ]);
+        }
+        // -- 
+
         $anggaran = Anggaran::find($request->id);
         $tahapan = Tahapan::whereNama(\App\Enum\Tahapan::KUA_PPAS)->first();
+
+        // -- adding code
+        $anggaran->catatan = $request->catatan;
+        if ($request->pilihan) {
+            $anggaran->is_verifikasi = 1;
+            $message = 'Berhasil Transfer data.';
+        }
+        else {
+            $anggaran->is_verifikasi = 2;
+            $message = 'Data telah ditolak.';
+        }     
+        // --
 
         if (!$tahapan)
         {
             return error_pages(400, 'Tahapan ' . \App\Enum\Tahapan::KUA_PPAS . ' tidak ditemukan, silahkan hubungi Administrator!');
         }
 
-        if (!empty($tahapan)) {
+        if (!empty($tahapan) && $request->pilihan) {
             $anggaran_transfer = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
             $this->musrenbang_service->transferTargetAnggaran($anggaran, $anggaran_transfer);
             $anggaran->pagu = $request->pagu_usulan;
@@ -385,7 +412,7 @@ class RancanganController extends Controller
         return redirect(route('rancangan-kuappas.index'))->with('alert', [
             'type' => 'success',
             'alert' => 'Berhasil !',
-            'message' => 'Berhasil Transfer data.',
+            'message' => $message,
         ]);
     }
 

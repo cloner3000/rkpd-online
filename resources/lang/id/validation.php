@@ -61,7 +61,7 @@ return [
     'same'                 => 'Isian :attribute dan :other harus sama.',
     'size'                 => [
         'numeric' => 'Isian :attribute harus berukuran :size.',
-        'file'    => 'Isian :attribute harus berukuran :size kilobyte.',
+        'file'    => 'Isian :attribute maksimal berukuran :size kilobyte.',
         'string'  => 'Isian :attribute harus berukuran :size karakter.',
         'array'   => 'Isian :attribute harus mengandung :size item.',
     ],

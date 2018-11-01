@@ -1,4 +1,4 @@
-<li class="m-menu__item  m-menu__item--submenu {{ active_class(if_route_pattern(['menu.*', 'user.*', 'role.*', 'permission.*']), 'm-menu__item--open') }} m-menu__item--expanded"
+<li class="m-menu__item  m-menu__item--submenu {{ active_class(if_route_pattern(['menu.*', 'user.*', 'role.*', 'permission.*', 'bidang']), 'm-menu__item--open') }} m-menu__item--expanded"
     aria-haspopup="true" data-menu-submenu-toggle="hover">
     <a href="#" class="m-menu__link m-menu__toggle">
         <i class="m-menu__link-icon fa fa-group"></i>

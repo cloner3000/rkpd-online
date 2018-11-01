@@ -30,6 +30,17 @@
         </div>
     </div>
     <div class="m-content">
+        @if (count($errors) > 0)
+          <div class="alert alert-danger">
+            Mohon maaf, form isian harus diisi seluruhnya!
+            <br>
+            <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+        @endif
         <div class="m-portlet m-portlet--mobile">
             <div class="m-portlet__head">
                 <div class="m-portlet__head-caption">
@@ -48,7 +59,7 @@
                 @endif
 
                 <form class="m-form m-form--fit m-form--label-align-right"
-                      action="{{ route('musrenbang-kecamatan.transfer.store', ['id' => $item->id]) }}" method="POST">
+                      action="{{ route('musrenbang-kecamatan.transfer.store', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     @php($user = auth()->user())
                     <div class="m-portlet__body" style="padding-top:0px">
@@ -97,8 +108,8 @@
                                     @if ($errors->has('sumber_anggaran'))
                                         <br>
                                         <span class="form-control-feedback">
-                        <strong>{{ $errors->first('sumber_anggaran') }}</strong>
-                    </span>
+                                            <strong>{{ $errors->first('sumber_anggaran') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>
@@ -112,8 +123,8 @@
                         @if ($errors->has('nama_kegiatan'))
                             <br>
                             <span class="form-control-feedback">
-                <strong>{{ $errors->first('nama_kegiatan') }}</strong>
-            </span>
+                                <strong>{{ $errors->first('nama_kegiatan') }}</strong>
+                            </span>
                         @endif
                     </div>
 
@@ -229,9 +240,40 @@
                                   readonly>{{ $item->lokasi ?? '' }}</textarea>
                     </div>
 
+                    <!-- start added coding -->
+                    <hr>
+                    <h5>Setujui / Tolak</h5>
+                    <div class="form-group m-form__group">
+                        <label>Setujui Kegiatan?</label>
+                        <br>
+                        <label for="setuju">
+                            <input type="radio" name="pilihan" value="1" id="setuju" onclick="show2();" >
+                             Setujui
+                        </label>
+                        <br>
+                        <label for="tolak">
+                            <input type="radio" name="pilihan" value="0" id="tolak" onclick="show1();">
+                             Tolak
+                        </label>
+                        <br>
+                        <br>
+                        <label>Catatan <small>(wajib diisi)</small></label>
+                        <textarea class="form-control" name="catatan" id="catatan" cols="30" rows="2">
+                        </textarea>
+                        <br>
+                        <div id="div1" style="display: none">
+                            <label>
+                            Input Proposal <small>(wajib diisi, file harus PDF, ukuran maksimal 2 MB)</small>
+                            </label> 
+                            <input type="file" id="proposal" name="proposal" class="form-control m-input" accept="application/pdf">
+                        </div>
+                    </div>
+                    
+                    <!-- end added coding -->
+
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions">
-                            <button type="submit" class="btn btn-primary">Transfer</button>
+                            <button type="submit" class="btn btn-primary">Proses</button>
                             <a href="{{ url()->previous() }}" class="btn btn-secondary">Batal</a>
                         </div>
                     </div>
@@ -242,3 +284,14 @@
         </div>
     </div>
 @endsection
+
+@push('footer.javascript')
+    <script>
+        function show1(){
+            document.getElementById('div1').style.display ='none';
+        }
+        function show2(){
+            document.getElementById('div1').style.display = 'block';
+        }
+    </script>
+@endpush

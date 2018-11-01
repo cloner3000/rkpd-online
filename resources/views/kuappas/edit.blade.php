@@ -50,7 +50,7 @@
                 <form class="m-form m-form--fit m-form--label-align-right"  method="POST" enctype="multipart/form-data"
                       action="{{ route('kuappas.update', [$item->id]) }}">
                     {{ method_field('PUT')}}
-                    @include('rancangan.akhir._form')
+                    @include('kuappas._form')
                 </form>
 
             </div>
