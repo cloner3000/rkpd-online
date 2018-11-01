@@ -267,15 +267,41 @@ class RancanganController extends Controller
 
     public function transfer(Request $request)
     {
+        // -- adding code
+        if (empty($request->pilihan)) {
+            $this->validate($request, [
+                'pilihan' => 'required'
+            ]);
+        }
+        if ($request->pilihan) {
+            $this->validate($request, [
+                'catatan' => 'required'
+            ]);
+        }
+        // -- 
+
         $anggaran = Anggaran::find($request->input('id_transfer'));
         $tahapan = Tahapan::whereNama(\App\Enum\Tahapan::KUA_PPAS)->first();
+
+        // -- adding code
+        if (empty($request->pilihan)) {
+            $this->validate($request, [
+                'pilihan' => 'required'
+            ]);
+        }
+        if ($request->pilihan) {
+            $this->validate($request, [
+                'catatan' => 'required'
+            ]);
+        }
+        // -- 
 
         if (!$tahapan)
         {
             return error_pages(400, 'Tahapan ' . \App\Enum\Tahapan::KUA_PPAS . ' tidak ditemukan, silahkan hubungi Administrator!');
         }
 
-        if (!empty($tahapan)) {
+        if (!empty($tahapan) && $request->pilihan) {
             $anggaran_transfer = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
             $this->musrenbang_service->transferTargetAnggaran($anggaran, $anggaran_transfer);
             $anggaran->is_transfer = true;
@@ -285,7 +311,7 @@ class RancanganController extends Controller
         return redirect(route('kuappas.index'))->with('alert', [
             'type' => 'success',
             'alert' => 'Berhasil !',
-            'message' => 'Berhasil Transfer data.',
+            'message' => $message,
         ]);
     }
 }

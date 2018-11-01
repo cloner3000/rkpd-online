@@ -46,7 +46,113 @@
                     'message' => session('alert')['message']
                 ])
             @endif
-            <!--begin: Search Form -->
+
+            @role(\App\Enum\Roles::BIDANG)
+                <!-- Filter -->
+                <form action="{{ route('kerja.filter') }}" method="post">
+                    {{ csrf_field() }}
+                    <div class="form-group">
+                        
+                        <!-- edited form -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>
+                                    Perangkat Daerah
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <select name="selected_opd" class="form-control m-select2" id="m_select2_1">
+                                    @foreach ($opd_bidang as $opd)
+                                        <option value="{{ $opd->id }}" @if($opd->id == $dropdown1) selected @endif>{{ $opd->nama }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="old_dropdown1" value="{{ $dropdown1 }}">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="submit" class="btn btn-primary" name="button_1" value="Pilih">
+                            </div>
+                        </div>
+                        <!-- edited form -->
+                        
+                        <!-- original form -->
+                        {{-- <div class="col-md-8">
+                            <div class="form-group m-form__group">
+                                <label>
+                                    Perangkat Daerah
+                                </label>
+                                <select name="selected_opd" class="form-control m-select2" id="m_select2_1">
+                                    @foreach ($opd_bidang as $opd)
+                                        <option value="{{ $opd->id }}" @if($opd->id == $dropdown1) selected @endif>{{ $opd->nama }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="hidden" name="old_dropdown1" value="{{ $dropdown1 }}">
+                            </div>
+                        </div> --}}
+                        <!-- original form -->
+                        
+                    </div>
+
+                    @if (!empty($dropdown1))
+                        <div class="form-group">
+
+                            <!-- edited form -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>
+                                        Program
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <select name="selected_program" class="form-control m-select2" id="m_select2_1">
+                                        @forelse ($program as $prog)
+                                            <option value="{{ $prog->id }}">{{ $prog->nama }}</option>
+                                        @empty
+                                            <option value="">Tidak ada data program</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="submit" class="btn btn-primary" name="button_1" value="Pilih">
+                                </div>
+                            </div>
+                            <!-- edited form -->
+
+                            <!-- original form -->
+                            {{-- <div class="col-md-12">
+                                <div class="form-group m-form__group">
+                                    <label>
+                                        Program
+                                    </label>
+                                    <select name="selected_program" class="form-control m-select2" id="m_select2_1">
+                                        @forelse ($program as $prog)
+                                            <option value="{{ $prog->id }}">{{ $prog->nama }}</option>
+                                        @empty
+                                            <option value="">Tidak ada data program</option>
+                                        @endforelse
+                                    </select>
+                                </div>
+                            </div> --}}
+                            <!-- original form -->
+
+                        </div>
+                    @endif
+
+                    {{-- <div class="form-group">
+                        <div class="col-12">
+                            <label></label>
+                            <button type="submit" class="btn btn-primary">Pilih</button>
+                        </div>
+                    </div> --}}
+
+                </form>
+            @endrole
+
+            @if (!empty($items))
+                <!--begin: Search Form -->
                 <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
                     <div class="row align-items-center">
                         <div class="col-xl-8 order-2 order-xl-1">
@@ -54,7 +160,10 @@
                                 <div class="col-md-7">
                                     @include('global.table_search', [
                                        'action' => route('kerja.index', ['url'=>'items']),
-                                       'search' => $search ?? ""
+                                       'search' => $search ?? "",
+                                       'selected_opd' => $dropdown1 ?? "",
+                                       'selected_program' => $dropdown2 ?? "",
+                                       'old_dropdown1' => $old_dropdown1 ?? ""
                                    ])
                                 </div>
                             </div>
@@ -73,64 +182,65 @@
                 <!--begin: Datatable -->
                 <div class="m-datatable m-datatable--default m-datatable--brand m-datatable--loaded">
                     <table width="100%" class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th title="Field #0">
-                            Nomor
-                        </th>
-                        <th title="Field #1">
-                            Nama Kegiatan
-                        </th>
-                        <th title="Field #2">
-                            Lokasi
-                        </th>
-                        <th title="Field #4">
-                            Transfer
-                        </th>
-                        <th title="Field #6">
-                            Aksi
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @forelse($items as $key => $item)
-                        <tr>
-                            <td>
-                                {{ $items->firstItem() + $key }}
-                            </td>
-                            <td>
-                                {{ $item->kegiatan->nama }}
-                            </td>
-                            <td>
-                                {{ $item->lokasi }}
-                            </td>
-                            <td>
-                                {{ $item->is_transfer ? 'Sudah' : 'Belum' }}
-                            </td>
-                            <td>
-                                @include('global.table_action', [
-                                    'action' => route('kerja.destroy', ['id' => $item->id]),
-                                    'url'    => route('kerja.edit', ['id' => $item->id]),
-                                    'id'     => $item->id,
-                                    'show'   => route('kerja.show', $item->id),
-                                    'transfer' => route('kerja.transfer', ['id' => $item->id]),
-                                ])
-                            </td>
-                        </tr>
-                        @empty
+                        <thead>
                             <tr>
-                                <td colspan="5" class="m-datatable--error" style=" text-align: center;vertical-align: middle;padding: 5px;position: relative;" height="100">
-                                    Data Tidak Ditemukan
+                                <th title="Field #0">
+                                    Nomor
+                                </th>
+                                <th title="Field #1">
+                                    Nama Kegiatan
+                                </th>
+                                <th title="Field #2">
+                                    Lokasi
+                                </th>
+                                <th title="Field #4">
+                                    Transfer
+                                </th>
+                                <th title="Field #6">
+                                    Aksi
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($items as $key => $item)
+                            <tr>
+                                <td>
+                                    {{ $items->firstItem() + $key }}
+                                </td>
+                                <td>
+                                    {{ ($bidang_nama[0] == 'Administrator' or $bidang_nama[0] == 'OPD' or $bidang_nama[0] == 'Kecamatan') ? $item->kegiatan->nama : $item->nama }}
+                                </td>
+                                <td>
+                                    {{ $item->lokasi }}
+                                </td>
+                                <td>
+                                    {{ $item->is_transfer ? 'Sudah' : 'Belum' }}
+                                </td>
+                                <td>
+                                    @include('global.table_action', [
+                                        'action' => route('kerja.destroy', ['id' => $item->id]),
+                                        'url'    => route('kerja.edit', ['id' => $item->id]),
+                                        'id'     => $item->id,
+                                        'show'   => route('kerja.show', $item->id),
+                                        'transfer' => route('kerja.transfer', ['id' => $item->id]),
+                                    ])
                                 </td>
                             </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-                <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
-                    {{ $items->appends(['search' => request()->input('search') ])->links() }}
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="m-datatable--error" style=" text-align: center;vertical-align: middle;padding: 5px;position: relative;" height="100">
+                                        Data Tidak Ditemukan
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                    <div class="m-datatable__pager m-datatable--paging-loaded clearfix">
+                        {{ ($bidang_nama[0] == 'Administrator' or $bidang_nama[0] == 'OPD' or $bidang_nama[0] == 'Kecamatan') ? $items->appends(['search' => request()->input('search') ])->links() : $items->appends(['search' => request()->input('search'), 'selected_opd' => request()->input('selected_opd'), 'selected_program' => request()->input('selected_program'), 'old_dropdown1' => request()->input('old_dropdown1'),])->links() }}
+                    </div>
                 </div>
-            </div>
                 <!--end: Datatable -->
+            @endif
             </div>
         </div>
     </div>

@@ -275,10 +275,35 @@ class MusrenbangController extends Controller
 
     public function transfer(Request $request)
     {
+        // -- adding code
+        if (empty($request->pilihan)) {
+            $this->validate($request, [
+                'pilihan' => 'required'
+            ]);
+        }
+        if ($request->pilihan) {
+            $this->validate($request, [
+                'catatan' => 'required'
+            ]);
+        }
+        // -- 
+
         $anggaran = Anggaran::find($request->input('id_transfer'));
         $tahapan = Tahapan::whereNama('Musrenbang Kecamatan')->firstOrFail();
 
-        if (!empty($tahapan)) {
+        // -- adding code
+        $anggaran->catatan = $request->catatan;
+        if ($request->pilihan) {
+            $anggaran->is_verifikasi = 1;
+            $message = 'Berhasil Transfer data.';
+        }
+        else {
+            $anggaran->is_verifikasi = 2;
+            $message = 'Data telah ditolak.';
+        }     
+        // --
+
+        if (!empty($tahapan) && $request->pilihan) {
             $anggaran_transfer = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
             $this->musrenbang_service->transferTargetAnggaran($anggaran, $anggaran_transfer);
             $anggaran->is_transfer = true;
@@ -288,7 +313,7 @@ class MusrenbangController extends Controller
         return redirect(route('musrenbang-desa.index'))->with('alert', [
             'type' => 'success',
             'alert' => 'Berhasil !',
-            'message' => 'Berhasil Transfer data.',
+            'message' => $message,
         ]);
     }
 }
