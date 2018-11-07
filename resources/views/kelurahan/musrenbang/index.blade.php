@@ -97,6 +97,9 @@
                             <th title="Field #4">
                                 Transfer
                             </th>
+                            <th title="Field #5">
+                                Status | Catatan
+                            </th>
                             <th title="Field #6">
                                 Aksi
                             </th>
@@ -116,6 +119,18 @@
                                 </td>
                                 <td>
                                     {{ $item->is_transfer ? 'Sudah' : 'Belum' }}
+                                </td>
+                                <td>
+                                    @if ($item->is_transfer == 1 && $item->is_verifikasi == 1)
+                                        <span class="label label-sm label-success">Diterima | </span>
+                                    @elseif($item->is_transfer == 0 && $item->is_verifikasi == 2)
+                                        <span class="label label-danger">Ditolak | </span>
+                                    @elseif($item->is_transfer == 1 && $item->is_verifikasi == 0)
+                                        <label class="label label-sm label-danger">Diterima</label>
+                                    @else
+                                        <label class="label label-sm label-danger">Menunggu tindakan</label>
+                                    @endif
+                                    {{ $item->catatan }}
                                 </td>
                                 <td>
                                     @include('global.table_action', [

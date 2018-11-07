@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers\kerja;
+
 use App\Admin\Visi;
 use App\Anggaran;
 use App\Enum\ErrorMessages;
@@ -139,7 +141,7 @@ class RancanganController extends Controller
                                 ->where('bidang_permissions.bidang_id', $bidang_id)
                                 ->where('anggaran.tahapan_id', $tahapan->id)
                                 ->where('program.id', $dropdown2)
-                                ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas')
+                                ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan')
                                 ->where(function($query) use ($search_keyword){
                                     $query->where('kegiatan.nama', 'like', '%'.$search_keyword.'%')
                                                     ->orWhere('anggaran.lokasi', 'like', '%'.$search_keyword.'%');
@@ -159,7 +161,7 @@ class RancanganController extends Controller
                                     ->where('bidang_permissions.bidang_id', $bidang_id)
                                     ->where('anggaran.tahapan_id', $tahapan->id)
                                     ->where('program.id', $dropdown2)
-                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas')
+                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan')
                                     ->orderBy('anggaran.prioritas')
                                     ->orderBy('anggaran.created_at', 'ASC')
                                     ->paginate(10);
@@ -330,6 +332,17 @@ class RancanganController extends Controller
         if (! can_entry($this->tahapan)) {
             return error_pages(400, ErrorMessages::CLOSED_ENTRY);
         }
+
+        // coding tambahan utk menghapus catatan
+        $data = Anggaran::find($id);
+        $data->catatan = null;
+        // if ($data->path_proposal) {
+        //     Storage::delete($data->path_proposal);
+        // }
+        // $data->path_proposal = null;
+        $data->save();
+        // end
+        
         $musrenbang = Anggaran::findOrFail($id);
         $this->musrenbang_service->updateTransferStatus($musrenbang);
         $musrenbang->delete();

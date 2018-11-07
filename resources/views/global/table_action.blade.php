@@ -26,8 +26,9 @@
         @endif
         @if(!(empty($canTransfer)) && $canTransfer)
             @if(!empty($isViewTransfer) && $isViewTransfer)
+
                 <a href="{{ $transfer }}"
-                   class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill {{ $item->is_transfer ? 'disabled' : '' }}">
+                   class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill {{ ($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0) ? 'disabled' : '' }}">
                     <i class="la la-send"></i>
                 </a>
             @else
@@ -35,7 +36,7 @@
                       method="POST">
                     {{ csrf_field() }}
                     <input type="hidden" value="{{ $item->id }}" name="id_transfer">
-                    <button type="button" {{ $item->is_transfer ? 'disabled' : '' }}
+                    <button type="button" {{ ($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0) ? 'disabled' : '' }}
                             class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
                             data-toggle="modal" data-target="#modal_transfer_{{ $id ?? "" }}" title="Trasfer"
                             type="button">

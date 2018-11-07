@@ -266,6 +266,16 @@ class MusrenbangController extends Controller
             return error_pages(400, ErrorMessages::CLOSED_ENTRY);
         }
 
+        // coding tambahan utk menghapus catatan
+        $data = Anggaran::find($id);
+        $data->catatan = null;
+        if ($data->path_proposal) {
+            Storage::delete($data->path_proposal);
+        }
+        $data->path_proposal = null;
+        $data->save();
+        // end
+
         $musrenbang = Anggaran::findOrFail($id);
         $this->musrenbang_service->updateTransferStatus($musrenbang);
         $musrenbang->delete();

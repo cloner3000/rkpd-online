@@ -103,7 +103,10 @@ Route::group(['middleware' => 'auth'], function () {
             'laporan\renja\LaporanController@htmltopdfview')->name('export.pdf.renja');
     });
     Route::group(['prefix' => 'rancangan', 'middleware' => 'auth'], function () {
-        Route::resource('awal', 'awal\RancanganController');
+
+        Route::post('awal', 'awal\RancanganController@index')->name('awal.filter');
+        // Route::resource('awal', 'awal\RancanganController');
+        Route::resource('awal', 'awal\RancanganController', ['except' => ['store']])->names('awal');
         Route::get('awal/{id}/transfer', 'awal\RancanganController@transfer')->name('awal.transfer.view');
         Route::post('awal/{id}/transfer', 'awal\RancanganController@doTransfer')->name('awal.transfer.store');
 
