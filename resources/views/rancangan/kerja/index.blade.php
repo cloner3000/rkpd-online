@@ -240,7 +240,8 @@
                                         'transfer' => route('kerja.transfer.view', ['id' => $item->id]),
                                         'isViewTransfer' => true,
                                         'tahapan' => 'kerja',
-                                        'bidang' => $bidang
+                                        'bidang' => $bidang,
+                                        'admin' => $admin
                                     ])
                                 </td>
                             </tr>

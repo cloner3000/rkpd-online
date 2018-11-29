@@ -28,14 +28,17 @@
             @if(!empty($isViewTransfer) && $isViewTransfer)
 
                 <a href="{{ $transfer }}"
-                   class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill 
-                   @if (!empty($tahapan))
-                       @if ($tahapan == 'kerja')
-                            @if( (!empty($bidang) ? $bidang == 'bidang' : false) )
+                    class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill 
+                    @if (!empty($tahapan))
+                        @if ($tahapan == 'kerja')
+                            @if( (!empty($admin) ? $admin == true : false) )
+                                @if ($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0)
+                                   disabled
+                                @endif
+                            @elseif( (!empty($bidang) ? $bidang == true : false) )
                                 @if (!($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0 or !$item->is_checked))
                                     disabled
                                 @endif
-                            {{-- @endif --}}
                             @else
                                 @if ($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0 or !$item->is_checked)
                                    disabled
@@ -45,7 +48,7 @@
                        ">
                     @else
                         {{ ($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0) ? 'disabled' : '' }}">
-                   @endif
+                    @endif
                     <i class="la la-send"></i>
                 </a>
             @else

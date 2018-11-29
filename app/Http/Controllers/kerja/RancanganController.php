@@ -82,9 +82,15 @@ class RancanganController extends Controller
 
         if (strpos($username, 'bidang') !== false) {
             $bidang = true;
+            $admin = false;
+        }
+        elseif ($user->hasRole(Roles::ADMIN)) {
+            $bidang = false;
+            $admin = true;
         }
         else {
             $bidang = false;
+            $admin = false;
         }
 
 
@@ -114,7 +120,8 @@ class RancanganController extends Controller
 
                 'bidang_nama',
 
-                'bidang'
+                'bidang',
+                'admin'
             ));
         }
 
@@ -207,7 +214,8 @@ class RancanganController extends Controller
                 'dropdown2',
                 'old_dropdown1',
 
-                'bidang'
+                'bidang',
+                'admin'
             ));
         }
     }
