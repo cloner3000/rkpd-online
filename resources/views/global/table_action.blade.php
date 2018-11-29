@@ -28,17 +28,40 @@
             @if(!empty($isViewTransfer) && $isViewTransfer)
 
                 <a href="{{ $transfer }}"
-                   class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill {{ ($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0) ? 'disabled' : '' }}">
+                   class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill 
+                   @if (!empty($tahapan))
+                       @if ($tahapan == 'kerja')
+                            @if( (!empty($bidang) ? $bidang == 'bidang' : false) )
+                                @if (!($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0 or !$item->is_checked))
+                                    disabled
+                                @endif
+                            {{-- @endif --}}
+                            @else
+                                @if ($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0 or !$item->is_checked)
+                                   disabled
+                                @endif
+                            @endif
+                       @endif
+                       ">
+                    @else
+                        {{ ($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0) ? 'disabled' : '' }}">
+                   @endif
                     <i class="la la-send"></i>
                 </a>
             @else
                 <form action="{{ $transfer }}"
                       method="POST">
                     {{ csrf_field() }}
+
+                    <!-- start coding tambahan -->
+                    <input type="hidden" value="0" name="isViewTransfer">
+                    <input type="hidden" value="1" name="pilihan">
+                    <!-- end coding tambahan -->
+                    
                     <input type="hidden" value="{{ $item->id }}" name="id_transfer">
                     <button type="button" {{ ($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0) ? 'disabled' : '' }}
                             class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill"
-                            data-toggle="modal" data-target="#modal_transfer_{{ $id ?? "" }}" title="Trasfer"
+                            data-toggle="modal" data-target="#modal_transfer_{{ $id ?? "" }}" title="Transfer"
                             type="button">
                         <i class="la la-send"></i>
                     </button>

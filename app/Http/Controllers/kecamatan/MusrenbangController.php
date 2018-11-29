@@ -338,8 +338,7 @@ class MusrenbangController extends Controller
         }
         if ($request->pilihan) {
             $this->validate($request, [
-                'catatan' => 'required',
-                'proposal' => 'required|max:3100'
+                'catatan' => 'required'
             ]);
         }
         else {

@@ -138,7 +138,9 @@
                                     'url'    => route('musrenbang-desa.edit', ['id' => $item->id]),
                                     'id'     => $item->id,
                                     'show'   => route('musrenbang-desa.show', $item->id),
-                                    'transfer' => route('musrenbang-desa.transfer', ['id' => $item->id]),
+                                    'transfer' => route('musrenbang-desa.transfer.view', $item->id),
+                                    'isViewTransfer' => true,
+                                    'is_verifikasi' => $item->is_verifikasi
                                 ])
                             </td>
                         </tr>

@@ -74,11 +74,31 @@ class RancanganController extends Controller
 
         $bidang_nama = $user->roles->pluck('name'); //bidang
 
+        // $user_opd = DB::table('users_opd')->where('user_id', $user->id)->first();
+        // print_r($user_opd->opd_id);
+
+        //
+        $username = auth()->user()->name;
+
+        if (strpos($username, 'bidang') !== false) {
+            $bidang = true;
+        }
+        else {
+            $bidang = false;
+        }
+
+
         if ($bidang_nama[0] == "Administrator" or $bidang_nama[0] == "Kecamatan" or $bidang_nama[0] == "OPD") {
             $tahapan = Tahapan::whereNama($this->tahapan)->firstOrFail();
             $items = new Anggaran();
-            $items = $items->whereTahapanId($tahapan->id);
-
+            if ($bidang_nama[0] <> "Administrator") {
+                $user_opd = DB::table('users_opd')->where('user_id', $user->id)->first();
+                $user_opd_id = $user_opd->opd_id;
+                $items = $items->whereTahapanId($tahapan->id)->where('opd_id', $user_opd_id);
+            }
+            else {
+                $items = $items->whereTahapanId($tahapan->id);
+            }
             $search = $request->get('search');
             $items  = $items->search($search)
                 ->orderBy('created_at', 'ASC')
@@ -92,7 +112,9 @@ class RancanganController extends Controller
                 'canManage',
                 'search',
 
-                'bidang_nama'
+                'bidang_nama',
+
+                'bidang'
             ));
         }
 
@@ -141,7 +163,7 @@ class RancanganController extends Controller
                                 ->where('bidang_permissions.bidang_id', $bidang_id)
                                 ->where('anggaran.tahapan_id', $tahapan->id)
                                 ->where('program.id', $dropdown2)
-                                ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan')
+                                ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan', 'anggaran.is_checked')
                                 ->where(function($query) use ($search_keyword){
                                     $query->where('kegiatan.nama', 'like', '%'.$search_keyword.'%')
                                                     ->orWhere('anggaran.lokasi', 'like', '%'.$search_keyword.'%');
@@ -161,7 +183,7 @@ class RancanganController extends Controller
                                     ->where('bidang_permissions.bidang_id', $bidang_id)
                                     ->where('anggaran.tahapan_id', $tahapan->id)
                                     ->where('program.id', $dropdown2)
-                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan')
+                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan', 'anggaran.is_checked')
                                     ->orderBy('anggaran.prioritas')
                                     ->orderBy('anggaran.created_at', 'ASC')
                                     ->paginate(10);
@@ -183,7 +205,9 @@ class RancanganController extends Controller
                 'program',
                 'dropdown1',
                 'dropdown2',
-                'old_dropdown1'
+                'old_dropdown1',
+
+                'bidang'
             ));
         }
     }
@@ -373,36 +397,51 @@ class RancanganController extends Controller
         $kegiatan = Kegiatan::where('id', '=', $request->input('keyword'))->withAll()->first();
         return response()->json($kegiatan);
     }
-    public function transfer(Request $request)
+    public function transfer($id)
     {
-        $anggaran = Anggaran::find($request->input('id_transfer'));
-        $tahapan = Tahapan::whereNama(\App\Enum\Tahapan::KABUPATEN)->firstOrFail();
-        if (!empty($tahapan)) {
-            $anggaran_transfer = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
-            $this->musrenbang_service->transferTargetAnggaran($anggaran, $anggaran_transfer);
-            $anggaran->is_transfer = true;
-            $anggaran->save();
-        }
-        return redirect()->back()->with('alert', [
-            'type' => 'success',
-            'alert' => 'Berhasil !',
-            'message' => 'Berhasil Transfer data.',
-        ]);
+        $item = Anggaran::findOrFail($id);
+        // $districts = Districts::all();
+        // $visi = Visi::active();
+        // $jenisLokasi = JenisLokasi::all();
+        $sumberAnggarans = SumberAnggaran::all();
+        $sumberAnggaranPuguIndikatif = SumberAnggaran::whereNama('Pagu Indikatif')->first();
+        return view('rancangan.kerja.transfer', compact(
+            'item',
+            // 'districts',
+            // 'visi',
+            // 'jenisLokasi',
+            'sumberAnggarans',
+            'sumberAnggaranPuguIndikatif'));
     }
     public function doTransfer(Request $request, $id)
     {
-        $anggaran = Anggaran::find($id);
-        $tahapan = Tahapan::whereNama(\App\Enum\Tahapan::KABUPATEN)->firstOrFail();
-        if (!empty($tahapan)) {
-            $newAnggaran = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
-            $anggaran->is_transfer = true;
+        $username = auth()->user()->name;
+
+        if (strpos($username, 'bidang') !== false) {
+            $anggaran = Anggaran::find($id);
+            $anggaran->is_checked = 1;
             $anggaran->save();
-            $this->musrenbang_service->storeTargetAnggaran($request, $newAnggaran);
+
+            return redirect(route('kerja.index'))->with('alert', [
+                'type' => 'success',
+                'alert' => 'Berhasil !',
+                'message' => 'Berhasil Verifikasi Data.',
+            ]);
         }
-        return redirect()->back()->with('alert', [
-            'type' => 'success',
-            'alert' => 'Berhasil !',
-            'message' => 'Berhasil Transfer data.',
-        ]);
+        else {
+            $anggaran = Anggaran::find($id);
+            $tahapan = Tahapan::whereNama(\App\Enum\Tahapan::KABUPATEN)->firstOrFail();
+            if (!empty($tahapan)) {
+                $newAnggaran = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
+                $anggaran->is_transfer = true;
+                $anggaran->save();
+                $this->musrenbang_service->storeTargetAnggaran($request, $newAnggaran);
+            }
+            return redirect()->back()->with('alert', [
+                'type' => 'success',
+                'alert' => 'Berhasil !',
+                'message' => 'Berhasil Transfer data.',
+            ]);
+        }
     }
 }

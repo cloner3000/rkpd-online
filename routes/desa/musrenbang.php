@@ -2,6 +2,8 @@
 
 Route::group(['prefix' => 'musrenbang', 'middleware' => 'auth'], function () {
     Route::resource('musrenbang-desa', 'desa\MusrenbangController');
+    Route::get('musrenbang-desa/{id}/transfer', 'desa\MusrenbangController@transfer')->name('musrenbang-desa.transfer.view');
+    Route::post('musrenbang-desa/{id}/transfer', 'desa\MusrenbangController@doTransfer')->name('musrenbang-desa.transfer.store');
 
     Route::resource('musrenbang-kelurahan', 'kelurahan\MusrenbangController');
     Route::resource('musrenbang-dewan', 'dewan\MusrenbangController');

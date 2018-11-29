@@ -263,15 +263,17 @@ class MusrenbangController extends Controller
     public function transfer(Request $request)
     {
         // -- adding code
-        if (empty($request->pilihan)) {
-            $this->validate($request, [
-                'pilihan' => 'required'
-            ]);
-        }
-        if ($request->pilihan) {
-            $this->validate($request, [
-                'catatan' => 'required'
-            ]);
+        if (!$request->isViewTransfer) {
+            if (empty($request->pilihan)) {
+                $this->validate($request, [
+                    'pilihan' => 'required'
+                ]);
+            }
+            if ($request->pilihan) {
+                $this->validate($request, [
+                    'catatan' => 'required'
+                ]);
+            }
         }
         // -- 
 
@@ -291,7 +293,8 @@ class MusrenbangController extends Controller
         }
         // -- 
 
-        if (!empty($tahapan) && $request->pilihan) {
+        // isViewTransfer = 0 artinya tidak menggunakan view transfer tetapi menggunakan modal
+        if ((!empty($tahapan) && $request->pilihan) or ($isViewTransfer == 0)) {
             $anggaran_transfer = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
             $this->musrenbang_service->transferTargetAnggaran($anggaran, $anggaran_transfer);
             $anggaran->is_transfer = true;

@@ -216,6 +216,25 @@
                         <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled readonly>{{ $item->lokasi ?? '' }}</textarea>
                     </div>
 
+                     <!-- start added coding -->
+                    <hr>
+                    <h5>Proposal</h5>
+                    <div class="form-group m-form__group">
+                        <label>Proposal Kegiatan</label>
+                        <br>
+                        <label for="setuju">
+                            <p>
+                                @if ($item->proposal)
+                                    {{-- <a href="{{ url('storage/app/'.$item->proposal) }}" title="link">Lihat</a> proposal kegiatan --}}
+                                    <a href="{{ URL::to('download/'.$item->id) }}" title="link" target="_blank">Lihat</a> proposal kegiatan
+                                @else
+                                    <s>Lihat</s> proposal kegiatan
+                                @endif
+                            </p>
+                        </label>
+                    </div>
+                    <!-- end added coding -->
+
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions">
                             <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>

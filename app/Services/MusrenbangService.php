@@ -187,6 +187,7 @@ class MusrenbangService
         $item->village_id         = $anggaran->village_id;
         $item->pagu               = $anggaran->pagu;
         $item->prioritas          = $anggaran->prioritas;
+        $item->proposal           = $anggaran->proposal;
         $item->user()->associate(auth()->user());
         $item->save();
 

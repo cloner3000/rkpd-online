@@ -129,10 +129,15 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('kuappas', 'kuappas\RancanganController')->names('kuappas');
         Route::post('kuappas/{id}/transfer', 'kuappas\RancanganController@transfer')->name('kuappas.transfer');
         Route::post('kuappas/{id}/kegiatan', 'kuappas\RancanganController@kegiatan')->name('kuappas.kegiatan');
+
         // route tambahan
         Route::get('rancangan-kuappas/{id}/transfer', 'rancangankuappas\RancanganController@transferView')->name('rancangan-kuappas.transfer.view');
         Route::post('rancangan-kuappas/{id}/transfer',
             'rancangankuappas\RancanganController@transfer')->name('rancangan-kuappas.transfer.store');
+
+        Route::get('kerja/{id}/transfer', 'kerja\RancanganController@transfer')->name('kerja.transfer.view');
+        Route::post('kerja/{id}/transfer', 'kerja\RancanganController@doTransfer')->name('kerja.transfer.store');
+
     });
     Route::group(['prefix' => 'api', 'middleware' => 'auth'], function () {
         Route::get('kegiatan', 'desa\MusrenbangController@lookupKegiatanByName')->name('kegiatan.lookup');
@@ -144,5 +149,14 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'admin'], function () {
             Route::get('kegiatan', 'Admin\KegiatanController@apiKegiatan')->name('api.kegiatan');
         });
+    });
+
+    // route download proposal
+    Route::get('download/{id}', function($id)
+    {
+        $data = \App\Anggaran::where('id', $id)->first();
+        // Storage::download($data->proposal);
+        return Storage::download($data->proposal);
+        
     });
 });

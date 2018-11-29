@@ -435,15 +435,17 @@ class RancanganController extends Controller
     public function doTransfer(Request $request, $id)
     {
         // -- adding code
-        if (empty($request->pilihan)) {
-            $this->validate($request, [
-                'pilihan' => 'required'
-            ]);
-        }
-        if ($request->pilihan) {
-            $this->validate($request, [
-                'catatan' => 'required'
-            ]);
+        if (!$request->isViewTransfer) {
+            if (empty($request->pilihan)) {
+                $this->validate($request, [
+                    'pilihan' => 'required'
+                ]);
+            }
+            if ($request->pilihan) {
+                $this->validate($request, [
+                    'catatan' => 'required'
+                ]);
+            }
         }
         // -- 
 
@@ -462,7 +464,8 @@ class RancanganController extends Controller
         }     
         // --
 
-        if (!empty($tahapan) && $request->pilihan) {
+        // isViewTransfer = 0 artinya tidak menggunakan view transfer tetapi menggunakan modal
+        if ((!empty($tahapan) && $request->pilihan) or ($isViewTransfer == 0)) {
             $newAnggaran = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
             $anggaran->is_transfer = true;
             $anggaran->save();

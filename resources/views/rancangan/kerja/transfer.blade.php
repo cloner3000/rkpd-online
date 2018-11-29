@@ -243,20 +243,28 @@
                     <div class="form-group m-form__group">
                         <label>Setujui Kegiatan?</label>
                         <br>
-                        <label for="setuju">
-                            <input type="radio" name="pilihan" value="1" id="setuju" onclick="show2();" >
-                             Setujui
-                        </label>
-                        <br>
-                        <label for="tolak">
-                            <input type="radio" name="pilihan" value="0" id="tolak" onclick="show1();">
-                             Tolak
-                        </label>
-                        <br>
-                        <br>
-                        <label>Catatan <small>(wajib diisi)</small></label>
-                        <textarea class="form-control" name="catatan" id="catatan" cols="30" rows="2">
-                        </textarea>
+                        @if (!(auth()->user()->name == 'bidangpmm' or auth()->user()->name == 'bidangipw' or auth()->user()->name == 'bidangesda')
+                            )
+                            <label for="setuju">
+                                <input type="radio" name="pilihan" value="1" id="setuju" onclick="show2();" >
+                                 Setujui
+                            </label>
+                            <br>
+                            <label for="tolak">
+                                <input type="radio" name="pilihan" value="0" id="tolak" onclick="show1();">
+                                 Tolak
+                            </label>
+                            <br>
+                            <br>
+                            <label>Catatan <small>(wajib diisi)</small></label>
+                            <textarea class="form-control" name="catatan" id="catatan" cols="30" rows="2">
+                            </textarea>
+                        @else 
+                            <label for="setuju">
+                                <input type="checkbox" name="pilihan" value="1" id="setuju" onclick="show2();" >
+                                 Setujui
+                            </label>
+                        @endif
                     </div>
                     <!-- end added coding -->
 

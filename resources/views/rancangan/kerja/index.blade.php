@@ -109,7 +109,7 @@
                                 <div class="col-md-8">
                                     <select name="selected_program" class="form-control m-select2" id="m_select2_1">
                                         @forelse ($program as $prog)
-                                            <option value="{{ $prog->id }}">{{ $prog->nama }}</option>
+                                            <option value="{{ $prog->id }}"@if($prog->id == $dropdown2) selected @endif>{{ $prog->nama }}</option>
                                         @empty
                                             <option value="">Tidak ada data program</option>
                                         @endforelse
@@ -237,7 +237,10 @@
                                         'url'    => route('kerja.edit', ['id' => $item->id]),
                                         'id'     => $item->id,
                                         'show'   => route('kerja.show', $item->id),
-                                        'transfer' => route('kerja.transfer', ['id' => $item->id]),
+                                        'transfer' => route('kerja.transfer.view', ['id' => $item->id]),
+                                        'isViewTransfer' => true,
+                                        'tahapan' => 'kerja',
+                                        'bidang' => $bidang
                                     ])
                                 </td>
                             </tr>

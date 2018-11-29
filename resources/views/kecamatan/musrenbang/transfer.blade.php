@@ -260,13 +260,6 @@
                         <label>Catatan <small>(wajib diisi)</small></label>
                         <textarea class="form-control" name="catatan" id="catatan" cols="30" rows="2">
                         </textarea>
-                        <br>
-                        <div id="div1" style="display: none">
-                            <label>
-                            Input Proposal <small>(wajib diisi, file harus PDF, ukuran maksimal 2 MB)</small>
-                            </label> 
-                            <input type="file" id="proposal" name="proposal" class="form-control m-input" accept="application/pdf">
-                        </div>
                     </div>
                     
                     <!-- end added coding -->
