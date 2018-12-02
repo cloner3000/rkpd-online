@@ -121,7 +121,6 @@ class MusrenbangController extends Controller
             'nama_kegiatan' => 'required|max:255',
             'lokasi_kegiatan' => 'required',
             'lokasi' => 'required'
-
         ]);
 
         $tahapan = Tahapan::whereNama(\App\Enum\Tahapan::DESA)->firstOrFail();
@@ -257,9 +256,12 @@ class MusrenbangController extends Controller
 
     public function lookupKegiatanByName(Request $request)
     {
-        $kegiatan = Kegiatan::where('nama', 'like', '%' . $request->input('q') . '%')
-            ->where('is_active', 'A')
-            ->orWhere('keyword', 'like', '%' . $request->input('q') . '%')
+        $val = '%' . $request->input('q') . '%';
+        $kegiatan = Kegiatan::where(function($query) use ($val){
+                $query->where('nama', 'like', $val);
+                $query->orWhere('keyword', 'like', $val);
+            })
+            ->where('is_active', 1)
             ->select('id', 'nama as full_name')
             ->get();
 

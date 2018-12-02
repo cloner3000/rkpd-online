@@ -9,19 +9,18 @@
 </div>
 
 @php
-    $district   = get_district($user->opd->first()->kode ?? null);
     $desa       = get_village($user->opd->first()->kode ?? null);
 @endphp
 
 <div class="form-group row">
-    @if($district)
+    @if($desa)
         <div class="col-6">
             <div class="form-group m-form__group">
                 <label>
                     Kecamatan *
                 </label>
-                <select class="form-control m-select2" id="select_district_2" name="kecamatan" readonly disabled>
-                    <option disabled selected value="{{ $district->id }}">{{ $district->name  }}</option>
+                <select class="form-control m-select2" name="kecamatan" id="m_select2_1" >
+                    <option selected value="{{ $desa->district->id }}">{{ $desa->district->name  }}</option>
                 </select>
             </div>
         </div>
@@ -30,32 +29,8 @@
                 <label>
                     Desa / Kelurahan
                 </label>
-                <select class="form-control m-select2" id="select_village" name="desa" disabled>
-                    @foreach($district->villages as $village)
-                        <option value="{{ $village->id }}">{{ $village->name }}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-    @elseif($desa)
-        <div class="col-6">
-            <div class="form-group m-form__group">
-                <label>
-                    Kecamatan *
-                </label>
-                <select class="form-control m-select2" id="select_district_2" name="kecamatan" readonly disabled>
-                    <option disabled selected
-                            value="{{ $desa->district->id }}">{{ $desa->district->name  }}</option>
-                </select>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="form-group m-form__group">
-                <label>
-                    Desa / Kelurahan
-                </label>
-                <select class="form-control m-select2" name="desa" disabled>
-                    <option selected disabled value="{{ $desa->id }}">{{ $desa->name }}</option>
+                <select class="form-control m-select2" name="desa" id="m_select2_1" >
+                    <option selected value="{{ $user->opd->first()->kode }}">{{ $desa->name }}</option>
                 </select>
             </div>
         </div>

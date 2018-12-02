@@ -59,6 +59,7 @@ class LaporanController extends Controller
 
     public function show(Request $request)
     {
+        $opd = $request->user()->opd()->first();
         $district = $request->get('district', null);
         $village = $request->get('village', null);
         $items = new Anggaran();
@@ -95,7 +96,7 @@ class LaporanController extends Controller
 
         $items = $items->toJson();
 
-        return view('laporan.desa._table', compact('items', 'anggaran', 'showKecamatan'));
+        return view('laporan.desa._table', compact('items', 'anggaran', 'showKecamatan', 'opd'));
     }
 
     public function exportExcel(Request $request)

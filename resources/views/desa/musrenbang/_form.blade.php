@@ -12,14 +12,14 @@
                 <select class="form-control m-select2" id="m_select2_1" disabled>
                     <option value="{{ $item->tahun ?? (Carbon\Carbon::now()->year + 2)  }}">{{ $item->tahun ?? (Carbon\Carbon::now()->year + 2)  }}</option>
                 </select>
-                <input type="hidden" name="tahun" value="{{ $item->tahun ?? (Carbon\Carbon::now()->year + 1)  }}">
+                <input type="hidden" name="tahun" value="{{ $item->tahun ?? (Carbon\Carbon::now()->year + 2)  }}">
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group m-form__group {{ $errors->has('sumber_anggaran') ? 'has-danger' : '' }}">
                 @if(if_route_pattern(['musrenbang-desa.*', 'musrenbang-kelurahan.*']))
                     <label>Sumber Anggaran</label>
-                    <select class="form-control m-select2" id="m_select2_1" name="sumber_anggaran" required disabled>
+                    <select class="form-control m-select2" id="m_select2_1" name="sumber_anggaran" required>
                         @foreach ($sumberAnggarans as $anggaran)
                             <!-- <option value="{{ $anggaran->id  }}" {{ (old('sumber_anggaran') == $anggaran->id) || (($item->sumberAnggaran->id ?? false) == $anggaran->id) ? 'selected' : '' }} >
                                 {{ $anggaran->nama }}
@@ -72,8 +72,8 @@
 </div>
 
 <div class="form-group m-form__group">
-    <label>Deskripsi</label>
-    <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled readonly>{{ $item->kegiatan->deskripsi ?? '' }}</textarea>
+    <label>Catatan</label>
+    <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled readonly>{{ $item->kegiatan->catatan ?? '' }}</textarea>
 </div>
 
 <hr>
@@ -140,7 +140,7 @@
             <label>
                 Kecamatan *
             </label>
-            <select class="form-control m-select2" id="select_district_2" name="kecamatan">
+            <select class="form-control" id="select_district_2" name="kecamatan">
                 <option disabled selected>-- Silahkan Pilih --</option>
                 @forelse($districts as $district)
                     <option value="{{ $district->id }}">

@@ -106,7 +106,7 @@
     <tbody>
     <tr>
         <td>
-            <h2>HASIL MUSRENBANG DESA</h2>
+            <h2>HASIL MUSRENBANG DESA {{ $opd->nama }}</h2>
             <h2>
                 @if($showKecamatan)
                     KECAMATAN {{ $anggaran->districtOpd->nama ?? '' }}

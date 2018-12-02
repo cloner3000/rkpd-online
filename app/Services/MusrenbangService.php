@@ -19,15 +19,7 @@ class MusrenbangService
 
     public function store($request, $tahapan, $is_kelurahan = false)
     {
-
-        if ($request->input('kecamatan') && $request->input('desa')) {
-            $kecamatan = Districts::find($request->input('kecamatan'));
-            $desa = Villages::find($request->input('desa'));
-            if ($desa && $kecamatan) {
-                $lokasi = 'Kecamatan : ' . $kecamatan->name . '; Desa/Kelurahan : ' . $desa->name;
-            }
-        }
-
+    
         if ($request->input('lokasi')) {
             $lokasi = $request->input('lokasi');
         }
@@ -59,8 +51,8 @@ class MusrenbangService
         $anggaran->user()->associate($request->user());
         $anggaran->sumberAnggaran()->associate($sumberAnggaran);
         $anggaran->kegiatan()->associate($kegiatan);
-
-        $this->storeVillageAndDesa($anggaran, $tahapan);
+        $anggaran->village_id = $request->input('desa');;
+        $anggaran->district_id = $request->input('kecamatan');;
 
         $anggaran->save();
 

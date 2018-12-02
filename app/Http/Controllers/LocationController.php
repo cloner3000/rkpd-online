@@ -11,7 +11,7 @@ class LocationController extends Controller
         $villages = Villages::select('id as id', 'name as text')
             ->where('district_id', $districtId)
             ->orWhere('type', $request->input('type'))
-            ->get()->chunk(100);
+            ->get();
         return response()->json($villages);
     }
 }
