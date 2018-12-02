@@ -49,23 +49,37 @@
                 @endif
 
                 <div class="pull-right">
-                    <form action="{{ route('export.excel.desa') }}" style="display:inline;" method="POST">
+                    <!-- <form action="{{ route('export.excel.desa') }}" style="display:inline;" method="POST">
                         {{ csrf_field() }}
                         <input type="hidden" name="district" value="{{ $district->id ?? null }}">
                         <input type="hidden" name="village" value="{{ $village->id ?? null }}">
                         <button type="submit" class="btn m-btn--pill m-btn--air btn-secondary">
                             Excel
                         </button>
-                    </form>
+                    </form> -->
+                    <button onclick="printPage()" class="btn m-btn--pill m-btn--air btn-secondary">
+                            PDF
+                        </button>
                     <a href="{{ route('laporan.desa') }}" class="btn m-btn--pill m-btn--air btn-secondary">Kembali</a>
                 </div>
                 <br><br><br>
                 <hr>
 
-                <iframe frameborder="0" width="100%" height="500" name="form_laporan"
+                <iframe id="form_laporan" frameborder="0" width="100%" height="500" name="form_laporan"
                         src="{{ route('laporan.preview', ['district' => $district, 'village' => $village]) }}"></iframe>
 
             </div>
         </div>
     </div>
+    
 @endsection
+
+
+@push('footer.javascript')
+        <script>
+        function printPage(){
+            window.frames["form_laporan"].focus();
+            window.frames["form_laporan"].print();
+            }
+        </script>
+@endpush
