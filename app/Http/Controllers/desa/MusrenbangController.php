@@ -258,6 +258,7 @@ class MusrenbangController extends Controller
     public function lookupKegiatanByName(Request $request)
     {
         $kegiatan = Kegiatan::where('nama', 'like', '%' . $request->input('q') . '%')
+            ->where('is_active', 'A')
             ->orWhere('keyword', 'like', '%' . $request->input('q') . '%')
             ->select('id', 'nama as full_name')
             ->get();

@@ -19,11 +19,16 @@
             <div class="form-group m-form__group {{ $errors->has('sumber_anggaran') ? 'has-danger' : '' }}">
                 @if(if_route_pattern(['musrenbang-desa.*', 'musrenbang-kelurahan.*']))
                     <label>Sumber Anggaran</label>
-                    <select class="form-control m-select2" id="m_select2_1" name="sumber_anggaran" required>
+                    <select class="form-control m-select2" id="m_select2_1" name="sumber_anggaran" required disabled>
                         @foreach ($sumberAnggarans as $anggaran)
-                            <option value="{{ $anggaran->id  }}" {{ (old('sumber_anggaran') == $anggaran->id) || (($item->sumberAnggaran->id ?? false) == $anggaran->id) ? 'selected' : '' }} >
+                            <!-- <option value="{{ $anggaran->id  }}" {{ (old('sumber_anggaran') == $anggaran->id) || (($item->sumberAnggaran->id ?? false) == $anggaran->id) ? 'selected' : '' }} >
+                                {{ $anggaran->nama }}
+                            </option> -->
+                            @if($anggaran->id == 3)
+                            <option value="{{ $anggaran->id  }}" selected>
                                 {{ $anggaran->nama }}
                             </option>
+                            @endif
                         @endforeach
                     </select>
                 @else
