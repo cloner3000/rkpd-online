@@ -10,7 +10,7 @@
                     Tahun Anggaran
                 </label>
                 <select class="form-control m-select2" id="m_select2_1" disabled>
-                    <option value="{{ $item->tahun ?? (Carbon\Carbon::now()->year + 1)  }}">{{ $item->tahun ?? (Carbon\Carbon::now()->year + 1)  }}</option>
+                    <option value="{{ $item->tahun ?? (Carbon\Carbon::now()->year + 2)  }}">{{ $item->tahun ?? (Carbon\Carbon::now()->year + 2)  }}</option>
                 </select>
                 <input type="hidden" name="tahun" value="{{ $item->tahun ?? (Carbon\Carbon::now()->year + 1)  }}">
             </div>

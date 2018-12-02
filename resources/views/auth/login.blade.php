@@ -48,12 +48,9 @@
             </div>
             <div class="m-grid__item m-grid__item--fluid m-grid m-grid--center m-grid--hor m-grid__item--order-tablet-and-mobile-1	m-login__content" style="background-image: url({{ asset('/metronic/assets/app/media/img//bg/bg-4.jpg') }})">
                 <div class="m-grid__item m-grid__item--middle">
-                    <h3 class="m-login__title text-white">
-                        RKPD Online Kabupaten Sukabumi
-                    </h3>
-                    <p class="m-login__msg">
-                       Sebuah Sistem Perencanaan yang Dikembangkan untuk Meningkatkan Integritas dan Profesionalisme. Sehingga Terjadinya Sinergitas Perencanaan Pembangunan di Kabupaten Sukabumi.
-                    </p>
+                    <div>
+                    <iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=le7ejga7vslrrs3cs5jgqct2o8%40group.calendar.google.com&amp;color=%232F6309&amp;ctz=Asia%2FJakarta" style="border-width:0" width="100%" height="600" frameborder="0" scrolling="no"></iframe>
+                    </div>
                 </div>
             </div>
         </div>
