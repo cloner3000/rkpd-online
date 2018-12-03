@@ -65,22 +65,25 @@ class LaporanController extends Controller
         $items = new Anggaran();
         $items = $items->withLaporan()->whereTahapanId($this->tahapan->id);
         $showKecamatan = false;
+        $user_id = $request->user()->id;
 
-        $kecamatan = Districts::find($district);
-        $desa = Villages::find($village);
+        // $kecamatan = Districts::find($district);
+        // $desa = Villages::find($village);
 
-        $where = 'Kecamatan: ';
+        // $where = 'Kecamatan: ';
 
-        if ($kecamatan) {
-            $where .= $kecamatan->name;
-        }
+        // if ($kecamatan) {
+        //     $where .= $kecamatan->name;
+        // }
 
-        if ($desa) {
-            $where .= ', Desa/Kelurahan: ' . $desa->name;
-        }
+        // if ($desa) {
+        //     $where .= ', Desa/Kelurahan: ' . $desa->name;
+        // }
 
-        $items = $items->where('lokasi', 'LIKE', $where . '%');
-        $showKecamatan = true;
+        // $items = $items->where('lokasi', 'LIKE', $where . '%');
+        // $showKecamatan = true;
+        
+        $items= $items->where('user_id', $user_id);
 
         if ($request->user()->hasRole(Roles::KELURAHAN)) {
             $items = $items->where('is_kelurahan', true);
