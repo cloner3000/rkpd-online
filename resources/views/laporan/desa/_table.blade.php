@@ -109,7 +109,7 @@
             <h2>HASIL MUSRENBANG DESA {{ $opd->nama }}</h2>
             <h2>
                 @if($showKecamatan)
-                    KECAMATAN {{ $anggaran->districtOpd->nama ?? '' }}
+                    KECAMATAN {{ $kecamatan->name }}
                     <br>
                 @endif
                 KABUPATEN SUKABUMI</h2>

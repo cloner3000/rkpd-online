@@ -67,10 +67,10 @@ class LaporanController extends Controller
         $showKecamatan = false;
         $user_id = $request->user()->id;
 
-        // $kecamatan = Districts::find($district);
-        // $desa = Villages::find($village);
+        $kecamatan = Districts::find($district);
+        $desa = Villages::find($village);
 
-        // $where = 'Kecamatan: ';
+        $where = 'Kecamatan: ';
 
         // if ($kecamatan) {
         //     $where .= $kecamatan->name;
@@ -81,7 +81,7 @@ class LaporanController extends Controller
         // }
 
         // $items = $items->where('lokasi', 'LIKE', $where . '%');
-        // $showKecamatan = true;
+        $showKecamatan = true;
         
         $items= $items->where('user_id', $user_id);
 
@@ -98,8 +98,8 @@ class LaporanController extends Controller
         $anggaran = $items->first();
 
         $items = $items->toJson();
-
-        return view('laporan.desa._table', compact('items', 'anggaran', 'showKecamatan', 'opd'));
+        
+        return view('laporan.desa._table', compact('items', 'anggaran', 'showKecamatan', 'opd', 'kecamatan'));
     }
 
     public function exportExcel(Request $request)
