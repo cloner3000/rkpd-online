@@ -58,8 +58,11 @@ class MusrenbangController extends Controller
 
         // jika user role kecamatan tampilkan data sesuai district id user login
         if ($user->hasRole(Roles::KECAMATAN) && $user->opd->first()) {
-            $items = $items->whereDistrictId($user->opd->first()->id);
+            $query = '%Kecamatan: '.strtoupper($user->name).',%';
+            $items = $items->where('lokasi', 'like' , $query);
         }
+
+        // print_r($query);
 
         // fungsi search
         $search = $request->get('search');
