@@ -78,7 +78,8 @@ class DashboardService
         }
 
         if ($user->hasRole(Roles::KECAMATAN) && $user->opd->first()) {
-            $items = $items->whereDistrictId($user->opd->first()->id);
+            $query = '%Kecamatan: '.strtoupper($user->name).',%';
+            $items = $items->where('lokasi', 'like' , $query);
         }
 
         if ($user->hasRole(Roles::OPD) && $user->opd->first()) {
