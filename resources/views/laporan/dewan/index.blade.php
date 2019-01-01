@@ -73,7 +73,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <div class="col-12">
                             <div class="form-group m-form__group">
                                 <label>
@@ -97,7 +97,7 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     @endrole
 
                     @role(\App\Enum\Roles::ADMIN)

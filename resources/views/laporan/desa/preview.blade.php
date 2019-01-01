@@ -58,8 +58,8 @@
                         </button>
                     </form> -->
                     <button onclick="printPage()" class="btn m-btn--pill m-btn--air btn-secondary">
-                            PDF
-                        </button>
+                        PDF
+                    </button>
                     <a href="{{ route('laporan.desa') }}" class="btn m-btn--pill m-btn--air btn-secondary">Kembali</a>
                 </div>
                 <br><br><br>

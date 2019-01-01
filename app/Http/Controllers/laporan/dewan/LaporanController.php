@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\laporan\dewan;
 
+
 use App\BidangUrusan;
 use App\Anggaran;
 use App\Kegiatan;
@@ -81,36 +82,15 @@ class LaporanController extends Controller
 
     public function show(Request $request)
     {
-        $district = $request->get('district', null);
-        $village = $request->get('village', null);
-        $user = $request->get('user', null);
-
-        $program = \App\Program::all();
-        $sasaran =\App\Sasaran::all();
-        $urusan = \App\BidangUrusan::all();
-        $indikatorsasaran =\App\IndikatorSasaran::all();
-
         $items = new Anggaran();
         $items = $items->withLaporan()->whereTahapanId($this->tahapan->id);
+        $user_id = $request->user()->id;
 
-        $kecamatan = Districts::find($district);
-        $desa = Villages::find($village);
-
-        $where = 'Kecamatan: ';
-
-        if ($kecamatan) {
-            $where .= $kecamatan->name;
+        if ($request->user()->hasRole(Roles::DPRD)) {
+            $items= $items->where('user_id', $user_id);
+            $items = $items->orderBy('district_id', 'ASC');            
         }
-
-        if ($desa) {
-            $where .= ', Desa/Kelurahan: ' . $desa->name;
-        }
-
-        $items = $items->where('lokasi', 'LIKE', $where . '%');
-
-        if ($user && $user != 0) {
-            $items = $items->whereUserId($user);
-        }
+        $nama = $request->user()->nama_lengkap;
 
         $items = $items->get();
 
@@ -118,7 +98,8 @@ class LaporanController extends Controller
 
         $items = $items->toJson();
 
-        return view('laporan.dewan._table', compact('items', 'anggaran'));
+       // print_r($items);
+        return view('laporan.dewan._table', compact('items', 'anggaran', 'nama'));
     }
 
     public function exportExcel(Request $request)

@@ -49,15 +49,9 @@
                 @endif
 
                 <div class="pull-right">
-                    <form action="{{ route('export.excel.dewan') }}" style="display:inline;" method="POST">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="district" value="{{ $district->id ?? null }}">
-                        <input type="hidden" name="village" value="{{ $village->id ?? null }}">
-                        <input type="hidden" name="user" value="{{ $user->id ?? null }}">
-                        <button type="submit" class="btn m-btn--pill m-btn--air btn-secondary">
-                            Excel
-                        </button>
-                    </form>
+                    <button onclick="printPage()" class="btn m-btn--pill m-btn--air btn-secondary">
+                        PDF
+                    </button>
                     <a href="{{ route('laporan.dewan') }}" class="btn m-btn--pill m-btn--air btn-secondary">Kembali</a>
                 </div>
                 <br><br><br>
@@ -71,3 +65,12 @@
         </div>
     </div>
 @endsection
+
+@push('footer.javascript')
+        <script>
+        function printPage(){
+            window.frames["form_laporan"].focus();
+            window.frames["form_laporan"].print();
+            }
+        </script>
+@endpush
