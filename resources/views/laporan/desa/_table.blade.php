@@ -106,7 +106,7 @@
     <tbody>
     <tr>
         <td>
-            <h2>HASIL MUSRENBANG DESA {{ $opd->nama }}</h2>
+            <h2>HASIL MUSRENBANG DESA @if(!$status_kec) {{ $opd->nama }} @endif</h2>
             <h2>
                 @if($showKecamatan)
                     KECAMATAN {{ $kecamatan->name }}
