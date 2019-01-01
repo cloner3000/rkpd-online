@@ -62,6 +62,7 @@ class LaporanController extends Controller
         $opd = $request->user()->opd()->first();
         $district = $request->get('district', null);
         $village = $request->get('village', null);
+
         $items = new Anggaran();
         $items = $items->withLaporan()->whereTahapanId($this->tahapan->id);
         $showKecamatan = false;
@@ -83,14 +84,20 @@ class LaporanController extends Controller
         // $items = $items->where('lokasi', 'LIKE', $where . '%');
         $showKecamatan = true;
         
-        $items= $items->where('user_id', $user_id);
-
         if ($request->user()->hasRole(Roles::KELURAHAN)) {
+            $items= $items->where('user_id', $user_id);
             $items = $items->where('is_kelurahan', true);
         }
 
         if ($request->user()->hasRole(Roles::DESA)) {
+            $items= $items->where('user_id', $user_id);
             $items = $items->where('is_kelurahan', false);
+        }
+
+        if ($request->user()->hasRole(Roles::KECAMATAN)) {
+            $query = '%Kecamatan: '.strtoupper($request->user()->name).',%';
+            $items = $items->where('lokasi', 'like' , $query);
+            $items = $items->orderBy('village_id', 'ASC');
         }
 
         $items = $items->get();
@@ -99,6 +106,9 @@ class LaporanController extends Controller
 
         $items = $items->toJson();
         
+
+        // echo $request->user()->name;
+        // echo $items;
         return view('laporan.desa._table', compact('items', 'anggaran', 'showKecamatan', 'opd', 'kecamatan'));
     }
 
