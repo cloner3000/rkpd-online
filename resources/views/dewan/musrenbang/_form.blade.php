@@ -44,8 +44,8 @@
 </div>
 
 <div class="form-group m-form__group">
-    <label>Deskripsi</label>
-    <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled readonly>{{ $item->kegiatan->deskripsi ?? '' }}</textarea>
+    <label>Catatan</label>
+    <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled readonly>{{ $item->kegiatan->catatan ?? '' }}</textarea>
 </div>
 
 <hr>
@@ -94,6 +94,16 @@
             @endif
         @endforeach
     @endif
+</div>
+
+<h5>Input Proposal</h5>
+<div class="form-group m-form__group">
+    <div>
+        <label>
+        Input Proposal <small>(wajib diisi, file harus PDF atau zip, ukuran maksimal 2 MB)</small>
+        </label> 
+        <input type="file" name="proposal" class="form-control m-input" accept="application/pdf application/zip">
+    </div>
 </div>
 
 <div id="hasil_container">

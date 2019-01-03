@@ -17,7 +17,7 @@ use App\Opd;
 class MusrenbangService
 {
 
-    public function store($request, $tahapan, $is_kelurahan = false)
+    public function store($request, $tahapan, $is_kelurahan = false, $path_proposal = false)
     {
     
         if ($request->input('lokasi')) {
@@ -53,6 +53,7 @@ class MusrenbangService
         $anggaran->kegiatan()->associate($kegiatan);
         $anggaran->village_id = $request->input('desa');;
         $anggaran->district_id = $request->input('kecamatan');;
+        $anggaran->proposal = $path_proposal;
 
         $anggaran->save();
 
