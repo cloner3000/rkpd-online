@@ -23,7 +23,7 @@ class KegiatanController extends Controller
     {
         // $items  = Kegiatan::orderBy('created_at', 'DESC')->get();
 
-        $items = DB::table('kegiatan')->select('id','nama','deskripsi')->get();
+        $items = DB::table('kegiatan')->select('id','nama','keyword')->get();
 
         return view('admin.kegiatan.index', compact('items'));
     }
