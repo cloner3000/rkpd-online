@@ -54,6 +54,8 @@ class KegiatanController extends Controller
         $item->nama      = $request->input('nama');
         $item->deskripsi = $request->input('deskripsi');
         $item->keyword   = $request->input('keyword');
+        $item->jenis_kegiatan   = $request->input('jenis_kegiatan');
+        $item->catatan   = $request->input('catatan');
 
         $item->program()->associate($request->input('program'));
         $item->indikatorSasaran()->associate($request->input('indikator_sasaran'));

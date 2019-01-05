@@ -59,6 +59,15 @@
         @endif
     </div>
 
+    <div class="form-group m-form__group">
+        <label class="form-control-label" for="inputDanger1">Jenis Kegiatan</label>
+        <select class="form-control" id="jenis_kegiatan" name="jenis_kegiatan">
+            <option value="" selected>Pilih Jenis Kegiatan</option>
+            <option value="1"> Non Fisik </option>
+            <option value="2"> Fisik </option>
+        </select>
+    </div>
+
     <div class="form-group m-form__group {{ $errors->has('deskripsi') ? ' has-danger' : '' }}">
         <label class="form-control-label" for="inputDanger1">Deskripsi</label>
         <input type="text" class="form-control form-control-danger m-input" id="deskripsi" placeholder="Masukan Deskripsi"
@@ -80,6 +89,18 @@
             </div>
         @endif
     </div>
+
+    <div class="form-group m-form__group {{ $errors->has('keyword') ? ' has-danger' : '' }}">
+        <label class="form-control-label" for="inputDanger1">Catatan</label>
+        <input type="text" class="form-control form-control-danger m-input" id="catatan" placeholder="Masukan Catatan Kegiatan"
+               name="catatan" value="{{ old('keyword', $item->keyword ?? '') }}">
+        @if ($errors->has('catatan'))
+            <div class="form-control-feedback">
+                {{ $errors->first('catatan') }}
+            </div>
+        @endif
+    </div>
+
 </div>
 
 <div class="m-portlet__foot m-portlet__foot--fit">
