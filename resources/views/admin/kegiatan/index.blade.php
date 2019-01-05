@@ -76,9 +76,6 @@
                         <th title="Nama">
                             Nama
                         </th>
-                        <th title="Keyword">
-                            Keyword
-                        </th>
                         <th title="Aksi">
                             Aksi
                         </th>
@@ -89,9 +86,6 @@
                         <tr>
                             <td>
                                 {{ $item->nama }}
-                            </td>
-                            <td>
-                                {{ $item->keyword }}
                             </td>
                             <td>
                                 @include('global.table_action_admin', [
