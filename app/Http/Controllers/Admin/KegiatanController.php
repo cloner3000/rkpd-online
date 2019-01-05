@@ -10,6 +10,7 @@ use App\Http\Requests\Admin\DestroyKegiatanPost;
 use App\Http\Requests\Admin\StoreKegiatanPost;
 use App\Http\Requests\Admin\UpdateKegiatanPost;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KegiatanController extends Controller
 {
@@ -22,7 +23,7 @@ class KegiatanController extends Controller
     {
         // $items  = Kegiatan::orderBy('created_at', 'DESC')->get();
 
-        $items = DB::table('kegiatan')->select('id','nama','catatan')->get();
+        $items = DB::table('kegiatan')->select('id','nama','deskripsi')->get();
 
         return view('admin.kegiatan.index', compact('items'));
     }
