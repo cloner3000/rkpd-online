@@ -77,11 +77,11 @@
                             Nama
                         </th>
                         <th title="Deskripsi">
-                            Deskripsi
+                            Catatan
                         </th>
-                        <th title="Keyword">
+                        <!-- <th title="Keyword">
                             Keyword
-                        </th>
+                        </th> -->
                         <th title="Aksi">
                             Aksi
                         </th>
@@ -94,11 +94,11 @@
                                 {{ $item->nama }}
                             </td>
                             <td>
-                                {{ $item->deskripsi }}
+                                {{ $item->catatan }}
                             </td>
-                            <td>
+                            <!-- <td>
                                 {{ $item->keyword }}
-                            </td>
+                            </td> -->
                             <td>
                                 @include('global.table_action_admin', [
                                     'action' => route('kegiatan.destroy', ['id' => $item->id]),
