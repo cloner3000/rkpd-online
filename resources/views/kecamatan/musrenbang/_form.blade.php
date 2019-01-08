@@ -97,6 +97,16 @@
     @endif
 </div>
 
+<h5>Input Proposal</h5>
+<div class="form-group m-form__group">
+    <div>
+        <label>
+        Input Proposal <small>(wajib diisi, file harus PDF atau zip, ukuran maksimal 2 MB)</small>
+        </label> 
+        <input type="file" name="proposal" class="form-control m-input" accept="application/pdf application/zip application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    </div>
+</div>
+
 <div id="hasil_container">
 
 </div>

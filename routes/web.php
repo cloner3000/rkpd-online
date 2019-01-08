@@ -109,6 +109,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('awal', 'awal\RancanganController', ['except' => ['store']])->names('awal');
         Route::get('awal/{id}/transfer', 'awal\RancanganController@transfer')->name('awal.transfer.view');
         Route::post('awal/{id}/transfer', 'awal\RancanganController@doTransfer')->name('awal.transfer.store');
+        Route::post('awal', 'awal\RancanganController@store')->name('awal.store');
 
         Route::post('kerja', 'rancangankuappas\RancanganController@store')->name('kerja.store');
         Route::post('kerja', 'rancangankuappas\RancanganController@update')->name('kerja.update');

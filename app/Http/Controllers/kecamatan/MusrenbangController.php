@@ -144,6 +144,15 @@ class MusrenbangController extends Controller
                 '</strong> Tidak memiliki OPD </br> Silahkan Hubungi Administrator!');
         }
 
+        $path_proposal = null;
+        if ($request->file('proposal')) {
+            $file_proposal = $request->file('proposal');
+            $ext = $file_proposal->extension();
+            $path_proposal = "proposal".'/'.$request->id." - ".$request->file('proposal')->getClientOriginalName().'.'.$ext;
+            // echo $path_proposal;
+            $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
+        }
+
         $this->musrenbang_service->store($request, $tahapan);
 
         return redirect(route('musrenbang-kecamatan.index'))->with('alert', [
