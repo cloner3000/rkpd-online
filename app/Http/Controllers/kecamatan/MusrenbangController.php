@@ -269,10 +269,10 @@ class MusrenbangController extends Controller
         // coding tambahan utk menghapus catatan
         $data = Anggaran::find($id);
         $data->catatan = null;
-        if ($data->path_proposal) {
-            Storage::delete($data->path_proposal);
+        if ($data->proposal) {
+            Storage::delete($data->proposal);
         }
-        $data->path_proposal = null;
+        $data->proposal = null;
         $data->save();
         // end
 
@@ -280,7 +280,7 @@ class MusrenbangController extends Controller
         $this->musrenbang_service->updateTransferStatus($musrenbang);
         $musrenbang->delete();
 
-        return redirect(route('musrenbang-kecamatan.index'))->with('alert', [
+        return redirect()->back()->with('alert', [
             'type' => 'success',
             'alert' => 'Berhasil !',
             'message' => 'Berhasil menghapus data.',

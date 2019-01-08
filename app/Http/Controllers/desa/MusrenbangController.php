@@ -355,7 +355,7 @@ class MusrenbangController extends Controller
             $anggaran->save();
         }
 
-        return redirect(route('musrenbang-desa.index'))->with('alert', [
+        return redirect()->back()->with('alert', [
             'type' => 'success',
             'alert' => 'Berhasil !',
             'message' => $message,
