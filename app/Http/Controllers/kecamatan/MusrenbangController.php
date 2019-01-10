@@ -152,8 +152,9 @@ class MusrenbangController extends Controller
             // echo $path_proposal;
             $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
         }
-
-        $this->musrenbang_service->store($request, $tahapan);
+        $file = $path_proposal;
+        
+        $this->musrenbang_service->store($request, $tahapan, $is_kelurahan=false, $file);
 
         return redirect(route('musrenbang-kecamatan.index'))->with('alert', [
             'type' => 'success',
