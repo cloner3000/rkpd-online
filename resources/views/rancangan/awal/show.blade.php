@@ -173,7 +173,7 @@
                         <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled readonly>{{ $item->lokasi ?? '' }}</textarea>
                     </div>
 
-                     <!-- start added coding -->
+                    <!-- start added coding -->
                     <hr>
                     <h5>Proposal</h5>
                     <div class="form-group m-form__group">

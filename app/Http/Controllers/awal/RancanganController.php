@@ -21,6 +21,9 @@ use App\Bidang;
 use App\BidangPermission;
 use Illuminate\Support\Facades\DB;
 
+use File;
+use Storage;
+
 class RancanganController extends Controller
 {
     protected $musrenbang_service;
@@ -270,8 +273,9 @@ class RancanganController extends Controller
             // echo $path_proposal;
             $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
         }
+        $file = $path_proposal;
 
-        $this->musrenbang_service->store($request, $tahapan);
+        $this->musrenbang_service->store($request, $tahapan, $is_kelurahan=false, $file);
 
         return redirect(route('awal.index'))->with('alert', [
             'type' => 'success',
