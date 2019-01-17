@@ -267,7 +267,7 @@
                                         '        <div class="col-lg-3">\n' +
                                         '            <div class="form-group m-form__group">\n' +
                                         '                <label>Target</label>\n' +
-                                        '                <input type="number" min="0" name="target_indikator_kegiatan[' + res.data.indikator_kegiatan[i].id + ']" class="form-control m-input">\n' +
+                                        '                <input type="number" min="0" step="0.01" name="target_indikator_kegiatan[' + res.data.indikator_kegiatan[i].id + ']" class="form-control m-input">\n' +
                                         '            </div>\n' +
                                         '        </div>\n' +
                                         '        <div class="col-lg-2">\n' +
