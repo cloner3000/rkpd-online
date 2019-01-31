@@ -130,14 +130,18 @@
         }
     </style>
     <script src="//code.jquery.com/jquery.min.js"></script>
-    <link href="{{ asset('/js/table2excel.js') }}" rel="stylesheet" type="text/css" />
-
-    <script>
-      var table2excel = new Table2Excel();
-
-      document.getElementById('export').addEventListener('click', function() {
-        table2excel.export(document.querySelectorAll('table'));
-      });
+    <script type="text/javascript">
+    var tableToExcel = (function() {
+      var uri = 'data:application/vnd.ms-excel;base64,',
+          template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+          base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+      return function(table, name) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+        window.location.href = uri + base64(format(template, ctx))
+      }
+    })()
     </script>
 
 </head>
@@ -146,14 +150,14 @@
 
 
 <div class="">
-  <input type="button" id="export" value="export">
+  <input type="button" onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel">
 </div>
 <!-- baru tabel -->
 <table width="1400" height="550" border="0" cellspacing="0" cellpadding="4" align="center" class="wrapper" id="testTable">
 
 <tr>
 	<td colspan="3"  align="center">
-	   DAFTAR RENCANA PROGRAM DAN KEGIATAN RANCANGAN AWAL TAHUN 2019
+	   DAFTAR RENCANA PROGRAM DAN KEGIATAN RANCANGAN AWAL RKPD 2020
   </td>
 </tr>
 <tr>
