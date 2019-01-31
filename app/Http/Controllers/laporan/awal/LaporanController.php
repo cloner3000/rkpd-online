@@ -116,6 +116,9 @@ class LaporanController extends Controller
 
         $anggaran = $items->first();
 
+        $time=6000;
+        ini_set('max_execution_time', $time);
+        
         $items = $items->toJson();
         $view_table = view('laporan.awal._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran', 'sumberanggaran'));
         //return view('laporan.renja._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran'));
