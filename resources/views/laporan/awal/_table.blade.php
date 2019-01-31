@@ -180,17 +180,17 @@
   		<th rowspan="3" width="40">Sasaran Daerah</th>
   		<th rowspan="3" width="30">Lokasi</th>
   		<th colspan="9">Indikator Kerja tahun 2019</th>
-      <th colspan="7">Usulan Pagu 2019</th>
+      <!-- <th colspan="7">Usulan Pagu 2019</th> -->
     </tr>
 
     <tr style="border-bottom:#999 solid 2px;">
   		<th colspan="3">Hasil Program</th>
   		<th colspan="3">Keluaran Kegiatan</th>
   		<th colspan="3">Hasil Kegiatan</th>
-      <th colspan="4">APBD Kabupaten</th>
+      <!-- <th colspan="4">APBD Kabupaten</th>
       <th rowspan="2">APBD Provinsi</th>
       <th rowspan="2">APBN</th>
-      <th rowspan="2">Total Usulan Pagu</th>
+      <th rowspan="2">Total Usulan Pagu</th> -->
     </tr>
 
     <tr style="border-bottom:#999 solid 2px;">
@@ -204,10 +204,10 @@
   		<th width="30">Target</th>
   		<th width="30">Satuan</th>
 
-      <th width="30">PIK P3K</th>
+      <!-- <th width="30">PIK P3K</th>
   		<th width="30">PIK Sektoral</th>
   		<th width="50">Pagu Indikatif</th>
-      <th width="50">Jumlah</th>
+      <th width="50">Jumlah</th> -->
     </tr>
 
    	<tr>
@@ -225,13 +225,13 @@
         <td align="center"><center>13</center></td>
         <td align="center"><center>14</center></td>
         <td align="center"><center>15</center></td>
-        <td align="center"><center>16</center></td>
+        <!-- <td align="center"><center>16</center></td>
         <td align="center"><center>17</center></td>
         <td align="center"><center>18</center></td>
         <td align="center"><center>19</center></td>
         <td align="center"><center>20</center></td>
         <td align="center"><center>21</center></td>
-        <td align="center"><center>22</center></td>
+        <td align="center"><center>22</center></td> -->
     </tr>
 
     <tr>
@@ -312,33 +312,6 @@
                             @endforeach
                             </td>
 
-                            <td style="text-align:left;">
-                              @if($anggaran->sumber_anggaran_id==1)
-                                {{number_format($anggaran->pagu, 2)}}
-                              @endif
-                            </td>
-                            <td style="text-align:left;">
-                              @if($anggaran->sumber_anggaran_id==2)
-                                {{number_format($anggaran->pagu, 2)}}
-                              @endif
-                            </td>
-                            <td style="text-align:left;">
-                              @if($anggaran->sumber_anggaran_id==3)
-                                {{number_format($anggaran->pagu, 2)}}
-                              @endif
-                            </td>
-                            <td style="text-align:left;">{{number_format($anggaran->pagu, 2)}}</td>
-                            <td style="text-align:left;">
-                              @if($anggaran->sumber_anggaran_id==4)
-                                {{number_format($anggaran->pagu, 2)}}
-                              @endif
-                            </td>
-                            <td style="text-align:left;">
-                              @if($anggaran->sumber_anggaran_id==5)
-                                {{number_format($anggaran->pagu, 2)}}
-                              @endif
-                            </td>
-                            <td style="text-align:left;">{{number_format($anggaran->pagu, 2)}}</td>
                         </tr>
                     @endif
                 @endforeach
