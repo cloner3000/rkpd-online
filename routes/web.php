@@ -141,15 +141,15 @@ Route::group(['middleware' => 'auth'], function () {
 
     });
     Route::group(['prefix' => 'api'], function () {
-        // Route::get('kegiatan', 'desa\MusrenbangController@lookupKegiatanByName')->name('kegiatan.lookup');
-        // Route::post('kegiatan', 'desa\MusrenbangController@fetchKegiatanData')->name('kegiatan.lookup.data');
-        // Route::post('transfer_desa', 'desa\MusrenbangController@transfer')->name('musrenbang-desa.transfer');
-        // Route::post('transfer_kelurahan',
-        //     'kelurahan\MusrenbangController@transfer')->name('musrenbang-kelurahan.transfer');
-        // Route::get('kegiatan/opd', 'awal\RancanganController@lookupKegiatanByName')->name('kegiatan.lookup.opd');
-        // Route::group(['prefix' => 'admin'], function () {
-        //     Route::get('kegiatan', 'Admin\KegiatanController@apiKegiatan')->name('api.kegiatan');
-        // });
+        Route::get('kegiatan', 'desa\MusrenbangController@lookupKegiatanByName')->name('kegiatan.lookup');
+        Route::post('kegiatan', 'desa\MusrenbangController@fetchKegiatanData')->name('kegiatan.lookup.data');
+        Route::post('transfer_desa', 'desa\MusrenbangController@transfer')->name('musrenbang-desa.transfer');
+        Route::post('transfer_kelurahan',
+            'kelurahan\MusrenbangController@transfer')->name('musrenbang-kelurahan.transfer');
+        Route::get('kegiatan/opd', 'awal\RancanganController@lookupKegiatanByName')->name('kegiatan.lookup.opd');
+        Route::group(['prefix' => 'admin'], function () {
+            Route::get('kegiatan', 'Admin\KegiatanController@apiKegiatan')->name('api.kegiatan');
+        });
         Route::get('kegiatan_desa', 'desa\MusrenbangController@apiKegiatanDesa')->name('api.kegiatan.desa');
         Route::get('nama_kegiatan', 'desa\MusrenbangController@apiKegiatanNama')->name('api.kegiatan.name');
         
