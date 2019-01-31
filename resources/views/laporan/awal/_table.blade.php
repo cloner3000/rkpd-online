@@ -143,7 +143,7 @@
         window.location.href = uri + base64(format(template, ctx))
     }})()
     </script>
-    
+
 </head>
 
 <body>
@@ -286,9 +286,9 @@
                             @if($anggaran->jenis_lokasi_id === 3)
                                 {{ $anggaran->lokasi }}
                             @elseif($anggaran->jenis_lokasi_id === 1)
-                                [{{"Kantor OPD"}}]
+                                {{ $anggaran->lokasi }}
                             @else
-                                [{{"Tersebar"}}]
+                                {{"Tersebar"}}
                             @endif
                             </td>
 
