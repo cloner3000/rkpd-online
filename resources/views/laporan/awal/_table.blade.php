@@ -180,17 +180,17 @@
   		<th rowspan="3" width="40">Sasaran Daerah</th>
   		<th rowspan="3" width="30">Lokasi</th>
   		<th colspan="9">Indikator Kerja tahun 2019</th>
-      <!-- <th colspan="7">Usulan Pagu 2019</th> -->
+        <th colspan="7">Usulan Pagu 2020</th>
     </tr>
 
     <tr style="border-bottom:#999 solid 2px;">
   		<th colspan="3">Hasil Program</th>
   		<th colspan="3">Keluaran Kegiatan</th>
   		<th colspan="3">Hasil Kegiatan</th>
-      <!-- <th colspan="4">APBD Kabupaten</th>
-      <th rowspan="2">APBD Provinsi</th>
-      <th rowspan="2">APBN</th>
-      <th rowspan="2">Total Usulan Pagu</th> -->
+        <th colspan="4">APBD Kabupaten</th>
+        <th rowspan="2">APBD Provinsi</th>
+        <th rowspan="2">APBN</th>
+        <th rowspan="2">Total Usulan Pagu</th>
     </tr>
 
     <tr style="border-bottom:#999 solid 2px;">
@@ -204,10 +204,10 @@
   		<th width="30">Target</th>
   		<th width="30">Satuan</th>
 
-      <!-- <th width="30">PIK P3K</th>
-  		<th width="30">PIK Sektoral</th>
-  		<th width="50">Pagu Indikatif</th>
-      <th width="50">Jumlah</th> -->
+        <th width="30">PIK P3K</th>
+        <th width="30">PIK Sektoral</th>
+        <th width="50">Pagu Indikatif</th>
+        <th width="50">Jumlah</th>
     </tr>
 
    	<tr>
@@ -312,6 +312,35 @@
                             @endforeach
                             </td>
 
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id==1)
+                                {{$anggaran->pagu}}
+                              @endif
+                            </td>
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id==2)
+                                {{ $anggaran->pagu }}
+                              @endif
+                            </td>
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id==3)
+                                {{ $anggaran->pagu }}
+                              @endif
+                            </td>
+                            <td style="text-align:left;">{{ $anggaran->pagu }}</td>
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id==4)
+                                {{ $anggaran->pagu }}
+                              @endif
+                            </td>
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id==5)
+                                {{ $anggaran->pagu }}
+                              @endif
+                            </td>
+                            <td style="text-align:left;">
+                              {{ $anggaran->pagu }}
+                            </td>
                         </tr>
                     @endif
                 @endforeach
