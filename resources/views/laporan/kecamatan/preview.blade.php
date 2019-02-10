@@ -49,17 +49,6 @@
                 @endif
 
                 <div class="pull-right">
-                    <form action="{{ route('export.excel.kecamatan') }}" style="display:inline;" method="POST">
-                        {{ csrf_field() }}
-                        <input type="hidden" name="district" value="{{ $district->id ?? null }}">
-                        <input type="hidden" name="village" value="{{ $village->id ?? null }}">
-                        <button type="submit" class="btn m-btn--pill m-btn--air btn-secondary">
-                            Excel
-                        </button>
-                    </form>
-
-                    <a href="{{ route('htmltopdfview',['download'=>'pdf']) }}"  class="btn m-btn--pill m-btn--air btn-secondary">Download PDF</a>
-               
                     <a href="{{ route('laporan.kecamatan') }}"
                        class="btn m-btn--pill m-btn--air btn-secondary">Kembali</a>
                 </div>
