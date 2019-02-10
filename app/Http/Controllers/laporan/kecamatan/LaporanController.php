@@ -2,18 +2,28 @@
 
 namespace App\Http\Controllers\laporan\kecamatan;
 
+use App\BidangUrusan;
 use App\Anggaran;
+use App\Kegiatan;
+use App\Sasaran;
+use App\Program;
+use App\IndikatorSasaran;
 use App\Enum\Roles;
 use App\location\Districts;
 use App\location\Villages;
 use App\Services\DashboardService;
 use App\Tahapan;
-use Box\Spout\Writer\Style\Color;
-use Box\Spout\Writer\Style\StyleBuilder;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Spatie\Permission\Models\Role;
+use Box\Spout\Writer\Style\Color;
+use Box\Spout\Writer\Style\StyleBuilder;
 use Box\Spout\Writer\WriterFactory;
 use Box\Spout\Common\Type;
+use dompdf;
+use Barryvdh\DomPDF\Facade as PDF;
+use Maatwebsite\Excel\Facades\Excel;
 
 class LaporanController extends Controller
 {
@@ -62,46 +72,49 @@ class LaporanController extends Controller
     }
 
     public function show(Request $request)
-    {
-        ini_set('max_execution_time', 0);
-        ini_set('memory_limit','2048M');
+    {   
         $district = $request->get('district', null);
         $village = $request->get('village', null);
+        $user_id = $request->get('user', null);
+        $program = \App\Program::all();
+
         $items = new Anggaran();
         $items = $items->withLaporan()->whereTahapanId($this->tahapan->id);
-        $showKecamatan = false;
-
+        $sasaran =\App\Sasaran::all();
+        $indikatorsasaran =\App\IndikatorSasaran::all();
         $kecamatan = Districts::find($district);
         $desa = Villages::find($village);
 
-        $where = 'Kecamatan: ';
+        $where = '';
 
         if ($kecamatan) {
-            $where .= $kecamatan->name;
+            $where .= 'Kecamatan: ' . $kecamatan->name;
         }
 
         if ($desa) {
             $where .= ', Desa/Kelurahan: ' . $desa->name;
         }
 
-        $items = $items->where('lokasi', 'LIKE', $where . '%');
-        $showKecamatan = true;
-
-        if ($request->user()->hasRole(Roles::KELURAHAN)) {
-            $items = $items->where('is_kelurahan', true);
+        if ($where){
+            $items = $items->where('lokasi', 'LIKE', $where . '%');
         }
 
-        if ($request->user()->hasRole(Roles::DESA)) {
-            $items = $items->where('is_kelurahan', false);
+        if ($user_id && $user_id != 0) {
+            $user = User::find($user_id);
+            $items = $items->where('user_id', $user_id);
         }
 
         $items = $items->get();
 
         $anggaran = $items->first();
 
+        $time=6000;
+        ini_set('max_execution_time', $time);
+        
         $items = $items->toJson();
-
-        return view ('laporan.kecamatan._table', compact('items', 'anggaran'));
+        $view_table = view('laporan.kecamatan._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran', 'sumberanggaran'));
+        //return view('laporan.renja._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran'));
+        return $view_table;
     }
 
     public function exportExcel(Request $request)

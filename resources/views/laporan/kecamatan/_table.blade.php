@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
-    <title>LAPORAN musrenbang kabupaten</title>
+    <title>LAPORAN Musrenbang Kecamatan</title>
     <style>
         @page {
             margin: 0px;
@@ -129,59 +129,90 @@
             }
         }
     </style>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript">
+    var tableToExcel = (function() {
+      var uri = 'data:application/vnd.ms-excel;base64,',
+          template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+          base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+      return function(table, name) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+        window.location.href = uri + base64(format(template, ctx))
+      }
+    })()
+    </script>
+
 </head>
 
 <body>
 
 
+<div class="">
+  <input type="button" onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel">
+</div>
 <!-- baru tabel -->
-<table width="1400" height="550" border="0" cellspacing="0" cellpadding="4" align="center" class="wrapper">
-<tr>
-    <td colspan="3">
-    <h2>DAFTAR RENCANA PROGRAM DAN KEGIATAN PRIORITAS TAHUN 2018</h2>
+<table width="1400" height="550" border="0" cellspacing="0" cellpadding="4" align="center" class="wrapper" id="testTable">
 
-    </td>
+<tr>
+	<td colspan="3"  align="center">
+	   DAFTAR RENCANA PROGRAM DAN KEGIATAN MUSRENBANG KECAMATAN
+  </td>
 </tr>
-
 <tr>
-    <td colspan="3">
-    <table width="100%" border="0" cellspacing="0" cellpadding="3" class="data_table">
+	<td colspan="3"  align="center">
+	   KECAMATAN {{$anggaran->user->nama_lengkap }}
+  </td>
+</tr>
+<tr>
+	<td colspan="3"  align="center">
+	   KABUPATEN SUKABUMI
+  </td>
+</tr>
+<tr>
+	<td colspan="3">
+	<table width="100%" border="1" cellspacing="0" cellpadding="3" class="data_table">
     <tr style="border-bottom:#999 solid 2px;">
-        <th rowspan="3" width="50"><center>Nomer</center></th>
-        <th rowspan="3" width="70">Uraian Urusan, Organisasi, Program, dan Kegiatan</th>
-       
-        <th rowspan="3" width="70">Deskripsi Kegiatan</th>
-        <th rowspan="3" width="40">Sasaran Daerah</th>
-        <th rowspan="3" width="40">Indikator Sasaran</th>
-        <th rowspan="3" width="30">Lokasi</th>
-        <th colspan="9">Indikator Kerja tahun 2019</th>
-        <th rowspan="3" width="70">Biaya</th>
-    
+  		<th rowspan="3" width="50"><center>Nomor</center></th>
+  		<th rowspan="3" width="70">Uraian Urusan, Organisasi, Program, dan Kegiatan</th>
+  		<th rowspan="3" width="40">Indikator Sasaran</th>
+  		<th rowspan="3" width="40">Sasaran Daerah</th>
+  		<th rowspan="3" width="30">Lokasi</th>
+  		<th colspan="9">Indikator Kerja tahun 2020</th>
+        <th colspan="7">Usulan Pagu 2020</th>
     </tr>
+
     <tr style="border-bottom:#999 solid 2px;">
-        <th colspan="3">Hasil Program</th>
-        <th colspan="3">Keluaran Kegiatan</th>
-        <th colspan="3">Hasil Kegiatan</th>
-       
-        
-        
+  		<th colspan="3">Hasil Program</th>
+  		<th colspan="3">Keluaran Kegiatan</th>
+  		<th colspan="3">Hasil Kegiatan</th>
+      <th colspan="4">APBD Kabupaten</th>
+      <th rowspan="2">APBD Provinsi</th>
+      <th rowspan="2">APBN</th>
+      <th rowspan="2">Total Usulan Pagu</th>
     </tr>
+
     <tr style="border-bottom:#999 solid 2px;">
-        <th width="50">Tolak Ukur</th>
-        <th width="30">Target</th>
-        <th width="30">Satuan</th>
-        <th width="50">Tolak Ukur</th>
-        <th width="30">Target</th>
-        <th width="30">Satuan</th>
-        <th width="50">Tolak Ukur</th>
-        <th width="30">Target</th>
-        <th width="30">Satuan</th>
-       
+  		<th width="50">Tolak Ukur</th>
+  		<th width="30">Target</th>
+  		<th width="30">Satuan</th>
+  		<th width="50">Tolak Ukur</th>
+  		<th width="30">Target</th>
+  		<th width="30">Satuan</th>
+  		<th width="50">Tolak Ukur</th>
+  		<th width="30">Target</th>
+  		<th width="30">Satuan</th>
+
+      <th width="30">PIK P3K</th>
+  		<th width="30">PIK Sektoral</th>
+  		<th width="50">Pagu Indikatif</th>
+      <th width="50">Jumlah</th>
     </tr>
-    <tr>
-        <td align="center"><center>1</center></td>
+
+   	<tr>
+		<td align="center"><center>1</center></td>
         <td align="center"><center>2</center></td>
-    
         <td align="center"><center>4</center></td>
         <td align="center"><center>5</center></td>
         <td align="center"><center>6</center></td>
@@ -195,27 +226,27 @@
         <td align="center"><center>14</center></td>
         <td align="center"><center>15</center></td>
         <td align="center"><center>16</center></td>
-        <td align="center"><center>
-      
-        </center></td>
-    </tr>   
+        <td align="center"><center>17</center></td>
+        <td align="center"><center>18</center></td>
+        <td align="center"><center>19</center></td>
+        <td align="center"><center>20</center></td>
+        <td align="center"><center>21</center></td>
+        <td align="center"><center>22</center></td>
+    </tr>
+
     <tr>
-        <td align="center" style="background-color:#FF0"><center></center></td>
-        <td colspan="16" style="background-color:#FF0">
-    
+        <td style="background-color:#FF0; text-align:left;">
+
         </td>
-        </tr>
-        <tr>
+        <td colspan="20" style="background-color:#FF0"></td>
+    </tr>
+    <tr>
         <td style="background-color:#FF0"></td>
-        <td colspan="16" style="background-color:#FF0">  
-                @php($user = auth()->user())
-                @php ($judul="1")
-               {{$user->nama_lengkap}}
-                              
-        </td>   
-                <tr style="border-bottom:#999 solid 2px;"></tr>
-                <tr style="border-bottom:#999 solid 2px;"></tr>
-            
+        <td colspan="20" style="background-color:#FF0; text-align:left">
+                <!-- @php($user = auth()->user())
+                @php ($judul="1") -->
+                {{$anggaran->user->nama_lengkap }}
+        </td>
             @php ($nom="0")
             @php ($no="0")
             @foreach($program as $test2 => $nam)
@@ -226,174 +257,112 @@
                         @php(++$no)
                         @if($nom == 1)
                         <tr>
-                            <td style="background-color:#90EE90">{{$no}}</td> 
-                            <td colspan="16" style="background-color:#90EE90"> {{ucwords($nam->nama)}} </td>
-                            <td> &nbsp; </td>
-                            <td> &nbsp; </td> 
+                            <td style="background-color:#90EE90">{{$no}}</td>
+                            <td colspan="20" style="background-color:#90EE90"> {{ $nam->nama }} </td>
+
                         </tr>
                         @endif
                         <tr>
-                            <td align="center">2.09.23.{{ $nam->id }}.{{ ++$idx }}</td>
+                            <td align="left">{{$anggaran->prioritas}}</td>
+                            <!-- <td align="center">2.09.23.{{ $nam->id }}.{{ ++$idx }}</td> -->
                             <td>{{ $anggaran->kegiatan->nama }}</td>
-                            <td style="text-align:left;">{{ $anggaran->kegiatan->deskripsi }}</td>
-                            
-                            <td style="text-align:right;">
-                            &nbsp;
-                            </td>
-                            <td style="text-align:right;">
-                            &nbsp;
-                            </td>
-                            <!-- @foreach ($indikatorsasaran as $insan)
+                            @foreach ($indikatorsasaran as $insan)
                                 @if($insan->id==$anggaran->kegiatan->indikator_sasaran_id)
-                                <td style="text-align:right;">
+                                <td style="text-align:left;">
+                                @php($indikator_program = $insan->nama)
                                 {{$insan->nama}}
                                 </td>
                                 @foreach($sasaran as $new)
                                 @if($new->id == $insan->sasaran_id)
-                                <td style="text-align:right;">
+                                <td style="text-align:left;">
                                 {{$new->nama}}
                                 </td>
                                 @endif
                                 @endforeach
-                                @endif    
-                            @endforeach -->
-                    
+                                @endif
+                            @endforeach
+
                             <td style="text-align:left;">
                             @if($anggaran->jenis_lokasi_id === 3)
-                                [{{ get_desa_from_location($anggaran->lokasi) }}]
+                                {{ $anggaran->lokasi }}
                             @elseif($anggaran->jenis_lokasi_id === 1)
-                                [{{"Kantor OPD"}}]
+                                {{ $anggaran->lokasi }}
                             @else
-                                [{{"Tersebar"}}]
+                                {{"Tersebar"}}
                             @endif
                             </td>
-                            <td colspan="3" style="text-align:left;">                   
+
+                            <td colspan="3" style="text-align:left;">
+                            {{$indikator_program}}
                             </td>
-                  
-                     
-                            <td colspan="3" style="text-align:left;"> 
+
+                            <td colspan="3" style="text-align:left;">
                             @foreach ($anggaran->target_anggaran as $target)
                             @if ($target->indikator_kegiatan->indikator_hasil_id == 2)
-                                    {{ $target->indikator_kegiatan->tolak_ukur.' '.$target->target.' '.$target->indikator_kegiatan->satuan->nama.'; ' }}  
+                                    {{ $target->indikator_kegiatan->tolak_ukur.' '.$target->target.' '.$target->indikator_kegiatan->satuan->nama.'; ' }}
                             @endif
                             @endforeach
                             </td>
-                    
-                            <td colspan="3" style="text-align:left;"> 
+
+                            <td colspan="3" style="text-align:left;">
                             @foreach ($anggaran->target_anggaran as $target)
                             @if ($target->indikator_kegiatan->indikator_hasil_id == 3)
-                                    {{ $target->indikator_kegiatan->tolak_ukur.' '.$target->target.' '.$target->indikator_kegiatan->satuan->nama.'; ' }}  
+                                    {{ $target->indikator_kegiatan->tolak_ukur.' '.$target->target.' '.$target->indikator_kegiatan->satuan->nama.'; ' }}
                             @endif
                             @endforeach
                             </td>
-                   
-                            <td style="text-align:left;"></td>
+
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id==1)
+                                {{$anggaran->pagu}}
+                              @endif
+                            </td>
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id==2)
+                                {{ $anggaran->pagu }}
+                              @endif
+                            </td>
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id==3)
+                                {{ $anggaran->pagu }}
+                              @endif
+                            </td>
+                            <td style="text-align:left;">{{ $anggaran->pagu }}</td>
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id==4)
+                                {{ $anggaran->pagu }}
+                              @endif
+                            </td>
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id==5)
+                                {{ $anggaran->pagu }}
+                              @endif
+                            </td>
+                            <td style="text-align:left;">
+                              {{ $anggaran->pagu }}
+                            </td>
+
                         </tr>
                     @endif
                 @endforeach
                 @php($nom="0")
             @endforeach
-    
-              
-                  <h2>{{ $anggaran->opd_pelaksana->nama }}</h2>  
-                  @php ($judul=$anggaran->opd_pelaksana->nama)   
-                   
-                    <h2>KABUPATEN SUKABUMI</h2>
-    <tr>
-        <td colspan="17"="center">Jumlah Keseluruhan</td>
-       
-    </tr>   
-  
-</table>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <colgroup>
-                    <col style=" width: 10%;">
-                    <col style=" width: 23%;">
-                    <col style=" width: 34%;">
-                    <col style=" width: 30%;">
-                </colgroup>
-                <tbody>
-                <tr>
-                    <td width="10%">&nbsp;</td>
-                    <td width="23%">&nbsp;</td>
-                    <td width="35%">&nbsp;</td>
-                    <td width="30%">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="3" rowspan="3"></td>
-                    <td style="text-align:left;">Sukabumi, {{ \Carbon\Carbon::now()->format('d F Y') }} <br>
-                    </td>
-                </tr>
-                <tr style="height:40px;">
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left;"><strong style="text-decoration:underline;"></strong><br><br>NIP :</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td style="text-align:center;">&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="4">&nbsp;</td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <colgroup>
-                    <col style=" width: 10%;">
-                    <col style=" width: 23%;">
-                    <col style=" width: 34%;">
-                    <col style=" width: 30%;">
-                </colgroup>
-                <tbody>
-                <tr>
-                    <td width="10%">&nbsp;</td>
-                    <td width="23%">&nbsp;</td>
-                    <td width="35%">&nbsp;</td>
-                    <td width="30%">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="3" rowspan="3">&nbsp;</td>
-                    <td style="text-align:center;">&nbsp;</td>
-                </tr>
-                <tr style="height:40px;">
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td style="text-align:center;">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td style="text-align:center;">&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="4">&nbsp;</td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3"></td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-    </tr>
-    
-    </tbody>
-</table>
-</td></tr></table>
+    </table>
 
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript">
+    var tableToExcel = (function() {
+    var uri = 'data:application/vnd.ms-excel;base64,',
+        template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+        base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        ,format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; })}
+    return function(table, name) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+        window.location.href = uri + base64(format(template, ctx))
+    }})()
+    </script>
 </body>
+
+
 </html>
