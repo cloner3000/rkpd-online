@@ -106,7 +106,7 @@
                                     <option selected 
                                             value="{{ $district->id }}">{{ $district->name }}</option>
                                 </select>
-                                <input type="hidden" name="district_id" value="3202030">
+                                <input type="hidden" name="district_id" value="{{ $district->id }}">
                             </div>
                         </div>
                         <div class="col-12">
