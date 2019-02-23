@@ -341,6 +341,7 @@
                             <td style="text-align:left;">
                               {{ $anggaran->pagu }}
                             </td>
+                            
                         </tr>
                     @endif
                 @endforeach

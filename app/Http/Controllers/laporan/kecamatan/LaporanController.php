@@ -47,6 +47,7 @@ class LaporanController extends Controller
         $opd = $request->user()->opd()->first();
         $village = get_village($request->user()->opd->first()->kode ?? null);
         $villages = Villages::pluck('name', 'id');
+        
         if ($request->user()->hasRole(Roles::KECAMATAN)) {
             if ($opd->jenisOpd && $opd->jenisOpd->nama == Roles::KECAMATAN) {
                 $district = Districts::find($opd->kode);
@@ -76,14 +77,16 @@ class LaporanController extends Controller
         $district = $request->get('district', null);
         $village = $request->get('village', null);
         $user_id = $request->get('user', null);
-        $program = \App\Program::all();
+        // $program = \App\Program::all();
 
         $items = new Anggaran();
         $items = $items->withLaporan()->whereTahapanId($this->tahapan->id);
-        $sasaran =\App\Sasaran::all();
-        $indikatorsasaran =\App\IndikatorSasaran::all();
+        // $sasaran =\App\Sasaran::all();
+        // $indikatorsasaran =\App\IndikatorSasaran::all();
         $kecamatan = Districts::find($district);
         $desa = Villages::find($village);
+        $opd = $request->user()->opd()->first();
+        $showKecamatan = true;
 
         $where = '';
 
@@ -98,11 +101,21 @@ class LaporanController extends Controller
         if ($where){
             $items = $items->where('lokasi', 'LIKE', $where . '%');
         }
+        
+        if ($request->user()->hasRole(Roles::KECAMATAN)) {
+            $query = '%Kecamatan: '.strtoupper($request->user()->name).',%';
+            $items = $items->where('lokasi', 'like' , $query);
+            $items = $items->orderBy('village_id', 'ASC');
+            $status_kec = true;
+        }
 
-        if ($user_id && $user_id != 0) {
+        if ($user_id && $user_id != 0){
             $user = User::find($user_id);
             $items = $items->where('user_id', $user_id);
+            // $counter=0;
         }
+        
+        $items = $items->orderBy('opd_pelaksana_id', 'ASC');
 
         $items = $items->get();
 
@@ -112,9 +125,7 @@ class LaporanController extends Controller
         ini_set('max_execution_time', $time);
         
         $items = $items->toJson();
-        $view_table = view('laporan.kecamatan._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran', 'sumberanggaran'));
-        //return view('laporan.renja._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran'));
-        return $view_table;
+        return view('laporan.kecamatan._table', compact('items', 'anggaran', 'showKecamatan', 'status_kec', 'opd', 'kecamatan'));
     }
 
     public function exportExcel(Request $request)
