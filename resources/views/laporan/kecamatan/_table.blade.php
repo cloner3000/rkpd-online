@@ -148,6 +148,7 @@
                     <th rowspan="3" width="100">SKPD Pelaksana</th>
                     <th rowspan="3" width="100">Kecamatan</th>
                     <th rowspan="3" width="100">Desa</th>
+                    <th rowspan="3" width="100">Verifikasi Dinas</th>
                 </tr>
                 <tr style="border-bottom:#999 solid 2px;"></tr>
                 <tr style="border-bottom:#999 solid 2px;"></tr>
@@ -171,6 +172,7 @@
                         <td style="text-align:right;">{{ $anggaran->opd_pelaksana->nama }}</td>
                         <td style="text-align:right;">{{ get_kecamatan_from_location($anggaran->lokasi) }}</td>
                         <td style="text-align:right;">{{ get_desa_from_location($anggaran->lokasi) }}</td>
+                        <td style="text-align:right;">&nbsp;</td>
                     </tr>
                 @endforeach
 
