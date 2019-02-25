@@ -123,7 +123,7 @@ class LaporanController extends Controller
         }
         
        
-
+        $items = $items->where('created_at', '>', '2019-02-24');
         $items = $items->get();
 
         $anggaran = $items->first();
