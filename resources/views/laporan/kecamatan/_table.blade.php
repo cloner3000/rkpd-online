@@ -128,10 +128,12 @@
         <td>
             <h2>HASIL MUSRENBANG KECAMATAN</h2>
             <h2>
-                @if($showKecamatan)
+                @if($status_kec)
                     KECAMATAN {{ $kecamatan->name }}
-                    <br>
+                @else
+                     {{ $opd->nama }}
                 @endif
+                <br>
                 KABUPATEN SUKABUMI</h2>
         </td>
     </tr>
@@ -203,7 +205,11 @@
                   </td>
 
                   <td colspan="2">
+                  @if($status_kec)
                   Pihak Kecamatan
+                  @else
+                  Pihak PD ___________________
+                  @endif
                   </td>
                 </tr>
 
@@ -263,46 +269,6 @@
             </table>
         </td>
     </tr>
-    <!-- <tr>
-        <td>
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <colgroup>
-                    <col style=" width: 10%;">
-                    <col style=" width: 23%;">
-                    <col style=" width: 34%;">
-                    <col style=" width: 30%;">
-                </colgroup>
-                <tbody>
-                <tr>
-                    <td width="10%">&nbsp;</td>
-                    <td width="23%">&nbsp;</td>
-                    <td width="35%">&nbsp;</td>
-                    <td width="30%">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="3" rowspan="3"></td>
-                    <td style="text-align:left;">Mengetahui, Pihak Kecamatan<br>
-                    </td>
-                </tr>
-                <tr style="height:40px;">
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td style="text-align:left;"><strong style="text-decoration:underline;"></strong><br><br>NIP :</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td style="text-align:center;">&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="4">&nbsp;</td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr> -->
     </tbody>
 </table>
 

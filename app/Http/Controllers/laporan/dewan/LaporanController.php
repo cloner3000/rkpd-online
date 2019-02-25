@@ -85,11 +85,20 @@ class LaporanController extends Controller
         $items = new Anggaran();
         $items = $items->withLaporan()->whereTahapanId($this->tahapan->id);
         $user_id = $request->user()->id;
+        $opd = $request->user()->opd()->first();
 
         if ($request->user()->hasRole(Roles::DPRD)) {
-            $items= $items->where('user_id', $user_id);
+            $items= $items->where('user_id', '=' , $user_id);
             $items = $items->orderBy('district_id', 'ASC');            
+            $status_pd = true;
         }
+
+        if ($request->user()->hasRole(Roles::OPD)) {
+            $items = $items->where('opd_pelaksana_id', '=' , $opd->id);
+            $items = $items->orderBy('user_id', 'DESC');
+            $status_pd = false;
+        }
+
         $nama = $request->user()->nama_lengkap;
 
         $items = $items->get();
@@ -99,7 +108,7 @@ class LaporanController extends Controller
         $items = $items->toJson();
 
        // print_r($items);
-        return view('laporan.dewan._table', compact('items', 'anggaran', 'nama'));
+        return view('laporan.dewan._table', compact('items', 'opd', 'anggaran', 'nama', 'status_pd'));
     }
 
     public function exportExcel(Request $request)

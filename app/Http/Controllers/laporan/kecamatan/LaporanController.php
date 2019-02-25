@@ -106,7 +106,14 @@ class LaporanController extends Controller
             $query = '%Kecamatan: '.strtoupper($request->user()->name).',%';
             $items = $items->where('lokasi', 'like' , $query);
             $items = $items->orderBy('village_id', 'ASC');
+            $items = $items->orderBy('opd_pelaksana_id', 'ASC');
             $status_kec = true;
+        }
+        
+        if ($request->user()->hasRole(Roles::OPD)) {
+            $items = $items->where('opd_pelaksana_id', '=' , $opd->id);
+            $items = $items->orderBy('user_id', 'DESC');
+            $status_kec = false;
         }
 
         if ($user_id && $user_id != 0){
@@ -115,7 +122,7 @@ class LaporanController extends Controller
             // $counter=0;
         }
         
-        $items = $items->orderBy('opd_pelaksana_id', 'ASC');
+       
 
         $items = $items->get();
 

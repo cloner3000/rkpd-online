@@ -103,7 +103,7 @@
         <label>
         Input Proposal <small>(wajib diisi, file harus PDF atau zip, ukuran maksimal 2 MB)</small>
         </label> 
-        <input type="file" name="proposal" class="form-control m-input" accept="application/pdf application/zip application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
+        <input type="file" name="proposal" class="form-control m-input" accept="application/pdf application/zip application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document" value="{{ $item->proposal ?? '' }}" >
     </div>
 </div>
 

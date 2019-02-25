@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
-    <title>Laporan Hasil Pokok-Pokok Pikiran Dewan</title>
+    <title>LAPORAN MUSRENBANG KECAMATAN</title>
     <style>
         @page {
             margin: 0px;
@@ -44,14 +44,6 @@
             text-align: center;
         }
 
-        .right_colom {
-            padding-left: 400px;
-        }
-
-        .data_colom {
-            padding-left: 30px;
-        }
-
         .data_table {
             border-collapse: collapse;
         }
@@ -87,34 +79,12 @@
             font-style: italic;
         }
 
-        .data_table1 {
-            border-collapse: collapse;
-        }
-
         .data_table1 td {
             vertical-align: middle;
             text-align: left;
             font-size: 12px;
             height: 13px;
             padding-left: 5px;
-        }
-
-        .specialy {
-            text-align: center;
-        }
-
-        #catatan {
-            float: left;
-            width: 400px;
-            height: 60px;
-            -webkit-border-radius: 8px;
-            -moz-border-radius: 8px;
-            border-radius: 8px;
-            border: 1px #999 solid;
-            text-align: left;
-            font-weight: bold;
-            color: #666;
-            padding: 5px;
         }
 
         @media print {
@@ -129,22 +99,42 @@
             }
         }
     </style>
+
+  <script src="//code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript">
+    var tableToExcel = (function() {
+      var uri = 'data:application/vnd.ms-excel;base64,',
+          template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+          base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+      return function(table, name) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+        window.location.href = uri + base64(format(template, ctx))
+      }
+    })()
+    </script>
 </head>
 
 <body>
 
+<div class="">
+  <input type="button" onclick="tableToExcel('testTable', 'W3C Example Table')" value="Export to Excel">
+</div>
 
-
-<table width="1400" height="550" border="0" cellspacing="0" cellpadding="4" align="center" class="wrapper">
+<table width="1400" height="550" border="0" cellspacing="0" cellpadding="4" align="center" class="wrapper" id="testTable">
     <tbody>
     <tr>
         <td>
-            <h2>HASIL POKOK-POKOK PIKIRAN DEWAN </h2>
+            <h2>HASIL Pokok Pokok Pikiran Dewan</h2>
             <h2>
-                @if($nama)
+                @if($status_pd)
                     {{ $nama }}
-                    <br>
-                @endif</h2>
+                @else
+                     {{ $opd->nama }}
+                @endif
+                <br>
+                KABUPATEN SUKABUMI</h2>
         </td>
     </tr>
     <tr>
@@ -160,6 +150,7 @@
                     <th rowspan="3" width="100">SKPD Pelaksana</th>
                     <th rowspan="3" width="100">Kecamatan</th>
                     <th rowspan="3" width="100">Desa</th>
+                    <th rowspan="3" width="100">Verifikasi Dinas</th>
                 </tr>
                 <tr style="border-bottom:#999 solid 2px;"></tr>
                 <tr style="border-bottom:#999 solid 2px;"></tr>
@@ -183,100 +174,102 @@
                         <td style="text-align:right;">{{ $anggaran->opd_pelaksana->nama }}</td>
                         <td style="text-align:right;">{{ get_kecamatan_from_location($anggaran->lokasi) }}</td>
                         <td style="text-align:right;">{{ get_desa_from_location($anggaran->lokasi) }}</td>
+                        <td style="text-align:right;">&nbsp;</td>
                     </tr>
                 @endforeach
 
+                <tr rowspan="10">
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr rowspan="10">
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">
+                  Bidang Esda Bappeda
+                  </td>
+
+                  <td colspan="2">
+                  Bidang PMM Bappeda
+                  </td>
+
+                  <td colspan="2">
+                  Bidang IPW Bappeda
+                  </td>
+
+                  <td colspan="2">
+                  @if(!$status_pd)
+                  Pihak PD ___________________
+                  @endif
+                  </td>
+                </tr>
+
+                <tr rowspan="10">
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr rowspan="10">
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr rowspan="10">
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr rowspan="10">
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                </tr>
+                <tr rowspan="10">
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                  <td colspan="2">&nbsp;</td>
+                </tr>
+
+                <tr>
+                  <td colspan="2">
+                  NIP : 
+                  </td>
+
+
+                  <td colspan="2">
+                  NIP
+                  </td>
+
+
+                  <td colspan="2">
+                  NIP
+                  </td>
+
+
+                  <td colspan="2">
+                  NIP
+                  </td>
+                </tr>
+
                 </tbody>
             </table>
         </td>
-    </tr>
-    <tr>
-        <td>
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <colgroup>
-                    <col style=" width: 10%;">
-                    <col style=" width: 23%;">
-                    <col style=" width: 34%;">
-                    <col style=" width: 30%;">
-                </colgroup>
-                <tbody>
-                <tr>
-                    <td width="10%">&nbsp;</td>
-                    <td width="23%">&nbsp;</td>
-                    <td width="35%">&nbsp;</td>
-                    <td width="30%">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="3" rowspan="3"></td>
-                    <td style="text-align:left;">Sukabumi, {{ \Carbon\Carbon::now()->format('d F Y') }} <br>
-                    </td>
-                </tr>
-                <tr style="height:40px;">
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td style="text-align:center;">&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="4">&nbsp;</td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                <colgroup>
-                    <col style=" width: 10%;">
-                    <col style=" width: 23%;">
-                    <col style=" width: 34%;">
-                    <col style=" width: 30%;">
-                </colgroup>
-                <tbody>
-                <tr>
-                    <td width="10%">&nbsp;</td>
-                    <td width="23%">&nbsp;</td>
-                    <td width="35%">&nbsp;</td>
-                    <td width="30%">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="3" rowspan="3">&nbsp;</td>
-                    <td style="text-align:center;">&nbsp;</td>
-                </tr>
-                <tr style="height:40px;">
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td style="text-align:center;">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td>&nbsp;</td>
-                    <td style="text-align:center;">&nbsp;</td>
-                    <td>&nbsp;</td>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <td colspan="4">&nbsp;</td>
-                </tr>
-                </tbody>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <td colspan="3"></td>
-    </tr>
-    <tr>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
     </tr>
     </tbody>
 </table>
+
+
 </body>
-
-
 </html>
