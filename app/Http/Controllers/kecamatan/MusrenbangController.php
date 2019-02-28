@@ -14,6 +14,7 @@ use App\Services\MusrenbangService;
 use App\SumberAnggaran;
 use App\Tahapan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 
 use File;
@@ -247,6 +248,28 @@ class MusrenbangController extends Controller
             'lokasi_kegiatan' => 'required'
 
         ]);
+        
+        $anggaran = Anggaran::find($id);
+        
+        if($request->pilihan){
+            $anggaran->is_desk = $request->pilihan;
+        }else{
+            $anggaran->is_desk = $request->pilihan;
+        }
+
+        $path_proposal = null;
+        if ($request->file('proposal')) {
+            $file_proposal = $request->file('proposal');
+            $ext = $file_proposal->extension();
+            $path_proposal = "proposal".'/'.rand()." - ".$request->file('proposal')->getClientOriginalName().'.'.$ext;
+            // echo $path_proposal;
+            Storage::delete($anggaran->proposal);
+            $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
+            $file = $path_proposal;
+            $anggaran->proposal = $file;
+        }
+
+        $anggaran->save();
 
         // cek opd
         $kegiatan = Kegiatan::find($request->input('nama_kegiatan'));

@@ -327,10 +327,10 @@ class MusrenbangController extends Controller
 
         if ($request->hasFile('proposal')) {
             $file_proposal = $request->file('proposal');
-            $path_proposal = "proposal".'/'.$request->id." - ".$anggaran->kegiatan->nama.'.'.'pdf';
+            $ext = $file_proposal->extension();
+            $path_proposal = "proposal".'/'.rand()." - ".$request->file('proposal')->getClientOriginalName().'.'.$ext;
             // echo $path_proposal;
-            $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
-        }
+            $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));        }
 
         // -- adding code
         $anggaran->catatan = $request->catatan;

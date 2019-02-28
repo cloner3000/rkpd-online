@@ -98,6 +98,9 @@
                         <th title="Field #4">
                             Transfer
                         </th>
+                        <th title="Field #4">
+                            Status Verifikasi Desk
+                        </th>
                         <th title="Field #5">
                             Status | Catatan
                         </th>
@@ -120,6 +123,9 @@
                             </td>
                             <td>
                                 {{ $item->is_transfer ? 'Sudah' : 'Belum' }}
+                            </td>
+                            <td>
+                                {{ $item->is_desk ? 'Diterima' : 'Ditolak' }}
                             </td>
                             <td>
                                 @if ($item->is_transfer == 1 && $item->is_verifikasi == 1)

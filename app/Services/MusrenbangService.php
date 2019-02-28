@@ -124,7 +124,7 @@ class MusrenbangService
         $anggaran->user()->associate($request->user());
         $anggaran->sumberAnggaran()->associate($sumberAnggaran);
         $anggaran->kegiatan()->associate($kegiatan);
-
+        
         $anggaran->save();
 
         $targets = $request->input('target_indikator_kegiatan');

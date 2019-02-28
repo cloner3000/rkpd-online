@@ -103,7 +103,7 @@
         <label>
         Input Proposal <small>(wajib diisi, file harus PDF atau zip, ukuran maksimal 2 MB)</small>
         </label> 
-        <input type="file" name="proposal" class="form-control m-input" accept="application/pdf application/zip application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document" value="{{ $item->proposal ?? '' }}" >
+        <input type="file" name="proposal" class="form-control m-input" accept="application/pdf application/zip application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document" >
     </div>
 </div>
 
@@ -116,6 +116,29 @@
 
 
 @include('kecamatan.musrenbang._lokasi')
+@if(Route::getCurrentRoute()->getName()!=="musrenbang-kecamatan.create")
+<h5> Diterima/Ditolak Oleh Perangkat Daerah Pada saat Desk?</h5>
+<div class="form-group m-form__group">
+    <label>Diterima/Ditolak?</label>
+    <br>
+    <label for="setuju">
+        @if($item->is_desk)
+            <input type="radio" name="pilihan" value="1" id="setuju" checked>Diterima
+        @else
+            <input type="radio" name="pilihan" value="1" id="setuju">Diterima
+        @endif
+    </label>
+    <br>
+    <label for="tolak">
+        @if(!$item->is_desk)
+            <input type="radio" name="pilihan" value="0" id="setuju" checked>Ditolak
+        @else
+            <input type="radio" name="pilihan" value="0" id="setuju">Ditolak
+        @endif
+    </label>
+</div>
+@endif
+
 
 <div class="m-portlet__foot m-portlet__foot--fit">
     <div class="m-form__actions">
@@ -123,6 +146,7 @@
         <a href="{{ url()->previous() }}" class="btn btn-secondary">Batal</a>
     </div>
 </div>
+
 
 @push('footer.javascript')
     <script>
