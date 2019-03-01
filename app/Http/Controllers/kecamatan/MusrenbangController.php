@@ -55,6 +55,7 @@ class MusrenbangController extends Controller
         if ($user->hasRole(Roles::OPD)) {
             $canTransfer = true;
             $items = $items->whereOpdId($user->opd()->first()->id);
+            $items = $items->where('is_desk', '=', '1');
         }
 
         // fungsi search
