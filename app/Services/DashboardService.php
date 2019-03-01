@@ -83,8 +83,12 @@ class DashboardService
         }
 
         if ($user->hasRole(Roles::OPD) && $user->opd->first()) {
-            if ($tahapan_name == TahapanName::POKOK_PIKIRAN_DEWAN || $tahapan_name == TahapanName::KECAMATAN) {
+            if ($tahapan_name == TahapanName::POKOK_PIKIRAN_DEWAN) {
                 $items = $items->whereOpdId($user->opd()->first()->id);
+            }
+            if ($tahapan_name == TahapanName::KECAMATAN) {
+                $items = $items->whereOpdId($user->opd()->first()->id);
+                $items = $items->where('is_desk', '=', '1');
             }
         }
 
