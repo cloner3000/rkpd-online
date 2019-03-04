@@ -355,6 +355,8 @@ class RancanganController extends Controller
             'lokasi_kegiatan' => 'required'
 
         ]);
+        
+        $anggaran = Anggaran::find($id);
 
         // cek opd
         $kegiatan = Kegiatan::find($request->input('nama_kegiatan'));
@@ -362,6 +364,20 @@ class RancanganController extends Controller
             return error_pages(400, 'Kegiatan <strong> '. $kegiatan->nama .
                 '</strong> Tidak memiliki OPD </br> Silahkan Hubungi Administrator!');
         }
+
+        $path_proposal = null;
+        if ($request->file('proposal')) {
+            $file_proposal = $request->file('proposal');
+            $ext = $file_proposal->extension();
+            $path_proposal = "proposal".'/'.rand()." - ".$request->file('proposal')->getClientOriginalName().'.'.$ext;
+            // echo $path_proposal;
+            Storage::delete($anggaran->proposal);
+            $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
+            $file = $path_proposal;
+            $anggaran->proposal = $file;
+        }
+
+        $anggaran->save();
 
         $this->musrenbang_service->update($request, $id);
 

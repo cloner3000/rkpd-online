@@ -154,7 +154,7 @@
                                         <div class="col-lg-3">
                                             <div class="form-group m-form__group">
                                                 <label>Target</label>
-                                                <input type="number" min="0"
+                                                <input type="number" min="0" step="0.1"
                                                        name="target_indikator_kegiatan[{{ $target->indikatorKegiatan->id }}]"
                                                        class="form-control m-input"
                                                        value="{{ $target->target }}" required>
