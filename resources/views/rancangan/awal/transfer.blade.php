@@ -59,7 +59,7 @@
                 @endif
 
                 <form class="m-form m-form--fit m-form--label-align-right"
-                      action="{{ route('awal.transfer.store', ['id' => $item->id]) }}" method="POST">
+                      action="{{ route('awal.transfer.store', ['id' => $item->id]) }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     @php($user = auth()->user())
                     <div class="m-portlet__body" style="padding-top:0px">
@@ -236,29 +236,16 @@
                         <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled
                                   readonly>{{ $item->lokasi ?? '' }}</textarea>
                     </div>
-
-                    <!-- start added coding -->
-                    <hr>
-                    <h5>Setujui / Tolak</h5>
+                    
+                    <h5>Proposal</h5>
                     <div class="form-group m-form__group">
-                        <label>Setujui Kegiatan?</label>
-                        <br>
-                        <label for="setuju">
-                            <input type="radio" name="pilihan" value="1" id="setuju" onclick="show2();" >
-                             Setujui
-                        </label>
-                        <br>
-                        <label for="tolak">
-                            <input type="radio" name="pilihan" value="0" id="tolak" onclick="show1();">
-                             Tolak
-                        </label>
-                        <br>
-                        <br>
-                        <label>Catatan <small>(wajib diisi)</small></label>
-                        <textarea class="form-control" name="catatan" id="catatan" cols="30" rows="2">
-                        </textarea>
+                        <div>
+                            <label>
+                            Ubah Proposal <small>(Jika Tidak dirubah Biarkan saja)</small>
+                            </label> 
+                            <input type="file" name="proposal" class="form-control m-input" accept="application/pdf application/zip application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                        </div>
                     </div>
-                    <!-- end added coding -->
 
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions">

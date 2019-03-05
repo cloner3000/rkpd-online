@@ -327,8 +327,7 @@ class MusrenbangController extends Controller
 
         if ($request->hasFile('proposal')) {
             $file_proposal = $request->file('proposal');
-            $ext = $file_proposal->extension();
-            $path_proposal = "proposal".'/'.rand()." - ".$request->file('proposal')->getClientOriginalName().'.'.$ext;
+            $path_proposal = "proposal".'/'.rand()." - ".$request->file('proposal')->getClientOriginalName();
             // echo $path_proposal;
             $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));        }
 

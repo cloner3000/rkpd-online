@@ -179,7 +179,7 @@
   		<th rowspan="3" width="40">Indikator Sasaran</th>
   		<th rowspan="3" width="40">Sasaran Daerah</th>
   		<th rowspan="3" width="30">Lokasi</th>
-  		<th colspan="9">Indikator Kerja tahun 2019</th>
+  		<th colspan="9">Indikator Kerja tahun 2020</th>
         <th colspan="7">Usulan Pagu 2020</th>
     </tr>
 

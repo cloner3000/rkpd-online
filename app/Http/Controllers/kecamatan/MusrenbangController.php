@@ -385,7 +385,7 @@ class MusrenbangController extends Controller
         $anggaran = Anggaran::find($id);
         if ($request->hasFile('proposal')) {
             $file_proposal = $request->file('proposal');
-            $path_proposal = "proposal".'/'.$request->id." - ".$anggaran->kegiatan->nama.'.'.'pdf';
+            $path_proposal = "proposal".'/'.rand()." - ".$request->file('proposal')->getClientOriginalName();
             // echo $path_proposal;
             $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
         }
@@ -413,10 +413,14 @@ class MusrenbangController extends Controller
             $this->musrenbang_service->storeTargetAnggaran($request, $newAnggaran);
         }
 
-        return redirect(route('musrenbang-kecamatan.index'))->with('alert', [
-            'type' => 'success',
-            'alert' => 'Berhasil !',
-            'message' => $message,
-        ]);
+        echo '<script type="text/javascript">'
+               , 'alert("Berhasil Transfer!");history.go(-2);location.reload(true);'
+			   , '</script>';
+
+        // return redirect(route('musrenbang-kecamatan.index'))->with('alert', [
+        //     'type' => 'success',
+        //     'alert' => 'Berhasil !',
+        //     'message' => $message,
+        // ]);
     }
 }
