@@ -53,8 +53,8 @@ class RancanganController extends Controller
         $opd = $user->opd()->first();
 
         if ($user->hasRole(Roles::KECAMATAN) || $user->hasRole(Roles::OPD)) {
-            // $items = $items->whereUserId($request->user()->id);
-            $items = $items->where('opd_pelaksana_id', '=', $opd->id);
+            $items = $items->whereUserId($request->user()->id);
+            //$items = $items->where('opd_pelaksana_id', '=', $opd->id);
             $canManage = true;
         }
 
