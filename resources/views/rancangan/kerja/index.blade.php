@@ -202,6 +202,9 @@
                                 <th title="Field #5">
                                     Sumber Anggaran
                                 </th>
+                                <th title="Field #5">
+                                    Sumber Awal
+                                </th>
                                 <th title="Field #6">
                                     Aksi
                                 </th>
@@ -245,6 +248,15 @@
                                         APBD Provinsi
                                     @else
                                         APBN
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($item->sumber_awal == 2)
+                                        Pokir
+                                    @elseif($item->sumber_awal == 4)
+                                        Musrenbang Kecamatan
+                                    @elseif($item->sumber_awal == 5)
+                                        Rancangan Awal
                                     @endif
                                 </td>
                                 <td>

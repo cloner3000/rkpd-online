@@ -176,7 +176,7 @@ class RancanganController extends Controller
                                 ->where('bidang_permissions.bidang_id', $bidang_id)
                                 ->where('anggaran.tahapan_id', $tahapan->id)
                                 ->where('program.id', $dropdown2)
-                                ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan', 'anggaran.is_checked')
+                                ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan', 'anggaran.is_checked', 'anggaran.sumber_awal', 'anggaran.sumber_anggaran_id')
                                 ->where(function($query) use ($search_keyword){
                                     $query->where('kegiatan.nama', 'like', '%'.$search_keyword.'%')
                                                     ->orWhere('anggaran.lokasi', 'like', '%'.$search_keyword.'%');
@@ -197,7 +197,7 @@ class RancanganController extends Controller
                                     ->where('bidang_permissions.bidang_id', $bidang_id)
                                     ->where('anggaran.tahapan_id', $tahapan->id)
                                     ->where('program.id', $dropdown2)
-                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan', 'anggaran.is_checked', 'anggaran.sumber_anggaran_id')
+                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan', 'anggaran.is_checked', 'anggaran.sumber_awal', 'anggaran.sumber_anggaran_id')
                                     ->orderBy('anggaran.prioritas')
                                     ->orderBy('anggaran.created_at', 'ASC')
                                     ->paginate(10);
