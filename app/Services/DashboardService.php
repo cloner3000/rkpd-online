@@ -88,7 +88,6 @@ class DashboardService
             }
             if ($tahapan_name == TahapanName::KECAMATAN) {
                 $items = $items->whereOpdId($user->opd()->first()->id);
-                $items = $items->where('is_desk', '=', '1');
             }
         }
 

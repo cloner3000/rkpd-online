@@ -199,6 +199,9 @@
                                 <th title="Field #5">
                                     Status | Catatan
                                 </th>
+                                <th title="Field #5">
+                                    Sumber Anggaran
+                                </th>
                                 <th title="Field #6">
                                     Aksi
                                 </th>
@@ -230,6 +233,19 @@
                                         <label class="label label-sm label-danger">Menunggu tindakan</label>
                                     @endif
                                     {{ $item->catatan }}
+                                </td>
+                                <td>
+                                    @if($item->sumber_anggaran_id == 1)
+                                        P3K
+                                    @elseif($item->sumber_anggaran_id == 2)
+                                        PIK Sektoral
+                                    @elseif($item->sumber_anggaran_id == 3)
+                                        Pagu Indikatif
+                                    @elseif($item->sumber_anggaran_id == 4)
+                                        APBD Provinsi
+                                    @else
+                                        APBN
+                                    @endif
                                 </td>
                                 <td>
                                     @include('global.table_action', [

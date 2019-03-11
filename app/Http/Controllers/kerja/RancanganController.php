@@ -172,6 +172,7 @@ class RancanganController extends Controller
                                 ->join('kegiatan', 'anggaran.kegiatan_id', '=', 'kegiatan.id')
                                 ->join('tahapan', 'anggaran.tahapan_id', '=', 'tahapan.id')
                                 ->join('program', 'kegiatan.program_id', 'program.id')
+                                ->where('anggaran.opd_pelaksana_id', $dropdown1)
                                 ->where('bidang_permissions.bidang_id', $bidang_id)
                                 ->where('anggaran.tahapan_id', $tahapan->id)
                                 ->where('program.id', $dropdown2)
@@ -196,7 +197,7 @@ class RancanganController extends Controller
                                     ->where('bidang_permissions.bidang_id', $bidang_id)
                                     ->where('anggaran.tahapan_id', $tahapan->id)
                                     ->where('program.id', $dropdown2)
-                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan', 'anggaran.is_checked')
+                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan', 'anggaran.is_checked', 'anggaran.sumber_anggaran_id')
                                     ->orderBy('anggaran.prioritas')
                                     ->orderBy('anggaran.created_at', 'ASC')
                                     ->paginate(10);
