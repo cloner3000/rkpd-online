@@ -247,12 +247,12 @@
                         <label>Setujui Kegiatan?</label>
                         <br>
                         <label for="setuju">
-                            <input type="radio" name="pilihan" value="1" id="setuju" onclick="show2();" >
+                            <input type="radio" name="pilihan" value="1" id="setuju" >
                              Setujui
                         </label>
                         <br>
                         <label for="tolak">
-                            <input type="radio" name="pilihan" value="0" id="tolak" onclick="show1();">
+                            <input type="radio" name="pilihan" value="0" id="tolak" >
                              Tolak
                         </label>
                         <br>

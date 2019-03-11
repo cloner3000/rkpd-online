@@ -126,6 +126,8 @@
                                     <span class="label label-sm label-success">Diterima | </span>
                                 @elseif($item->is_transfer == 0 && $item->is_verifikasi == 2)
                                     <span class="label label-danger">Ditolak | </span>
+                                @elseif($item->is_transfer == 1 && $item->is_verifikasi == 2)
+                                    <span class="label label-danger">Ditolak | </span>
                                 @elseif($item->is_transfer == 1 && $item->is_verifikasi == 0)
                                     <label class="label label-sm label-danger">Diterima</label>
                                 @else

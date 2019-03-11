@@ -333,8 +333,12 @@ class MusrenbangController extends Controller
             $anggaran->is_verifikasi = 2;
             $message = 'Data telah ditolak.';
         }
-        $anggaran->is_transfer = true;
-        $anggaran->save();
+        
+        if(!$request->pilihan){
+            $anggaran->is_verifikasi = 2;
+            $anggaran->is_transfer = true;
+            $anggaran->save();
+        }
 
         if (!empty($tahapan) && $request->pilihan) {
             $anggaran_transfer = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
