@@ -42,8 +42,6 @@ class LaporanController extends Controller
 
     public function index(Request $request)
     {
-        ini_set('max_execution_time', 0);
-        ini_set('memory_limit','2048M');
         $opd = $request->user()->opd()->first();
         $village = get_village($request->user()->opd->first()->kode ?? null);
         $villages = Villages::pluck('name', 'id');
@@ -55,11 +53,13 @@ class LaporanController extends Controller
             }
         }
 
-        if ($request->user()->hasRole(Roles::ADMIN)) {
-            $districts = Districts::pluck('name', 'id');
-        }
+        $districts = Districts::pluck('name', 'id');
 
-        return view ('laporan.kecamatan.index', compact('village', 'villages', 'district', 'districts'));
+        $users = User::whereHas('roles', function ($q) {
+            $q->whereRoleId(Role::findByName(Roles::KECAMATAN)->id);
+        })->pluck('nama_lengkap', 'id');
+
+        return view ('laporan.kecamatan.index', compact('village', 'villages', 'district', 'districts', 'users'));
     }
 
     public function preview(Request $request)
@@ -90,21 +90,22 @@ class LaporanController extends Controller
 
         $where = '';
 
-        if ($kecamatan) {
-            $where .= 'Kecamatan: ' . $kecamatan->name;
-        }
+        // if ($kecamatan) {
+        //     $where .= 'Kecamatan: ' . $kecamatan->name;
+        // }
 
-        if ($desa) {
-            $where .= ', Desa/Kelurahan: ' . $desa->name;
-        }
+        // if ($desa) {
+        //     $where .= ', Desa/Kelurahan: ' . $desa->name;
+        // }
 
-        if ($where){
-            $items = $items->where('lokasi', 'LIKE', $where . '%');
-        }
+        // if ($where){
+        //     $items = $items->where('lokasi', 'LIKE', $where . '%');
+        // }
         
         if ($request->user()->hasRole(Roles::KECAMATAN)) {
-            $query = '%Kecamatan: '.strtoupper($request->user()->name).',%';
-            $items = $items->where('lokasi', 'like' , $query);
+            // $query = '%Kecamatan: '.strtoupper($request->user()->name).',%';
+            // $items = $items->where('lokasi', 'like' , $query);
+            // $items = $items->where('sumber_anggaran_id', '=', '2');
             $items = $items->orderBy('village_id', 'ASC');
             $items = $items->orderBy('opd_pelaksana_id', 'ASC');
             $status_kec = true;
@@ -112,17 +113,18 @@ class LaporanController extends Controller
         
         if ($request->user()->hasRole(Roles::OPD)) {
             $items = $items->where('opd_pelaksana_id', '=' , $opd->id);
+            $items = $items->where('is_verifikasi', '=', '1');
             $items = $items->orderBy('user_id', 'DESC');
             $status_kec = false;
         }
 
-        if ($user_id && $user_id != 0){
-            $user = User::find($user_id);
-            $items = $items->where('user_id', $user_id);
-            // $counter=0;
-        }
+        // if ($user_id && $user_id != 0){
+        //     $user = User::find($user_id);
+        //     $items = $items->where('user_id', $user_id);
+        //     // $counter=0;
+        // }
         
-       
+        $items = $items->where('is_verifikasi', '=', '1');
         //$items = $items->where('created_at', '>', '2019-02-26');
         $items = $items->get();
 

@@ -304,21 +304,22 @@ class MusrenbangController extends Controller
 
     public function doTransfer(Request $request, $id)
     {
-        // -- adding code
-        if (!$request->isViewTransfer) {
-            if (empty($request->pilihan)) {
-                $this->validate($request, [
-                    'pilihan' => 'required'
-                ]);
-            }
-            if ($request->pilihan) {
-                $this->validate($request, [
-                    'catatan' => 'required'
-                ]);
-            }
-        }
-        // -- 
+        // // -- adding code
+        // if (!$request->isViewTransfer) {
+        //     if (empty($request->pilihan)) {
+        //         $this->validate($request, [
+        //             'pilihan' => 'required'
+        //         ]);
+        //     }
+        //     if ($request->pilihan) {
+        //         $this->validate($request, [
+        //             'catatan' => 'required'
+        //         ]);
+        //     }
+        // }
+        // // -- 
 
+        
         $anggaran = Anggaran::find($id);
         $tahapan = Tahapan::whereNama(\App\Enum\Tahapan::RANCANGAN_RENJA)->firstOrFail();
 
@@ -331,18 +332,18 @@ class MusrenbangController extends Controller
         else {
             $anggaran->is_verifikasi = 2;
             $message = 'Data telah ditolak.';
-        }     
-        // --
+        }
+        $anggaran->is_transfer = true;
+        $anggaran->save();
 
-        // isViewTransfer = 0 artinya tidak menggunakan view transfer tetapi menggunakan modal
-        if ((!empty($tahapan) && $request->pilihan) or ($isViewTransfer == 0)) {
-            $newAnggaran = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
+        if (!empty($tahapan) && $request->pilihan) {
+            $anggaran_transfer = $this->musrenbang_service->transfer($anggaran, $tahapan->id);
+            $this->musrenbang_service->transferTargetAnggaran($anggaran, $anggaran_transfer);
             $anggaran->is_transfer = true;
             $anggaran->save();
-            $this->musrenbang_service->storeTargetAnggaran($request, $newAnggaran);
         }
 
-        return redirect()->back()->with('alert', [
+        return redirect(route('musrenbang-dewan.index'))->with('alert', [
             'type' => 'success',
             'alert' => 'Berhasil !',
             'message' => $message,

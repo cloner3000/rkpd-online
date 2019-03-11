@@ -158,7 +158,7 @@
 
 <tr>
 	<td colspan="3"  align="center">
-	   <p><b>DAFTAR RANCANGAN AKHIR RKPD TAHUN 2019</b></p>
+	   <p><b>DAFTAR RANCANGAN RENJA RKPD TAHUN 2020</b></p>
   </td>
 </tr>
 <tr>
@@ -180,8 +180,8 @@
   		<th rowspan="3" width="40">Indikator Sasaran</th>
   		<th rowspan="3" width="40">Sasaran Daerah</th>
   		<th rowspan="3" width="30">Lokasi</th>
-  		<th colspan="9">Indikator Kerja tahun 2019</th>
-      <th colspan="7">Usulan Pagu 2019</th>
+  		<th colspan="9">Indikator Kerja tahun 2020</th>
+      <th colspan="7">Usulan Pagu 2020</th>
     </tr>
 
     <tr style="border-bottom:#999 solid 2px;">

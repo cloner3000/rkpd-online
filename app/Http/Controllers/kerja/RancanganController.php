@@ -9,7 +9,6 @@ use App\Enum\Roles;
 use App\JenisLokasi;
 use App\Kegiatan;
 use App\location\Districts;
-use App\location\Villages;
 use App\Services\MusrenbangService;
 use App\SumberAnggaran;
 use App\Tahapan;
@@ -37,37 +36,194 @@ class RancanganController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    // public function index(Request $request)
+    // {
+    //     $canEntry = can_entry($this->tahapan);
+    //     $canManage = false;
+    //     $canTransfer = can_transfer('Rancangan Renja');
+    //     $user = auth()->user();
+    //     $tahapan = Tahapan::whereNama(\App\Enum\Tahapan::RANCANGAN_RENJA)->firstOrFail();
+    //     $items = new Anggaran();
+    //     $items = $items->whereTahapanId($tahapan->id);
+
+    //     $opd = $user->opd()->first();
+
+    //     if ($user->hasRole(Roles::KECAMATAN) || $user->hasRole(Roles::OPD)) {
+    //         //$items = $items->whereUserId($request->user()->id);
+    //         $items = $items->where('opd_pelaksana_id', '=', $opd->id);
+    //         $canManage = true;
+    //     }
+
+    //     $search = $request->get('search');
+    //     $items  = $items->search($search)
+    //         ->orderBy('created_at', 'ASC')
+    //         ->paginate(10);
+
+    //     return view('rancangan.kerja.index', compact(
+    //         'items',
+    //         'canEntry',
+    //         'user',
+    //         'canTransfer',
+    //         'canManage',
+    //         'search'
+    //     ));
+    // }
+
     public function index(Request $request)
     {
         $canEntry = can_entry($this->tahapan);
         $canManage = false;
-        $canTransfer = can_transfer('Rancangan Renja');
+        $canTransfer = can_transfer('Musrenbang Kabupaten');
         $user = auth()->user();
-        $tahapan = Tahapan::whereNama(\App\Enum\Tahapan::RANCANGAN_RENJA)->firstOrFail();
-        $items = new Anggaran();
-        $items = $items->whereTahapanId($tahapan->id);
+        // $tahapan = Tahapan::whereNama($this->tahapan)->firstOrFail();
 
+        $bidang_nama = $user->roles->pluck('name'); //bidang
         $opd = $user->opd()->first();
 
-        if ($user->hasRole(Roles::KECAMATAN) || $user->hasRole(Roles::OPD)) {
-            $items = $items->whereUserId($request->user()->id);
-            //$items = $items->where('opd_pelaksana_id', '=', $opd->id);
-            $canManage = true;
+        // $user_opd = DB::table('users_opd')->where('user_id', $user->id)->first();
+        // print_r($user_opd->opd_id);
+
+        //
+        $username = auth()->user()->name;
+
+        if (strpos($username, 'bidang') !== false) {
+            $bidang = true;
+            $admin = false;
+        }
+        elseif ($user->hasRole(Roles::ADMIN)) {
+            $bidang = false;
+            $admin = true;
+        }
+        else {
+            $bidang = false;
+            $admin = false;
         }
 
-        $search = $request->get('search');
-        $items  = $items->search($search)
-            ->orderBy('created_at', 'ASC')
-            ->paginate(10);
 
-        return view('rancangan.kerja.index', compact(
-            'items',
-            'canEntry',
-            'user',
-            'canTransfer',
-            'canManage',
-            'search'
-        ));
+        if ($bidang_nama[0] == "Administrator" or $bidang_nama[0] == "Kecamatan" or $bidang_nama[0] == "OPD") {
+            $tahapan = Tahapan::whereNama($this->tahapan)->firstOrFail();
+            $items = new Anggaran();
+            if ($bidang_nama[0] <> "Administrator") {
+                $items = $items->where('opd_pelaksana_id', '=', $opd->id);
+                $items = $items->whereTahapanId($tahapan->id);
+            }
+            else {
+                $items = $items->whereTahapanId($tahapan->id);
+            }
+            $search = $request->get('search');
+            $items  = $items->search($search)
+                ->orderBy('created_at', 'ASC')
+                ->paginate(10);
+
+            return view('rancangan.kerja.index', compact(
+                'items',
+                'canEntry',
+                'user',
+                'canTransfer',
+                'canManage',
+                'search',
+
+                'bidang_nama',
+
+                'bidang',
+                'admin'
+            ));
+        }
+
+        else {
+            $user_id = $user->id;
+            $nama_lengkap = User::whereId($user_id)->pluck('nama_lengkap');
+            $nama_lengkap_up = strtoupper($nama_lengkap[0]);
+            $bidang_id   = Bidang::where('nama', 'like', $nama_lengkap_up)->pluck('id');
+            $tahapan = Tahapan::whereNama($this->tahapan)->firstOrFail();
+            $bidang_permission = BidangPermission::where('bidang_id', $bidang_id)->get();
+
+            $canManage = true;
+            $canTransfer = true;
+            $search_keyword = $request->search;
+
+            $opd_bidang = DB::table('bidang_permissions')
+                                ->join('opd', 'bidang_permissions.opd_id', 'opd.id')
+                                ->where('bidang_permissions.bidang_id', $bidang_id)
+                                ->orderBy('opd.nama')
+                                ->select('opd.id', 'opd.nama')
+                                ->get();
+
+            $dropdown1 = $request->selected_opd;
+            $dropdown2 = $request->selected_program;
+            $old_dropdown1 = $request->old_dropdown1;
+
+            if ($dropdown1) {
+                $program = DB::table('program')
+                                ->join('kegiatan', 'program.id', '=', 'kegiatan.program_id')
+                                ->join('anggaran', 'kegiatan.id', '=', 'anggaran.kegiatan_id')
+                                ->where('anggaran.tahapan_id', 6)
+                                ->where('anggaran.opd_pelaksana_id', $dropdown1)
+                                ->select('program.id', 'program.nama')
+                                ->orderBy('program.nama')
+                                ->distinct()
+                                ->get();
+
+                if ($dropdown1 == $old_dropdown1) {
+                    if ($dropdown2) {
+                        if ($search_keyword) {
+                            $items = DB::table('anggaran')
+                                ->join('bidang_permissions', 'anggaran.opd_id', '=', 'bidang_permissions.opd_id')
+                                ->join('kegiatan', 'anggaran.kegiatan_id', '=', 'kegiatan.id')
+                                ->join('tahapan', 'anggaran.tahapan_id', '=', 'tahapan.id')
+                                ->join('program', 'kegiatan.program_id', 'program.id')
+                                ->where('bidang_permissions.bidang_id', $bidang_id)
+                                ->where('anggaran.tahapan_id', $tahapan->id)
+                                ->where('program.id', $dropdown2)
+                                ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan', 'anggaran.is_checked')
+                                ->where(function($query) use ($search_keyword){
+                                    $query->where('kegiatan.nama', 'like', '%'.$search_keyword.'%')
+                                                    ->orWhere('anggaran.lokasi', 'like', '%'.$search_keyword.'%');
+                                })
+                                ->orderBy('anggaran.prioritas')
+                                ->orderBy('anggaran.created_at', 'ASC')
+                                ->paginate(10);
+
+                                $items->appends($request->only('search'));
+                        }
+                        else {
+                            $items = DB::table('anggaran')
+                                    ->join('bidang_permissions', 'anggaran.opd_id', 'bidang_permissions.opd_id')
+                                    ->join('kegiatan', 'anggaran.kegiatan_id', 'kegiatan.id')
+                                    ->join('tahapan', 'anggaran.tahapan_id', 'tahapan.id')
+                                    ->join('program', 'kegiatan.program_id', 'program.id')
+                                    ->where('anggaran.opd_pelaksana_id', $dropdown1)
+                                    ->where('bidang_permissions.bidang_id', $bidang_id)
+                                    ->where('anggaran.tahapan_id', $tahapan->id)
+                                    ->where('program.id', $dropdown2)
+                                    ->select('anggaran.id', 'anggaran.is_transfer', 'anggaran.lokasi', 'anggaran.created_at', 'bidang_permissions.*', 'kegiatan.nama', 'anggaran.prioritas', 'anggaran.is_verifikasi', 'anggaran.catatan', 'anggaran.is_checked')
+                                    ->orderBy('anggaran.prioritas')
+                                    ->orderBy('anggaran.created_at', 'ASC')
+                                    ->paginate(10);
+                        }
+                    }
+                }
+            }
+
+            return view('rancangan.kerja.index', compact(
+                'items',
+                'canEntry',
+                'user',
+                'canTransfer',
+                'canManage',
+                'search',
+
+                'bidang_nama',
+                'opd_bidang',
+                'program',
+                'dropdown1',
+                'dropdown2',
+                'old_dropdown1',
+
+                'bidang',
+                'admin'
+            ));
+        }
     }
 
     /**

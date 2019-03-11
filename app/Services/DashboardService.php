@@ -100,6 +100,7 @@ class DashboardService
 
         if ($tahapan_name == TahapanName::RANCANGAN_RENJA) {
             if ($user->hasRole(Roles::KECAMATAN) || $user->hasRole(Roles::OPD)) {
+                
                 $items = $items->AllByUser();
             }
         }
