@@ -46,6 +46,8 @@ class MusrenbangService
         $anggaran->is_kelurahan = $is_kelurahan;
 
         $anggaran->tahapan()->associate($tahapan);
+        $anggaran->sumber_awal = $tahapan->id;
+        
         $anggaran->statusKegiatan()->associate($statusKegiatan);
         $anggaran->jenisLokasi()->associate($jenisLokasi);
         $anggaran->user()->associate($request->user());
@@ -181,6 +183,7 @@ class MusrenbangService
         $item->pagu               = $anggaran->pagu;
         $item->prioritas          = $anggaran->prioritas;
         $item->proposal           = $anggaran->proposal;
+        $item->sumber_awal        = $anggaran->sumber_awal;
         $item->user()->associate(auth()->user());
         $item->save();
 

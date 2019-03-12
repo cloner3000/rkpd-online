@@ -43,6 +43,7 @@ class RancanganController extends Controller
     public function index(Request $request)
     {
         $canEntry = can_entry($this->tahapan);
+        // $canEntry = false;
         $canManage = false;
         $canTransfer = can_transfer('Rancangan Renja');
         $user = auth()->user();
