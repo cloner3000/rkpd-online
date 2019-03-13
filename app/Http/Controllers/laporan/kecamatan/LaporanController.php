@@ -103,8 +103,8 @@ class LaporanController extends Controller
         // }
         
         if ($request->user()->hasRole(Roles::KECAMATAN)) {
-            // $query = '%Kecamatan: '.strtoupper($request->user()->name).',%';
-            // $items = $items->where('lokasi', 'like' , $query);
+            $query = '%Kecamatan: '.strtoupper($request->user()->name).',%';
+            $items = $items->where('lokasi', 'like' , $query);
             // $items = $items->where('sumber_anggaran_id', '=', '2');
             $items = $items->orderBy('village_id', 'ASC');
             $items = $items->orderBy('opd_pelaksana_id', 'ASC');

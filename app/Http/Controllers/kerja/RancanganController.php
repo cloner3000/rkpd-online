@@ -437,11 +437,15 @@ class RancanganController extends Controller
             $anggaran->is_checked = 1;
             $anggaran->save();
 
-            return redirect(route('kerja.index'))->with('alert', [
-                'type' => 'success',
-                'alert' => 'Berhasil !',
-                'message' => 'Berhasil Verifikasi Data.',
-            ]);
+            echo '<script type="text/javascript">'
+               , 'alert("Berhasil Verifikasi Data");history.go(-2);location.reload(true);'
+			   , '</script>';
+
+            // return redirect(route('kerja.index'))->with('alert', [
+            //     'type' => 'success',
+            //     'alert' => 'Berhasil !',
+            //     'message' => 'Berhasil Verifikasi Data.',
+            // ]);
         }
         else {
             $anggaran = Anggaran::find($id);
