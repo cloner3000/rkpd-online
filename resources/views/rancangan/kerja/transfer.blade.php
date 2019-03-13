@@ -237,6 +237,19 @@
                                   readonly>{{ $item->lokasi ?? '' }}</textarea>
                     </div>
 
+                    <hr>
+                    <h5>Setujui?</h5>
+                    <div class="form-group m-form__group">
+                        <label>Setujui Kegiatan?</label>
+                        <br>
+                        <label for="setuju">
+                            <input type="radio" name="pilihan" value="1" id="setuju" >
+                             Setujui
+                        </label>
+                        <br>
+                        <br>
+                    </div>
+
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions">
                             <button type="submit" class="btn btn-primary">Proses</button>

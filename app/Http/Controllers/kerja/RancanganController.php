@@ -434,8 +434,10 @@ class RancanganController extends Controller
 
         if (strpos($username, 'bidang') !== false) {
             $anggaran = Anggaran::find($id);
-            $anggaran->is_checked = 1;
-            $anggaran->save();
+            if($request->pilihan){
+                $anggaran->is_checked = 1;
+                $anggaran->save();    
+            }
 
             echo '<script type="text/javascript">'
                , 'alert("Berhasil Verifikasi Data");history.go(-2);location.reload(true);'

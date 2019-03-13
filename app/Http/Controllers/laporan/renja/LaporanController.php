@@ -148,6 +148,7 @@ class LaporanController extends Controller
         $anggaran = $items->first();
 
         $time=6000;
+        ini_set('memory_limit','2048M');
         ini_set('max_execution_time', $time);
         
         $items = $items->toJson();
