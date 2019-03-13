@@ -44,7 +44,7 @@ class MusrenbangController extends Controller
 
         if ($user->hasRole(Roles::KECAMATAN) || $user->hasRole(Roles::OPD)) {
             $items = $items->whereUserId($request->user()->id);
-            $canManage = true;
+            // $canManage = true;
             $canTransfer = true;
         }
 

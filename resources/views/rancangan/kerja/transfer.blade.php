@@ -237,37 +237,6 @@
                                   readonly>{{ $item->lokasi ?? '' }}</textarea>
                     </div>
 
-                    <!-- start added coding -->
-                    <hr>
-                    <h5>Setujui / Tolak</h5>
-                    <div class="form-group m-form__group">
-                        <label>Setujui Kegiatan?</label>
-                        <br>
-                        @if (!(auth()->user()->name == 'bidangpmm' or auth()->user()->name == 'bidangipw' or auth()->user()->name == 'bidangesda')
-                            )
-                            <label for="setuju">
-                                <input type="radio" name="pilihan" value="1" id="setuju" onclick="show2();" >
-                                 Setujui
-                            </label>
-                            <br>
-                            <label for="tolak">
-                                <input type="radio" name="pilihan" value="0" id="tolak" onclick="show1();">
-                                 Tolak
-                            </label>
-                            <br>
-                            <br>
-                            <label>Catatan <small>(wajib diisi)</small></label>
-                            <textarea class="form-control" name="catatan" id="catatan" cols="30" rows="2">
-                            </textarea>
-                        @else 
-                            <label for="setuju">
-                                <input type="checkbox" name="pilihan" value="1" id="setuju" onclick="show2();" >
-                                 Setujui
-                            </label>
-                        @endif
-                    </div>
-                    <!-- end added coding -->
-
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions">
                             <button type="submit" class="btn btn-primary">Proses</button>
