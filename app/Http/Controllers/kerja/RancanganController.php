@@ -456,7 +456,7 @@ class RancanganController extends Controller
                 $anggaran->save();
                 $this->musrenbang_service->storeTargetAnggaran($request, $newAnggaran);
             }
-            return redirect()->back()->with('alert', [
+            return redirect(route('kerja.index'))->with('alert', [
                 'type' => 'success',
                 'alert' => 'Berhasil !',
                 'message' => 'Berhasil Transfer data.',
