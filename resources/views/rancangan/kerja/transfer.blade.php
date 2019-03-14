@@ -236,7 +236,7 @@
                         <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled
                                   readonly>{{ $item->lokasi ?? '' }}</textarea>
                     </div>
-
+                    @role(\App\Enum\Roles::BIDANG)
                     <hr>
                     <h5>Setujui?</h5>
                     <div class="form-group m-form__group">
@@ -249,6 +249,7 @@
                         <br>
                         <br>
                     </div>
+                    @endrole
 
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions">
