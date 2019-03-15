@@ -109,7 +109,7 @@ class DashboardService
         }
 
         if ($tahapan_name == TahapanName::KABUPATEN) {
-            if ($user->hasRole(Roles::OPD)) {
+            if ($user->hasRole(Roles::KECAMATAN) || $user->hasRole(Roles::OPD)) {
                 $items = $items->AllByUser();
             }
         }
