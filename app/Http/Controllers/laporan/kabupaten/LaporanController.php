@@ -131,6 +131,7 @@ class LaporanController extends Controller
             $items = $items->where('user_id', $user_id);
             $items = $items->orderBy('prioritas', 'ASC');
         }
+        $items = $items->where('sumber_awal', 2);
         $items = $items->get();
 
         $anggaran = $items->first();
