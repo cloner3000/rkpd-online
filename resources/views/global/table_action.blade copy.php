@@ -4,11 +4,11 @@
             {{ method_field('DELETE') }}
             {{ csrf_field() }}
             @if (!empty($canEntry) && $canEntry && !(empty($canManage)) && $canManage )
-                <!-- <a href="{{ $url ?? '#' }}"
+                <a href="{{ $url ?? '#' }}"
                    class="m-portlet__nav-link btn m-btn m-btn--hover-warning m-btn--icon m-btn--icon-only m-btn--pill {{ $item->is_transfer ? 'disable-edit disabled' : ''}}"
                    title="Ubah" {{ $item->is_transfer ? 'disabled' : '' }}>
                     <i class="la la-edit"></i>
-                </a> -->
+                </a>
                 <button type="button"
                         class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
                         data-toggle="modal" data-target="#modal_delete_{{ $id ?? "" }}" title="Hapus" {{ $item->is_transfer ? 'disabled' : '' }}>
@@ -27,7 +27,7 @@
         @if(!(empty($canTransfer)) && $canTransfer)
             @if(!empty($isViewTransfer) && $isViewTransfer)
 
-                <!-- <a href="{{ $transfer }}"
+                <a href="{{ $transfer }}"
                     class="m-portlet__nav-link btn m-btn m-btn--hover-success m-btn--icon m-btn--icon-only m-btn--pill 
                     @if (!empty($tahapan))
                         @if ($tahapan == 'kerja')
@@ -50,7 +50,7 @@
                         {{ ($item->is_transfer or (!empty($is_verifikasi)) ? $is_verifikasi == 2 : 0) ? 'disabled' : '' }}">
                     @endif
                     <i class="la la-send"></i>
-                </a> -->
+                </a>
             @else
                 <form action="{{ $transfer }}"
                       method="POST">

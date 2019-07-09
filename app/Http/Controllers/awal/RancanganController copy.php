@@ -143,16 +143,16 @@ class RancanganController extends Controller
                 '</strong> Tidak memiliki OPD </br> Silahkan Hubungi Administrator!');
         }
 
-        // $path_proposal = null;
-        // if ($request->file('proposal')) {
-        //     $file_proposal = $request->file('proposal');
-        //     $path_proposal = "proposal".'/'.rand()." - ".$request->file('proposal')->getClientOriginalName();
-        //     // echo $path_proposal;
-        //     $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
-        // }
-        // $file = $path_proposal;
+        $path_proposal = null;
+        if ($request->file('proposal')) {
+            $file_proposal = $request->file('proposal');
+            $path_proposal = "proposal".'/'.rand()." - ".$request->file('proposal')->getClientOriginalName();
+            // echo $path_proposal;
+            $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
+        }
+        $file = $path_proposal;
 
-        $this->musrenbang_service->store($request, $tahapan, $is_kelurahan=false);
+        $this->musrenbang_service->store($request, $tahapan, $is_kelurahan=false, $file);
 
         return redirect(route('awal.index'))->with('alert', [
             'type' => 'success',

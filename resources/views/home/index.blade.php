@@ -6,38 +6,45 @@
         </div>
     </div>
     <div class="m-content">
+        <div class="alert alert-danger">
+            Mohon Untuk kegiatan yang diinput hanya kegiatan baru dan kegiatan yang membutuhkan penambahan pagu 
+            <br>
+            Mohon untuk melakukan input kegiatan berdasarkan urutan prioritas
+        </div>
         <div class="m-portlet ">
             <div class="m-portlet__body  m-portlet__body--no-padding">
                 <div class="row m-row--no-padding m-row--col-separator-xl">
                    @foreach($items as $key => $item)
-                        <div class="col-md-12 col-lg-6 col-xl-4">
-                            <!--begin::New Feedbacks-->
-                            <div class="m-widget24">
-                                <div class="m-widget24__item">
-                                    <h4 class="m-widget24__title">
-                                        {{ get_name_tahapan($key) }}
-                                    </h4>
-                                    <br>
-                                    <span class="m-widget24__desc">
-                                        Usulan Kegiatan
-                                    </span>
-                                    <span class="m-widget24__stats m--font-info">
-                                        {{ get_format_currency($item['total']) }}
-                                    </span>
-                                    <div class="m--space-10"></div>
-                                    <div class="progress m-progress--sm">
-                                        <div class="progress-bar m--bg-info" role="progressbar" style="width: {{ get_percent($item['total'], $item['transfer']) }};" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                        @if(get_name_tahapan($key)=="Rancangan Awal Renja")
+                            <div class="col-md-12 col-lg-6 col-xl-4">
+                                <!--begin::New Feedbacks-->
+                                <div class="m-widget24">
+                                    <div class="m-widget24__item">
+                                        <h4 class="m-widget24__title">
+                                            Rancangan Perubahan RKPD 2019 yang berubah
+                                        </h4>
+                                        <br>
+                                        <span class="m-widget24__desc">
+                                            Usulan Kegiatan
+                                        </span>
+                                        <span class="m-widget24__stats m--font-info">
+                                            {{ get_format_currency($item['total']) }}
+                                        </span>
+                                        <div class="m--space-10"></div>
+                                        <div class="progress m-progress--sm">
+                                            <div class="progress-bar m--bg-info" role="progressbar" style="width: {{ get_percent($item['total'], $item['transfer']) }};" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="m-widget24__change">
+                                            Transfer
+                                                    </span>
+                                        <span class="m-widget24__number">
+                                            {{ get_percent($item['total'], $item['transfer']) }}
+                                        </span>
                                     </div>
-                                    <span class="m-widget24__change">
-                                        Transfer
-												</span>
-                                    <span class="m-widget24__number">
-                                        {{ get_percent($item['total'], $item['transfer']) }}
-                                    </span>
-                                </div>
+                                </div>    
+                                <!--end::New Feedbacks-->
                             </div>
-                            <!--end::New Feedbacks-->
-                        </div>
+                        @endif
                     @endforeach
                 </div>
             </div>

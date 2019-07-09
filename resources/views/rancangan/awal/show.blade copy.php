@@ -113,12 +113,54 @@
                         @endif
                     </div>
 
+                    <div class="form-group m-form__group">
+                        <label>Deskripsi</label>
+                        <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled readonly>{{ $item->kegiatan->deskripsi ?? '' }}</textarea>
+                    </div>
 
                     <hr>
                     <h5>Indikator Keluaran Kegiatan</h5>
-                    <div class="form-group m-form__group">
-                        <label>Output</label>
-                        <textarea class="form-control" name="output" id="output" cols="30" rows="2" disabled readonly>{{ $item->output ?? '' }}</textarea>
+
+
+                    <div class="form-group" id="indikator_container">
+                        @if(isset($item))
+                            @foreach ($item->targetAnggaran as $target)
+                                @if ($target->indikatorKegiatan->indikatorHasil->id == 2)
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group m-form__group">
+                                                <label>Tolak Ukur</label>
+                                                <input type="text" class="form-control m-input"
+                                                       value="{{ $target->indikatorKegiatan->tolak_ukur }}" readonly disabled>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-3">
+                                            <div class="form-group m-form__group">
+                                                <label>Target</label>
+                                                <input type="number"
+                                                       name="target_indikator_kegiatan[{{ $target->indikatorKegiatan->id }}]"
+                                                       class="form-control m-input"
+                                                       value="{{ $target->target }}" required readonly disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <div class="form-group m-form__group">
+                                                <label>Satuan</label>
+                                                <input type="text" value="{{ $target->indikatorKegiatan->satuan->nama }}"
+                                                       class="form-control m-input" readonly disabled>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <div class="form-group m-form__group clearfix">
+                                                <label class="clearfix">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div></br>
+                                @endif
+                            @endforeach
+                        @endif
                     </div>
 
                     <div id="hasil_container"></div>
@@ -131,12 +173,25 @@
                         <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled readonly>{{ $item->lokasi ?? '' }}</textarea>
                     </div>
 
-                    <h5>Pagu</h5>
+                    <!-- start added coding -->
+                    <hr>
+                    <h5>Proposal</h5>
                     <div class="form-group m-form__group">
-                        <label>Kebutuhan Anggaran</label>
-                        <textarea class="form-control" name="pagu" id="pagu" cols="30" rows="2" disabled readonly>{{ number_format($item->pagu,2) ?? '' }}</textarea>
+                        <label>Proposal Kegiatan</label>
+                        <br>
+                        <label for="setuju">
+                            <p>
+                                @if ($item->proposal)
+                                    {{-- <a href="{{ url('storage/app/'.$item->proposal) }}" title="link">Lihat</a> proposal kegiatan --}}
+                                    <a href="{{ URL::to('download/'.$item->id) }}" title="link" target="_blank">Lihat</a> proposal kegiatan
+                                @else
+                                    <s>Lihat</s> proposal kegiatan
+                                @endif
+                            </p>
+                        </label>
                     </div>
-                    
+                    <!-- end added coding -->
+
                     <div class="m-portlet__foot m-portlet__foot--fit">
                         <div class="m-form__actions">
                             <a href="{{ url()->previous() }}" class="btn btn-secondary">Kembali</a>

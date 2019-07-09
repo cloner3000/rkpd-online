@@ -59,7 +59,7 @@
     @endif
 @endforeach
 
-<!-- <li class="m-menu__item m-menu__item--submenu {{ active_class(if_route_pattern('laporan.*'), 'm-menu__item--active') }} "
+<li class="m-menu__item m-menu__item--submenu {{ active_class(if_route_pattern('laporan.*'), 'm-menu__item--active') }} "
     aria-haspopup="true"
     data-menu-submenu-toggle="hover">
     <a href="{{ has_access_menu($menu->nama) ? url($menu->url) : '#' }}" class="m-menu__link m-menu__toggle">
@@ -230,4 +230,4 @@
         </div>
     @endcan
 
-</li> -->
+</li>

@@ -10,7 +10,7 @@
                     Tahun Anggaran
                 </label>
                 <select class="form-control m-select2" id="m_select2_1" disabled>
-                    <option value="{{ $item->tahun ?? (Carbon\Carbon::now()->year + 1)  }}">{{ $item->tahun ?? (Carbon\Carbon::now()->year + 1)  }}</option>
+                    <option value="{{ $item->tahun ?? (Carbon\Carbon::now()->year + 1)  }}">{{ $item->tahun ?? (Carbon\Carbon::now()->year)  }}</option>
                 </select>
                 <input type="hidden" name="tahun" value="{{ $item->tahun ?? (Carbon\Carbon::now()->year + 1)  }}">
             </div>
@@ -43,73 +43,22 @@
     @endif
 </div>
 
-<div class="form-group m-form__group">
-    <label>Deskripsi</label>
-    <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled
-              readonly>{{ $item->kegiatan->deskripsi ?? '' }}</textarea>
-</div>
-
 <hr>
 <h5>Indikator Keluaran Kegiatan</h5>
 
-
-<div class="form-group" id="indikator_container">
-    @if(isset($item))
-        @foreach ($item->targetAnggaran as $target)
-            @if ($target->indikatorKegiatan->indikatorHasil->id == 2)
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="form-group m-form__group">
-                            <label>Tolak Ukur</label>
-                            <input type="text" class="form-control m-input"
-                                   value="{{ $target->indikatorKegiatan->tolak_ukur }}" readonly disabled>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-3">
-                        <div class="form-group m-form__group">
-                            <label>Target</label>
-                            <input type="number" step="any"
-                                   name="target_indikator_kegiatan[{{ $target->indikatorKegiatan->id }}]"
-                                   class="form-control m-input"
-                                   value="{{ $target->target }}" required>
-                        </div>
-                    </div>
-                    <div class="col-lg-2">
-                        <div class="form-group m-form__group">
-                            <label>Satuan</label>
-                            <input type="text" value="{{ $target->indikatorKegiatan->satuan->nama }}"
-                                   class="form-control m-input" readonly disabled>
-                        </div>
-                    </div>
-                    <div class="col-lg-1">
-                        <div class="form-group m-form__group clearfix">
-                            <label class="clearfix">
-                            </label>
-                            <button type="button" title="Hapus"
-                                    class="indikator-remove m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">
-                                <i class="la la-trash"></i></button>
-                        </div>
-                    </div>
-                </div></br>
-            @endif
-        @endforeach
+<div class="form-group m-form__group "
+     id="flag_output_lokasi">
+    <label for="name">Output Kegiatan</label>
+    <input type="text" class="form-control m-input" id="output"
+           name="output" value="{{ old('output') }}" placeholder="Nama tolak ukur : target satuan">
+    @if ($errors->has('output'))
+        <br>
+        <span class="form-control-feedback">
+                <strong>{{ $errors->first('output') }}</strong>
+            </span>
     @endif
 </div>
 
-<h5>Input Proposal</h5>
-<div class="form-group m-form__group">
-    <div>
-        <label>
-        Input Proposal <small>(wajib diisi, file harus PDF atau zip, ukuran maksimal 2 MB)</small>
-        </label> 
-        <input type="file" name="proposal" class="form-control m-input" accept="application/pdf application/zip application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document" value="{{ $item->proposal ?? '' }}">
-    </div>
-</div>
-
-<div id="hasil_container">
-
-</div>
 
 <hr>
 <h5>Lokasi Kegiatan</h5>
@@ -117,12 +66,29 @@
 
 @include('rancangan.awal._lokasi')
 
+<h5>Pagu</h5>
+
+<div class="form-group m-form__group "
+     id="flag_output_lokasi">
+    <label for="name">Kebutuhan Anggaran (Tanpa tanda titik)</label>
+    <input type="text" class="form-control m-input" id="pagu"
+           name="pagu" value="{{ old('pagu') }}" placeholder="500000000">
+    @if ($errors->has('pagu'))
+        <br>
+        <span class="form-control-feedback">
+                <strong>{{ $errors->first('pagu') }}</strong>
+            </span>
+    @endif
+</div>
+
+
 <div class="m-portlet__foot m-portlet__foot--fit">
     <div class="m-form__actions">
         <button type="submit" class="btn btn-primary">Simpan</button>
         <a href="{{ url()->previous() }}" class="btn btn-secondary">Batal</a>
     </div>
 </div>
+
 
 @push('footer.javascript')
     <script>
@@ -226,105 +192,105 @@
         });
 
         // on leave get lookup kegiatan
-        $kegiatanOpd.on('change', function () {
-            // console.log('Lookup data by kegiatan');
-            var val = $(this).val();
-            var route = "{{ route('kegiatan.lookup.data') }}";
-            var deskripsi = $('#deskripsi');
-            var $indikatorHasilProgram = $('#id_indikator_hasil_program');
-            var $indikatorHasilProgramSatuan = $('#id_indikator_hasil_program_satuan');
-            var $indikatorHasilProgramTarget = $('#id_indikator_hasil_program_target');
-            var $kegiatanId = $('#id_kegiatan_id');
-            var $indikatorContainer = $('#indikator_container');
-            var $hasilContainer = $('#hasil_container');
+        // $kegiatanOpd.on('change', function () {
+        //     // console.log('Lookup data by kegiatan');
+        //     var val = $(this).val();
+        //     var route = "{{ route('kegiatan.lookup.data') }}";
+        //     var deskripsi = $('#deskripsi');
+        //     var $indikatorHasilProgram = $('#id_indikator_hasil_program');
+        //     var $indikatorHasilProgramSatuan = $('#id_indikator_hasil_program_satuan');
+        //     var $indikatorHasilProgramTarget = $('#id_indikator_hasil_program_target');
+        //     var $kegiatanId = $('#id_kegiatan_id');
+        //     var $indikatorContainer = $('#indikator_container');
+        //     var $hasilContainer = $('#hasil_container');
 
-            if (val !== '') {
-                axios.post(route, {keyword: val})
-                    .then((res) => {
-                        deskripsi.val(res.data.deskripsi);
-                        $kegiatanId.val(res.data.id);
+        //     if (val !== '') {
+        //         axios.post(route, {keyword: val})
+        //             .then((res) => {
+        //                 deskripsi.val(res.data.deskripsi);
+        //                 $kegiatanId.val(res.data.id);
 
-                        if (res.data.indikator_kegiatan.length > 0) {
-                            // console.log('DAPET INDIKATOR KEGIATAN');
-                            var countKeluaran = 0;
-                            var countHasil = 0;
-                            $indikatorContainer.empty();
-                            $hasilContainer.empty();
-                            for (var i = 0; i < res.data.indikator_kegiatan.length; i++) {
-                                // console.log('MASUK LOOPING');
-                                // console.log(res.data.indikator_kegiatan[i].indikator_hasil);
-                                if (res.data.indikator_kegiatan[i].indikator_hasil.id == 2) {
-                                    // console.log('FETCH TARGET KK');
-                                    // console.log(res.data.indikator_kegiatan[i]);
-                                    countKeluaran++;
-                                    var template = '<div class="row">\n' +
-                                        '        <div class="col-lg-6">\n' +
-                                        '            <div class="form-group m-form__group">\n' +
-                                        '                <label>Tolak Ukur</label>\n' +
-                                        '                <input type="text" class="form-control m-input" value="' + res.data.indikator_kegiatan[i].tolak_ukur + '" readonly disabled>\n' +
-                                        '            </div>\n' +
-                                        '        </div>\n' +
-                                        '        <div class="col-lg-3">\n' +
-                                        '            <div class="form-group m-form__group">\n' +
-                                        '                <label>Target</label>\n' +
-                                        '                <input type="number" step="any" name="target_indikator_kegiatan[' + res.data.indikator_kegiatan[i].id + ']" class="form-control m-input">\n' +
-                                        '            </div>\n' +
-                                        '        </div>\n' +
-                                        '        <div class="col-lg-2">\n' +
-                                        '            <div class="form-group m-form__group">\n' +
-                                        '                <label>\n' +
-                                        '                    Satuan\n' +
-                                        '                </label>\n' +
-                                        '                <input type="text" value="' + res.data.indikator_kegiatan[i].satuan.nama + '" class="form-control m-input" readonly disabled>\n' +
-                                        '            </div>\n' +
-                                        '        </div>\n';
+        //                 if (res.data.indikator_kegiatan.length > 0) {
+        //                     // console.log('DAPET INDIKATOR KEGIATAN');
+        //                     var countKeluaran = 0;
+        //                     var countHasil = 0;
+        //                     $indikatorContainer.empty();
+        //                     $hasilContainer.empty();
+        //                     for (var i = 0; i < res.data.indikator_kegiatan.length; i++) {
+        //                         // console.log('MASUK LOOPING');
+        //                         // console.log(res.data.indikator_kegiatan[i].indikator_hasil);
+        //                         if (res.data.indikator_kegiatan[i].indikator_hasil.id == 2) {
+        //                             // console.log('FETCH TARGET KK');
+        //                             // console.log(res.data.indikator_kegiatan[i]);
+        //                             countKeluaran++;
+        //                             var template = '<div class="row">\n' +
+        //                                 '        <div class="col-lg-6">\n' +
+        //                                 '            <div class="form-group m-form__group">\n' +
+        //                                 '                <label>Tolak Ukur</label>\n' +
+        //                                 '                <input type="text" class="form-control m-input" value="' + res.data.indikator_kegiatan[i].tolak_ukur + '" readonly disabled>\n' +
+        //                                 '            </div>\n' +
+        //                                 '        </div>\n' +
+        //                                 '        <div class="col-lg-3">\n' +
+        //                                 '            <div class="form-group m-form__group">\n' +
+        //                                 '                <label>Target</label>\n' +
+        //                                 '                <input type="number" step="any" name="target_indikator_kegiatan[' + res.data.indikator_kegiatan[i].id + ']" class="form-control m-input">\n' +
+        //                                 '            </div>\n' +
+        //                                 '        </div>\n' +
+        //                                 '        <div class="col-lg-2">\n' +
+        //                                 '            <div class="form-group m-form__group">\n' +
+        //                                 '                <label>\n' +
+        //                                 '                    Satuan\n' +
+        //                                 '                </label>\n' +
+        //                                 '                <input type="text" value="' + res.data.indikator_kegiatan[i].satuan.nama + '" class="form-control m-input" readonly disabled>\n' +
+        //                                 '            </div>\n' +
+        //                                 '        </div>\n';
 
-                                    // if (countKeluaran > 1) {
-                                    template += '        <div class="col-lg-1">\n' +
-                                        '            <div class="form-group m-form__group clearfix">\n' +
-                                        '                <label class="clearfix">\n' +
-                                        '                </label>\n' +
-                                        '                <button type="button" title="Hapus" \n' +
-                                        '                        class="indikator-remove m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">\n' +
-                                        '                    <i class="la la-trash"></i></button>\n' +
-                                        '            </div>\n' +
-                                        '        </div>\n';
-                                    // }
-                                    template += '</div></br>';
-                                    $indikatorContainer.append(template);
-                                }
-                                if (res.data.indikator_kegiatan[i].indikator_hasil.id == 3) {
-                                    // console.log('FETCH TARGET KH');
-                                    // console.log(res.data.indikator_kegiatan[i]);
-                                    countHasil++;
-                                    var templateHasil = '<input type="hidden" class="form-control m-input" name="target_indikator_hasil[' + res.data.indikator_kegiatan[i].id + ']" value="0"></div>';
-                                    $hasilContainer.append(templateHasil);
-                                }
-                            }
-                        }
+        //                             // if (countKeluaran > 1) {
+        //                             template += '        <div class="col-lg-1">\n' +
+        //                                 '            <div class="form-group m-form__group clearfix">\n' +
+        //                                 '                <label class="clearfix">\n' +
+        //                                 '                </label>\n' +
+        //                                 '                <button type="button" title="Hapus" \n' +
+        //                                 '                        class="indikator-remove m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill">\n' +
+        //                                 '                    <i class="la la-trash"></i></button>\n' +
+        //                                 '            </div>\n' +
+        //                                 '        </div>\n';
+        //                             // }
+        //                             template += '</div></br>';
+        //                             $indikatorContainer.append(template);
+        //                         }
+        //                         if (res.data.indikator_kegiatan[i].indikator_hasil.id == 3) {
+        //                             // console.log('FETCH TARGET KH');
+        //                             // console.log(res.data.indikator_kegiatan[i]);
+        //                             countHasil++;
+        //                             var templateHasil = '<input type="hidden" class="form-control m-input" name="target_indikator_hasil[' + res.data.indikator_kegiatan[i].id + ']" value="0"></div>';
+        //                             $hasilContainer.append(templateHasil);
+        //                         }
+        //                     }
+        //                 }
 
-                        if ((res.data.program.length > 0) && (res.data.program) && (res.data.program.capaian_program.length > 0)) {
-                            // console.log('FETCH CAPAIAN PROGRAM');
-                            // console.log(res.data.program.capaian_program[0]);
-                            $indikatorHasilProgram.val(res.data.program.capaian_program[0].tolak_ukur);
-                            $indikatorHasilProgramSatuan.val(res.data.program.capaian_program[0].satuan.nama);
-                            $indikatorHasilProgramTarget.val(res.data.program.capaian_program[0].target);
-                        }
+        //                 if ((res.data.program.length > 0) && (res.data.program) && (res.data.program.capaian_program.length > 0)) {
+        //                     // console.log('FETCH CAPAIAN PROGRAM');
+        //                     // console.log(res.data.program.capaian_program[0]);
+        //                     $indikatorHasilProgram.val(res.data.program.capaian_program[0].tolak_ukur);
+        //                     $indikatorHasilProgramSatuan.val(res.data.program.capaian_program[0].satuan.nama);
+        //                     $indikatorHasilProgramTarget.val(res.data.program.capaian_program[0].target);
+        //                 }
 
-                    })
-                    .catch((error) => {
-                        // console.log(error);
-                    });
-            }
-        });
+        //             })
+        //             .catch((error) => {
+        //                 // console.log(error);
+        //             });
+        //     }
+        // });
 
-        $('#indikator_container').on('click', '.indikator-remove', function () {
-            $(this).closest('.row').remove();
-        });
+        // $('#indikator_container').on('click', '.indikator-remove', function () {
+        //     $(this).closest('.row').remove();
+        // });
 
-        $('#hasil_container').on('click', '.indikator-remove', function () {
-            $(this).closest('.row').remove();
-        });
+        // $('#hasil_container').on('click', '.indikator-remove', function () {
+        //     $(this).closest('.row').remove();
+        // });
 
 
     </script>

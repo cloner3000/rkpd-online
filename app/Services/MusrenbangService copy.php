@@ -17,7 +17,7 @@ use App\Opd;
 class MusrenbangService
 {
 
-    public function store($request, $tahapan, $is_kelurahan = false)
+    public function store($request, $tahapan, $is_kelurahan = false, $path_proposal = false)
     {
     
         if ($request->input('lokasi')) {
@@ -41,21 +41,48 @@ class MusrenbangService
         $anggaran->tahun = $request->input('tahun');
         $anggaran->opd()->associate($kegiatan->opd()->first());
         $anggaran->opd_pelaksana_id = $kegiatan->opd()->first()->id ?? null;
+        $anggaran->target_hk = $request->input('target_hk');
         $anggaran->lokasi = $lokasi ?? $request->input('lokasi');
         $anggaran->is_kelurahan = $is_kelurahan;
 
         $anggaran->tahapan()->associate($tahapan);
+        $anggaran->sumber_awal = $tahapan->id;
         
         $anggaran->statusKegiatan()->associate($statusKegiatan);
         $anggaran->jenisLokasi()->associate($jenisLokasi);
         $anggaran->user()->associate($request->user());
         $anggaran->sumberAnggaran()->associate($sumberAnggaran);
         $anggaran->kegiatan()->associate($kegiatan);
-        
+        $anggaran->village_id = $request->input('desa');;
+        $anggaran->district_id = $request->input('kecamatan');;
+        $anggaran->proposal = $path_proposal;
 
-        $anggaran->output = $request->input('output');
-        $anggaran->pagu = $request->input('pagu');
         $anggaran->save();
+
+        $targets = $request->input('target_indikator_kegiatan');
+
+        if ($targets) {
+            foreach ($targets as $id => $target) {
+                $indikatorKegiatan = IndikatorKegiatan::find($id);
+                $ta = new TargetAnggaran();
+                $ta->anggaran()->associate($anggaran);
+                $ta->indikatorKegiatan()->associate($indikatorKegiatan);
+                $ta->target = $target;
+                $ta->save();
+            }
+        }
+
+        $hasil = $request->input('target_indikator_hasil');
+        if ($hasil) {
+            foreach ($hasil as $id => $target) {
+                $indikatorKegiatan = IndikatorKegiatan::find($id);
+                $ta = new TargetAnggaran();
+                $ta->anggaran()->associate($anggaran);
+                $ta->indikatorKegiatan()->associate($indikatorKegiatan);
+                $ta->target = $target ?? 0;
+                $ta->save();
+            }
+        }
     }
 
     public function update($request, $id)

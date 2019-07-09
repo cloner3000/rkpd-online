@@ -3,7 +3,7 @@
     <div class="m-subheader ">
         <div class="d-flex align-items-center">
             <div class="mr-auto">
-                <h3 class="m-subheader__title m-subheader__title--separator">Rancangan Perubahan RKPD 2019</h3>
+                <h3 class="m-subheader__title m-subheader__title--separator">Rancangan Awal</h3>
                 <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                     <li class="m-nav__item m-nav__item--home">
                         <a href="{{ route('home') }}" class="m-nav__link m-nav__link--icon">
@@ -23,7 +23,7 @@
                     </li>
                     <li class="m-nav__item">
                         <a href="{{ route('awal.index') }}" class="m-nav__link">
-                            <span class="m-nav__link-text">Rancangan Perubahan RKPD 2019</span>
+                            <span class="m-nav__link-text">Rancangan Awal</span>
                         </a>
                     </li>
             </div>
@@ -34,7 +34,7 @@
             <div class="m-portlet__head">
                 <div class="m-portlet__head-caption">
                     <div class="m-portlet__head-title">
-                        <h3 class="m-portlet__head-text">Hasil Rancangan Perubahan RKPD 2019</h3>
+                        <h3 class="m-portlet__head-text">Hasil Rancangan Awal</h3>
                     </div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                         <a href="{{ route('awal.create') }}"
                            class="btn btn-accent m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
                             <span><i class="la la-plus"></i>
-                                <span>Tambah Rancangan Perubahan RKPD 2019</span>
+                                <span>Tambah Rancangan Awal</span>
                             </span>
                         </a>
                         <div class="m-separator m-separator--dashed d-xl-none"></div>
@@ -100,10 +100,13 @@
                         <th title="Field #2">
                             Lokasi
                         </th>
-                        <th title="Field #3">
-                            Output
-                        </th>
                         <th title="Field #4">
+                            Transfer
+                        </th>
+                        <th title="Field #5">
+                            Status | Catatan
+                        </th>
+                        <th title="Field #6">
                             Aksi
                         </th>
                     </tr>
@@ -121,7 +124,19 @@
                                 {{ $item->lokasi }}
                             </td>
                             <td>
-                                {{ $item->output }}
+                                {{ $item->is_transfer ? 'Sudah' : 'Belum' }}
+                            </td>
+                            <td>
+                                @if ($item->is_transfer == 1 && $item->is_verifikasi == 1)
+                                    <span class="label label-sm label-success">Diterima | </span>
+                                @elseif($item->is_transfer == 0 && $item->is_verifikasi == 2)
+                                    <span class="label label-danger">Ditolak | </span>
+                                @elseif($item->is_transfer == 1 && $item->is_verifikasi == 0)
+                                    <label class="label label-sm label-danger">Diterima</label>
+                                @else
+                                    <label class="label label-sm label-danger">Menunggu tindakan</label>
+                                @endif
+                                {{ $item->catatan }}
                             </td>
                             <td>
                                 @include('global.table_action', [

@@ -3,7 +3,7 @@
     <div class="m-subheader ">
         <div class="d-flex align-items-center">
             <div class="mr-auto">
-                <h3 class="m-subheader__title m-subheader__title--separator">Rancangan Perubahan RKPD 2019</h3>
+                <h3 class="m-subheader__title m-subheader__title--separator">Rancangan Awal</h3>
                 <ul class="m-subheader__breadcrumbs m-nav m-nav--inline">
                     <li class="m-nav__item m-nav__item--home">
                         <a href="{{ route('home') }}" class="m-nav__link m-nav__link--icon">
@@ -23,7 +23,7 @@
                     </li>
                     <li class="m-nav__item">
                         <a href="#" class="m-nav__link">
-                            <span class="m-nav__link-text">Rancangan Perubahan RKPD 2019</span>
+                            <span class="m-nav__link-text">Rancangan Awal</span>
                         </a>
                     </li>
             </div>
@@ -34,7 +34,7 @@
             <div class="m-portlet__head">
                 <div class="m-portlet__head-caption">
                     <div class="m-portlet__head-title">
-                        <h3 class="m-portlet__head-text">Tambah Rancangan Perubahan RKPD 2019</h3>
+                        <h3 class="m-portlet__head-text">Tambah Rancangan Awal</h3>
                     </div>
                 </div>
             </div>
