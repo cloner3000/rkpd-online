@@ -1,7 +1,7 @@
 {{ csrf_field() }}
 @php($user = auth()->user())
 <div class="m-portlet__body" style="padding-top:0px">
-    <h5>Detail Kegiatan</h5>
+    <h5>Detail Kegiatan Perubahan</h5>
 
     <div class="row form-group">
         <div class="col-md-6">
