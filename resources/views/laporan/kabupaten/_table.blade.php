@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=Windows-1252">
-    <title>Laporan Musrenbang Kabupaten</title>
+    <title>LAPORAN Musrenbang Kabupaten </title>
     <style>
         @page {
             margin: 0px;
@@ -129,6 +129,21 @@
             }
         }
     </style>
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script type="text/javascript">
+    var tableToExcel = (function() {
+      var uri = 'data:application/vnd.ms-excel;base64,',
+          template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+          base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+      return function(table, name) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+        window.location.href = uri + base64(format(template, ctx))
+      }
+    })()
+    </script>
+
 </head>
 
 <body>
@@ -143,30 +158,30 @@
 
 <tr>
 	<td colspan="3"  align="center">
-	   Daftar Kegiatan Musrenbang Kabupaten RKPD 2019
+	   <p><b>DAFTAR RANCANGAN AKHIR RKPD TAHUN 2020</b></p>
   </td>
 </tr>
 <tr>
 	<td colspan="3"  align="center">
-	   {{ ucwords($anggaran->user->nama_lengkap) }}
+	   <p><b>{{$anggaran->user->nama_lengkap }}</b></p>
   </td>
 </tr>
 <tr>
 	<td colspan="3"  align="center">
-	   Kabupaten Sukabumi
+	   <p><b>KABUPATEN SUKABUMI</b></p>
   </td>
 </tr>
 <tr>
 	<td colspan="3">
 	<table width="100%" border="1" cellspacing="0" cellpadding="3" class="data_table">
     <tr style="border-bottom:#999 solid 2px;">
-  		<th rowspan="3" width="50"><center>Prioritas</center></th>
+  		<th rowspan="3" width="50"><center>No</center></th>
   		<th rowspan="3" width="70">Uraian Urusan, Organisasi, Program, dan Kegiatan</th>
   		<th rowspan="3" width="40">Indikator Sasaran</th>
   		<th rowspan="3" width="40">Sasaran Daerah</th>
   		<th rowspan="3" width="30">Lokasi</th>
-  		<th colspan="9">Indikator Kerja tahun 2019</th>
-      <th colspan="7">Usulan Pagu 2019</th>
+  		<th colspan="9">Indikator Kerja tahun 2020</th>
+      <th colspan="7">Usulan Pagu 2020</th>
     </tr>
 
     <tr style="border-bottom:#999 solid 2px;">
@@ -249,22 +264,25 @@
                         </tr>
                         @endif
                         <tr>
-                            <td align="left">{{$anggaran->kegiatan_id}}</td>
-                            <!-- <td align="center">2.09.23.{{ $nam->id }}.{{ ++$idx }}</td> -->
+                            <td align="left">{{$anggaran->id}}</td>
+
                             <td>{{ $anggaran->kegiatan->nama }}</td>
+
                             @foreach ($indikatorsasaran as $insan)
                                 @if($insan->id==$anggaran->kegiatan->indikator_sasaran_id)
-                                <td style="text-align:left;">
-                                @php($indikator_program = $insan->nama)
-                                {{$insan->nama}}
-                                </td>
-                                @foreach($sasaran as $new)
-                                @if($new->id == $insan->sasaran_id)
-                                <td style="text-align:left;">
-                                {{$new->nama}}
-                                </td>
-                                @endif
-                                @endforeach
+                                  <td style="text-align:left;">
+                                  @php($indikator_program = $insan->nama)
+                                    @php($target = $insan->target)
+                                    @php($satuan = $insan->satuan)
+                                    {{ $insan->nama }}
+                                  </td>
+                                  @foreach($sasaran as $new)
+                                    @if($new->id == $insan->sasaran_id)
+                                      <td style="text-align:left;">
+                                      {{$new->nama}}
+                                      </td>
+                                    @endif
+                                  @endforeach
                                 @endif
                             @endforeach
 
@@ -272,30 +290,37 @@
                             @if($anggaran->jenis_lokasi_id === 3)
                                 {{ $anggaran->lokasi }}
                             @elseif($anggaran->jenis_lokasi_id === 1)
-                                [{{"Kantor OPD"}}]
+                              {{ $anggaran->lokasi }}
                             @else
-                                [{{"Tersebar"}}]
+                                {{"Tersebar di Kabupaten Sukabumi"}}
                             @endif
                             </td>
 
                             <td colspan="3" style="text-align:left;">
+                            @if($target != 0)
+                            {{$indikator_program.' '.$target.' '.$satuan}}
+                            @else
                             {{$indikator_program}}
+                            @endif
                             </td>
 
                             <td colspan="3" style="text-align:left;">
                             @foreach ($anggaran->target_anggaran as $target)
                             @if ($target->indikator_kegiatan->indikator_hasil_id == 2)
+                                @if($target->target!=0)
                                     {{ $target->indikator_kegiatan->tolak_ukur.' '.$target->target.' '.$target->indikator_kegiatan->satuan->nama.'; ' }}
+                                @endif
                             @endif
                             @endforeach
                             </td>
 
                             <td colspan="3" style="text-align:left;">
-                            @foreach ($anggaran->target_anggaran as $target)
+                            <!-- @foreach ($anggaran->target_anggaran as $target)
                             @if ($target->indikator_kegiatan->indikator_hasil_id == 3)
                                     {{ $target->indikator_kegiatan->tolak_ukur.' '.$target->target.' '.$target->indikator_kegiatan->satuan->nama.'; ' }}
                             @endif
-                            @endforeach
+                            @endforeach -->
+                            {{ 'Dukungan 10% terhadap '.$indikator_program }}
                             </td>
 
                             <td style="text-align:left;">
@@ -305,33 +330,51 @@
                             </td>
                             <td style="text-align:left;">
                               @if($anggaran->sumber_anggaran_id==2)
-                                {{$anggaran->pagu}}
+                                {{ $anggaran->pagu }}
                               @endif
                             </td>
                             <td style="text-align:left;">
                               @if($anggaran->sumber_anggaran_id==3)
-                                {{$anggaran->pagu}}
+                                {{ $anggaran->pagu }}
                               @endif
                             </td>
-                            <td style="text-align:left;">{{$anggaran->pagu}}</td>
+                            <td style="text-align:left;">
+                              @if($anggaran->sumber_anggaran_id < 4)
+                                {{ $anggaran->pagu }}
+                              @endif
+                            </td>
                             <td style="text-align:left;">
                               @if($anggaran->sumber_anggaran_id==4)
-                                {{$anggaran->pagu}}
+                                {{ $anggaran->pagu }}
                               @endif
                             </td>
                             <td style="text-align:left;">
                               @if($anggaran->sumber_anggaran_id==5)
-                                {{$anggaran->pagu}}
+                                {{ $anggaran->pagu }}
                               @endif
                             </td>
-                            <td style="text-align:left;">{{$anggaran->pagu}}</td>
+                            <td style="text-align:left;">
+                              {{ $anggaran->pagu }}
+                            </td>
                         </tr>
                     @endif
                 @endforeach
                 @php($nom="0")
             @endforeach
 </table>
+
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+var tableToExcel = (function() {
+  var uri = 'data:application/vnd.ms-excel;base64,',
+      template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+      base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+     ,format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; })}
+  return function(table, name) {
+    if (!table.nodeType) table = document.getElementById(table)
+    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+    window.location.href = uri + base64(format(template, ctx))
+  }})()
+</script>
 </body>
-
-
 </html>

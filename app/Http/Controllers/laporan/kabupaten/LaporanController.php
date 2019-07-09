@@ -47,7 +47,6 @@ class LaporanController extends Controller
         $village = get_village($request->user()->opd->first()->kode ?? null);
         $villages = Villages::pluck('name', 'id');
 
-
         if ($request->user()->hasRole(Roles::KECAMATAN)) {
             if ($opd->jenisOpd && $opd->jenisOpd->nama == Roles::KECAMATAN) {
                 $district = Districts::find($opd->kode);
@@ -102,13 +101,11 @@ class LaporanController extends Controller
         $user_id = $request->get('user', null);
 
         $program = \App\Program::all();
-        $sasaran =\App\Sasaran::all();
-        $urusan = \App\BidangUrusan::all();
-        $indikatorsasaran =\App\IndikatorSasaran::all();
 
         $items = new Anggaran();
         $items = $items->withLaporan()->whereTahapanId($this->tahapan->id);
-
+        $sasaran =\App\Sasaran::all();
+        $indikatorsasaran =\App\IndikatorSasaran::all();
         $kecamatan = Districts::find($district);
         $desa = Villages::find($village);
 
@@ -131,13 +128,16 @@ class LaporanController extends Controller
             $items = $items->where('user_id', $user_id);
             $items = $items->orderBy('prioritas', 'ASC');
         }
-        $items = $items->where('sumber_awal', 2);
         $items = $items->get();
 
         $anggaran = $items->first();
 
+        $time=6000;
+        ini_set('memory_limit','2048M');
+        ini_set('max_execution_time', $time);
+        
         $items = $items->toJson();
-        $view_table = view('laporan.kabupaten._table', compact('items', 'anggaran', 'program','kegiatan','sasaran','indikatorsasaran', 'sumberanggaran', 'urusan'));
+        $view_table = view('laporan.kabupaten._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran', 'sumberanggaran'));
         //return view('laporan.renja._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran'));
         return $view_table;
     }

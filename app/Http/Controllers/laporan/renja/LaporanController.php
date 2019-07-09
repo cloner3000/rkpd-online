@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\laporan\renja;
+
 use App\BidangUrusan;
 use App\Anggaran;
 use App\Kegiatan;
@@ -45,6 +46,7 @@ class LaporanController extends Controller
         $opd = $request->user()->opd()->first();
         $village = get_village($request->user()->opd->first()->kode ?? null);
         $villages = Villages::pluck('name', 'id');
+        
         if ($request->user()->hasRole(Roles::KECAMATAN)) {
             if ($opd->jenisOpd && $opd->jenisOpd->nama == Roles::KECAMATAN) {
                 $district = Districts::find($opd->kode);
@@ -89,7 +91,7 @@ class LaporanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
 //        dd($request->all());
         $district = Districts::find($request->get('district_id', null));
         $village = Villages::find($request->get('village_id', null));
@@ -140,7 +142,8 @@ class LaporanController extends Controller
         if ($user_id && $user_id != 0) {
             $user = User::find($user_id);
             $items = $items->where('user_id', $user_id);
-            $items = $items->where('is_verifikasi', '!=', '2');
+            // $items = $items->where('is_verifikasi', '!=', '2');
+            $items = $items->where('sumber_awal', 4);
         }
 
         $items = $items->get();
@@ -152,7 +155,7 @@ class LaporanController extends Controller
         ini_set('max_execution_time', $time);
         
         $items = $items->toJson();
-        $view_table = view('laporan.awal._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran', 'sumberanggaran'));
+        $view_table = view('laporan.renja._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran', 'sumberanggaran'));
         //return view('laporan.renja._table', compact('items', 'anggaran', 'program','kegiat','sasaran','indikatorsasaran'));
         return $view_table;
     }
