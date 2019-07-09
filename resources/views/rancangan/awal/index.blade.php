@@ -103,6 +103,9 @@
                         <th title="Field #3">
                             Output
                         </th>
+                        <th title="Field #3">
+                            Kebutuhan Anggaran
+                        </th>
                         <th title="Field #4">
                             Aksi
                         </th>
@@ -122,6 +125,9 @@
                             </td>
                             <td>
                                 {{ $item->output }}
+                            </td>
+                            <td>
+                                {{ $item->pagu }}
                             </td>
                             <td>
                                 @include('global.table_action', [
