@@ -127,7 +127,7 @@
                                 {{ $item->output }}
                             </td>
                             <td>
-                                {{ $item->pagu }}
+                                {{ number_format($item->pagu,2) }}
                             </td>
                             <td>
                                 @include('global.table_action', [
