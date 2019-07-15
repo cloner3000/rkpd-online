@@ -75,6 +75,14 @@ class MusrenbangService
             $lokasi = $request->input('lokasi');
         }
 
+        if ($request->input('output')) {
+            $output = $request->input('output');
+        }
+
+        if ($request->input('pagu')) {
+            $pagu = $request->input('pagu');
+        }
+
         $status_kegiatan = $request->input('status_kegiatan');
 
         if (empty($request->input('status_kegiatan'))) {
@@ -99,6 +107,8 @@ class MusrenbangService
         $anggaran->user()->associate($request->user());
         $anggaran->sumberAnggaran()->associate($sumberAnggaran);
         $anggaran->kegiatan()->associate($kegiatan);
+        $anggaran->pagu= $pagu;
+        $anggaran->output = $output;
         
         $anggaran->save();
 

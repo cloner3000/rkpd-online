@@ -59,7 +59,7 @@
     @endif
 @endforeach
 
-<!-- <li class="m-menu__item m-menu__item--submenu {{ active_class(if_route_pattern('laporan.*'), 'm-menu__item--active') }} "
+<li class="m-menu__item m-menu__item--submenu {{ active_class(if_route_pattern('laporan.*'), 'm-menu__item--active') }} "
     aria-haspopup="true"
     data-menu-submenu-toggle="hover">
     <a href="{{ has_access_menu($menu->nama) ? url($menu->url) : '#' }}" class="m-menu__link m-menu__toggle">
@@ -68,7 +68,7 @@
         <i class="m-menu__ver-arrow la la-angle-right"></i>
     </a>
 
-    @can('laporan-desa')
+    <!-- @can('laporan-desa')
         <div class="m-menu__submenu" style="display: block;">
             <span class="m-menu__arrow"></span>
             <ul class="m-menu__subnav">
@@ -120,7 +120,7 @@
                 </li>
             </ul>
         </div>
-    @endcan
+    @endcan -->
 
     @can('laporan-awal')
         <div class="m-menu__submenu" style="display: block;">
@@ -133,14 +133,14 @@
                         <i class="m-menu__link-icon flaticon-file-1">
                             <span></span>
                         </i>
-                        <span class="m-menu__link-text">Rancangan Awal</span>
+                        <span class="m-menu__link-text">Rancangan Perubahan RKPD 2019</span>
                     </a>
                 </li>
             </ul>
         </div>
     @endcan
 
-    @can('laporan-renja')
+    <!-- @can('laporan-renja')
         <div class="m-menu__submenu" style="display: block;">
             <span class="m-menu__arrow"></span>
             <ul class="m-menu__subnav">
@@ -228,6 +228,6 @@
                 </li>
             </ul>
         </div>
-    @endcan
+    @endcan -->
 
-</li> -->
+</li>

@@ -50,7 +50,7 @@
      id="flag_output_lokasi">
     <label for="name">Output Kegiatan</label>
     <input type="text" class="form-control m-input" id="output"
-           name="output" value="{{ old('output') }}" placeholder="Nama tolak ukur : target satuan">
+           name="output" value="{{ $item->output ?? '' }}" placeholder="Nama tolak ukur : target satuan">
     @if ($errors->has('output'))
         <br>
         <span class="form-control-feedback">
@@ -72,7 +72,7 @@
      id="flag_output_lokasi">
     <label for="name">Kebutuhan Anggaran (Tanpa tanda titik)</label>
     <input type="text" class="form-control m-input" id="pagu"
-           name="pagu" value="{{ old('pagu') }}" placeholder="500000000">
+           name="pagu" value="{{ $item->pagu ?? '' }}" placeholder="500000000">
     @if ($errors->has('pagu'))
         <br>
         <span class="form-control-feedback">

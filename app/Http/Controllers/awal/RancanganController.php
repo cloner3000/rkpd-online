@@ -233,27 +233,27 @@ class RancanganController extends Controller
 
         ]);
         
-        $anggaran = Anggaran::find($id);
+        // $anggaran = Anggaran::find($id);
 
-        // cek opd
-        $kegiatan = Kegiatan::find($request->input('nama_kegiatan'));
-        if (!$kegiatan->opd()->first()) {
-            return error_pages(400, 'Kegiatan <strong> '. $kegiatan->nama .
-                '</strong> Tidak memiliki OPD </br> Silahkan Hubungi Administrator!');
-        }
+        // // cek opd
+        // $kegiatan = Kegiatan::find($request->input('nama_kegiatan'));
+        // if (!$kegiatan->opd()->first()) {
+        //     return error_pages(400, 'Kegiatan <strong> '. $kegiatan->nama .
+        //         '</strong> Tidak memiliki OPD </br> Silahkan Hubungi Administrator!');
+        // }
 
-        $path_proposal = null;
-        if ($request->file('proposal')) {
-            $file_proposal = $request->file('proposal');
-            $path_proposal = "proposal".'/'.rand()." - ".$request->file('proposal')->getClientOriginalName();
-            // echo $path_proposal;
-            Storage::delete($anggaran->proposal);
-            $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
-            $file = $path_proposal;
-            $anggaran->proposal = $file;
-        }
+        // $path_proposal = null;
+        // if ($request->file('proposal')) {
+        //     $file_proposal = $request->file('proposal');
+        //     $path_proposal = "proposal".'/'.rand()." - ".$request->file('proposal')->getClientOriginalName();
+        //     // echo $path_proposal;
+        //     Storage::delete($anggaran->proposal);
+        //     $upload_proposal = Storage::put($path_proposal, file_get_contents($file_proposal->getRealPath()));
+        //     $file = $path_proposal;
+        //     $anggaran->proposal = $file;
+        // }
 
-        $anggaran->save();
+        // $anggaran->save();
 
         $this->musrenbang_service->update($request, $id);
 

@@ -23,7 +23,7 @@
                     </li>
                     <li class="m-nav__item">
                         <a href="#" class="m-nav__link">
-                            <span class="m-nav__link-text">Rancangan Perubahan RKPD 2019</span>
+                            <span class="m-nav__link-text">Rancangan Awal</span>
                         </a>
                     </li>
             </div>
@@ -34,7 +34,7 @@
             <div class="m-portlet__head">
                 <div class="m-portlet__head-caption">
                     <div class="m-portlet__head-title">
-                        <h3 class="m-portlet__head-text">Ubah Rancangan Perubahan RKPD 2019</h3>
+                        <h3 class="m-portlet__head-text">Ubah Pokok Pikiran Dewan</h3>
                     </div>
                 </div>
             </div>

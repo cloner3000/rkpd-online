@@ -4,11 +4,11 @@
             {{ method_field('DELETE') }}
             {{ csrf_field() }}
             @if (!empty($canEntry) && $canEntry && !(empty($canManage)) && $canManage )
-                <!-- <a href="{{ $url ?? '#' }}"
+                <a href="{{ $url ?? '#' }}"
                    class="m-portlet__nav-link btn m-btn m-btn--hover-warning m-btn--icon m-btn--icon-only m-btn--pill {{ $item->is_transfer ? 'disable-edit disabled' : ''}}"
                    title="Ubah" {{ $item->is_transfer ? 'disabled' : '' }}>
                     <i class="la la-edit"></i>
-                </a> -->
+                </a>
                 <button type="button"
                         class="m-portlet__nav-link btn m-btn m-btn--hover-danger m-btn--icon m-btn--icon-only m-btn--pill"
                         data-toggle="modal" data-target="#modal_delete_{{ $id ?? "" }}" title="Hapus" {{ $item->is_transfer ? 'disabled' : '' }}>
