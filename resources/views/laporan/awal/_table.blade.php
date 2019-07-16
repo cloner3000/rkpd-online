@@ -143,7 +143,7 @@ function myFunction() {
                         <td style="text-align:center">{{ ++$idx }}</td>
                         <td style="padding-left:">{{ $anggaran->kegiatan->nama }}</td>
                         <td style="text-align:left;">
-                            {{ $anggaran->kegiatan->nama }}
+                            {{ $anggaran->output }}
                         </td>
                         <td style="text-align:left;">{{ $anggaran->sumber_anggaran->nama }}</td>
                         <td style="text-align:left;">{{ $anggaran->lokasi }}</td>
