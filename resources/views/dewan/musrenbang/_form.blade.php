@@ -43,10 +43,10 @@
     @endif
 </div>
 
-<div class="form-group m-form__group">
+<!-- <div class="form-group m-form__group">
     <label>Catatan</label>
     <textarea class="form-control" name="deskripsi" id="deskripsi" cols="30" rows="2" disabled readonly>{{ $item->kegiatan->catatan ?? '' }}</textarea>
-</div>
+</div> -->
 
 <hr>
 <h5>Indikator Keluaran Kegiatan</h5>
@@ -96,7 +96,7 @@
     @endif
 </div>
 
-<h5>Input Proposal</h5>
+<!-- <h5>Input Proposal</h5>
 <div class="form-group m-form__group">
     <div>
         <label>
@@ -104,7 +104,7 @@
         </label> 
         <input type="file" name="proposal" class="form-control m-input" accept="application/pdf application/zip application/msword application/vnd.openxmlformats-officedocument.wordprocessingml.document" required>
     </div>
-</div>
+</div> -->
 
 <div id="hasil_container">
 
