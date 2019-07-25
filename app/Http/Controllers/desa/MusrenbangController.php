@@ -264,7 +264,7 @@ class MusrenbangController extends Controller
                 $query->where('nama', 'like', $val);
                 $query->orWhere('keyword', 'like', $val);
             })
-            ->where('is_active', 1)
+            // ->where('is_active', 1)
             ->select('id', 'nama as full_name')
             ->get();
 
